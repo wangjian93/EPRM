@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+    <mapper namespace="com.ivo.dao.equipment.IDepOfClassDao" >    
+        <resultMap id="depOfClass" type="com.ivo.model.equipment.DepOfClass">  
+            <result column="classID" property="classID" jdbcType="INTEGER" />  
+            <result column="className" property="className" jdbcType="VARCHAR" />  
+            <result column="department_fk" property="department_fk" jdbcType="INTEGER" />  
+        </resultMap>  
+      
+        <sql id="depOfClass_Column_List">  
+            classID, className, department_fk
+       </sql>  
+        
+        <select id="getByID" resultMap="depOfClass"  
+            parameterType="java.lang.Integer">  
+            select  
+            <include refid="depOfClass_Column_List" />  
+            from properrate_o_class
+            where classID = #{id,jdbcType=INTEGER}  
+        </select>  
+        
+        <!-- 查询用户-->  
+        <select id="getAll" resultMap="depOfClass">  
+            select  
+            <include refid="depOfClass_Column_List" />  
+            from properrate_o_class  
+        </select>
+    </mapper>

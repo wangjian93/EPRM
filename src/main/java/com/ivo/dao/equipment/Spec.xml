@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+    <mapper namespace="com.ivo.dao.equipment.ISpecDao" >    
+        <resultMap id="spec" type="com.ivo.model.equipment.Spec">  
+            <result column="id" property="id" jdbcType="INTEGER" />  
+            <result column="year" property="year" jdbcType="INTEGER" />  
+            <result column="month" property="month" jdbcType="INTEGER" />
+            <result column="equipmentGroup" property="equipmentGroup" jdbcType="INTEGER" />  
+            <result column="spec" property="spec" jdbcType="FLOAT" />
+            <result column="depClassID" property="depClassID" jdbcType="INTEGER" />  
+        </resultMap>  
+      
+        <sql id="spec_Column_List">  
+            year, month, equipmentGroup, spec,depClassID
+       </sql>  
+        
+        <select id="getSpec" resultMap="spec" parameterType="java.lang.Integer">  
+            select  
+            <include refid="spec_Column_List" />   
+            from properrate_o_spec left 
+            where id = #{id,jdbcType=INTEGER} 
+        </select> 
+        
+        <select id="getSpecByMonth" resultMap="spec" parameterType="java.lang.Integer">  
+            select * ,
+            		(select DISTINCT className from properrate_o_class p where p.classID=t.depClassID) AS depClassName,
+            		(select DISTINCT equipmentGroupName from properrate_o_equipmentGroup o where o.equipmentGroupID=t.equipmentGroup) AS equipmentGroupName
+            
+            from (select  
+            		<include refid="spec_Column_List" />  
+            		from properrate_o_spec 
+            		where year = #{year,jdbcType=INTEGER} and month = #{month,jdbcType=INTEGER} 
+        		)t order by depClassID,equipmentGroup desc 
+        </select>  
+          
+        <select id="getAllSpec" resultMap="spec">  
+            select  
+            <include refid="spec_Column_List" />  
+            from properrate_o_spec  
+        </select>
+        
+        <insert id="saveSpec" parameterType="com.ivo.model.equipment.Spec">  
+    			insert into properrate_o_spec
+    			(year, month, equipmentGroup, spec, depClassID)  
+    			values
+    			(#{year}, #{month}, #{equipmentGroup}, #{spec}, #{depClassID})   
+		</insert>
+		
+		<update id="updateSpec" parameterType="com.ivo.model.equipment.Spec">  
+	        	update properrate_o_spec  
+	        set spec=#{spec}
+	        where id = #{id}     
+		</update>
+    </mapper>

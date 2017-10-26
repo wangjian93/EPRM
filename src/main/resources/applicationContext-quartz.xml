@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="
+	       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+	       http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-2.5.xsd">
+
+	
+
+	<!-- 要调用的工作类 -->  
+          
+         <bean id="exampleBusinessObject" class="com.ivo.quartz.CreateCurrentCheckForm" />  
+    <bean id="jobDetail"  
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject" ref="exampleBusinessObject" />  
+        <property name="targetMethod" value="execute" />  
+        <property name="concurrent" value="false" />  
+    </bean>  
+    <bean id="simpleTrigger"  
+        class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <!-- see the example of method invoking job above -->  
+        <property name="jobDetail" ref="jobDetail" />  
+        <property name="cronExpression" value="0 49 13 * * ?" />
+    </bean>  
+  
+    <!-- 总调度用于启动Spring定时器 -->  
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+        <property name="triggers">  
+            <list>  
+                  
+                <ref bean="simpleTrigger" />  
+            </list>  
+        </property>  
+    </bean>    
+</beans>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+    <mapper namespace="com.ivo.dao.equipment.ICheckDataDetailDao" >    
+        <resultMap id="checkDataDetailMap" type="com.ivo.model.equipment.CheckDataDetail">  
+            <id column="id" property="id" jdbcType="INTEGER" />  
+        		<result column="year" property="year" jdbcType="INTEGER" />
+        		<result column="month" property="month" jdbcType="INTEGER" />
+        		<result column="day" property="day" jdbcType="INTEGER" />
+			<result column="equipmentGroup_fk" property="equipmentGroup_fk" jdbcType="INTEGER" />
+			<result column="equipmentID_fk" property="equipmentID_fk" jdbcType="INTEGER" />
+			<result column="day1" property="day1" jdbcType="VARCHAR" />
+			<result column="day2" property="day2" jdbcType="VARCHAR" />
+			<result column="day3" property="day3" jdbcType="VARCHAR" />
+			<result column="day4" property="day4" jdbcType="VARCHAR" />
+			<result column="day5" property="day5" jdbcType="VARCHAR" />
+			<result column="day6" property="day6" jdbcType="VARCHAR" />
+			<result column="day7" property="day7" jdbcType="VARCHAR" />
+			<result column="day8" property="day8" jdbcType="VARCHAR" />
+			<result column="day9" property="day9" jdbcType="VARCHAR" />
+			<result column="day10" property="day10" jdbcType="VARCHAR" />
+			<result column="day11" property="day11" jdbcType="VARCHAR" />
+			<result column="day12" property="day12" jdbcType="VARCHAR" />
+			<result column="day13" property="day13" jdbcType="VARCHAR" />
+			<result column="day14" property="day14" jdbcType="VARCHAR" />
+			<result column="day15" property="day15" jdbcType="VARCHAR" />
+			<result column="day16" property="day16" jdbcType="VARCHAR" />
+			<result column="day17" property="day17" jdbcType="VARCHAR" />
+			<result column="day18" property="day18" jdbcType="VARCHAR" />
+			<result column="day19" property="day19" jdbcType="VARCHAR" />
+			<result column="day20" property="day20" jdbcType="VARCHAR" />
+			<result column="day21" property="day21" jdbcType="VARCHAR" />
+			<result column="day22" property="day22" jdbcType="VARCHAR" />
+			<result column="day23" property="day23" jdbcType="VARCHAR" />
+			<result column="day24" property="day24" jdbcType="VARCHAR" />
+			<result column="day25" property="day25" jdbcType="VARCHAR" />
+			<result column="day26" property="day26" jdbcType="VARCHAR" />
+			<result column="day27" property="day27" jdbcType="VARCHAR" />
+			<result column="day28" property="day28" jdbcType="VARCHAR" />
+			<result column="day29" property="day29" jdbcType="VARCHAR" />
+			<result column="day30" property="day30" jdbcType="VARCHAR" />
+			<result column="day31" property="day31" jdbcType="VARCHAR" />
+        </resultMap>  
+      
+        <select id="getCheckData" resultMap="checkDataDetailMap">
+        		select *, (select DISTINCT equipmentName from properrate_o_equipment o where o.equipmentID=t.equipmentID_FK) AS equipmentName
+        		from (
+      		select * from ProperRate_D_CheckDataDetail 
+      		where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER} and equipmentID_fk=#{equipmentID, jdbcType=INTEGER}
+    			) t
+    		</select>
+    		
+    		<select id="getCheckDataGroup" resultMap="checkDataDetailMap">
+    			select *, (select DISTINCT equipmentName from properrate_o_equipment o where o.equipmentID=t.equipmentID_FK) AS equipmentName
+    			from (
+    			select * from ProperRate_D_CheckDataDetail
+    			where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER} and equipmentGroup_fk=#{equipmentGroup, jdbcType=INTEGER}
+    			)t
+    		</select>
+        
+        <insert id="saveCheckDataDetail" parameterType="com.ivo.model.equipment.CheckDataDetail">  
+   			insert into properrate_d_checkdatadetail
+    			(year, month, equipmentGroup_fk, equipmentID_fk, day1, day2, day3, day4, day5, day6, day7,
+    			day8, day9, day10, day11, day12, day13, day14, day15, day16, day17, day18, day19, day20, day21,
+    			day22, day23, day24, day25, day26, day27, day28, day29, day30, day31)  
+    			values  
+    			(#{year, jdbcType=INTEGER}, #{month, jdbcType=INTEGER}, #{equipmentGroup_fk, jdbcType=INTEGER}, #{equipmentID_fk, jdbcType=INTEGER}, #{day1}, #{day2}, #{day3}, #{day4}, #{day5}, #{day6}, #{day7},
+    			#{day8}, #{day9}, #{day10}, #{day11}, #{day12}, #{day13}, #{day14}, #{day15}, #{day16}, #{day17}, #{day18}, #{day19}, #{day20}, #{day21},
+    			#{day22}, #{day23}, #{day24}, #{day25}, #{day26}, #{day27}, #{day28}, #{day29}, #{day30}, #{day31}) 
+		</insert>
+		
+		<update id="updateCheckDataDetail" parameterType="com.ivo.model.equipment.CheckDataDetail">  
+	        	update properrate_d_checkdatadetail  
+	        <set>
+          		<if test="day1 != null">day1 = #{day1},</if> 
+             	<if test="day2 != null">day2 = #{day2},</if> 
+             	<if test="day3 != null">day3 = #{day3},</if> 
+             	<if test="day4 != null">day4 = #{day4},</if>
+             	<if test="day5 != null">day5 = #{day5},</if>
+             	<if test="day6 != null">day6 = #{day6},</if>
+             	<if test="day7 != null">day7 = #{day7},</if>
+             	<if test="day8 != null">day8 = #{day8},</if>
+             	<if test="day9 != null">day9 = #{day9},</if>
+             	<if test="day10 != null">day10 = #{day10},</if>
+             	<if test="day11 != null">day11 = #{day11},</if>
+             	<if test="day12 != null">day12 = #{day12},</if>
+             	<if test="day13 != null">day13 = #{day13},</if>
+             	<if test="day14 != null">day14 = #{day14},</if>
+             	<if test="day15 != null">day15 = #{day15},</if>
+             	<if test="day16 != null">day16 = #{day16},</if>
+             	<if test="day17 != null">day17 = #{day17},</if>
+             	<if test="day18 != null">day18 = #{day18},</if>
+             	<if test="day19 != null">day19 = #{day19},</if>
+             	<if test="day20 != null">day20 = #{day20},</if>
+             	<if test="day21 != null">day21 = #{day21},</if>
+             	<if test="day22 != null">day22 = #{day22},</if>
+             	<if test="day23 != null">day23 = #{day23},</if>
+             	<if test="day24 != null">day24 = #{day24},</if>
+             	<if test="day25 != null">day25 = #{day25},</if>
+             	<if test="day26 != null">day26 = #{day26},</if>
+             	<if test="day27 != null">day27 = #{day27},</if>
+             	<if test="day28 != null">day28 = #{day28},</if>
+             	<if test="day29 != null">day29 = #{day29},</if>
+             	<if test="day30 != null">day30 = #{day30},</if>
+             	<if test="day31 != null">day31 = #{day31},</if>
+        		</set>
+           	<where>
+                   id = #{id}
+          	 </where>     
+		</update>
+        
+    </mapper>

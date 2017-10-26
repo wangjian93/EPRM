@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+    <mapper namespace="com.ivo.dao.equipment.IEquipmentGroupDao" >    
+        <resultMap id="equipmentGroup" type="com.ivo.model.equipment.EquipmentGroup">  
+            <result column="equipmentGroupID" property="equipmentGroupID" jdbcType="INTEGER" />  
+            <result column="equipmentGroupName" property="equipmentGroupName" jdbcType="VARCHAR" />  
+            <result column="class_fk" property="class_fk" jdbcType="INTEGER" />
+            
+            <result column="validFlag" property="validFlag" jdbcType="INTEGER" />
+        		<result column="creater" property="creater" jdbcType="VARCHAR" />
+        		<result column="dateOfCreate" property="dateOfCreate" jdbcType="DATE" />
+        		<result column="updater" property="updater" jdbcType="VARCHAR" />
+        		<result column="dateOfUpdate" property="dateOfUpdate" jdbcType="DATE" />  
+        </resultMap>  
+      
+        <sql id="equipmentGroup_Column_List">  
+            equipmentGroupID, equipmentGroupName, class_fk, validFlag, creater, dateOfCreate, updater, dateOfUpdate
+       </sql>  
+        
+        <select id="getByID" resultMap="equipmentGroup"  
+            parameterType="java.lang.Integer">  
+            select  
+            <include refid="equipmentGroup_Column_List" />  
+            from properrate_o_equipmentGroup
+            where equipmentGroupID = #{id,jdbcType=INTEGER}  
+        </select>  
+          
+        <select id="getAll" resultMap="equipmentGroup">  
+            select  
+            <include refid="equipmentGroup_Column_List" />  
+            from properrate_o_equipmentGroup 
+            AND validFlag=1 
+        </select>
+        
+        <select id="getByName" resultMap="equipmentGroup"  
+            parameterType="java.lang.String">  
+            select  
+            <include refid="equipmentGroup_Column_List" />  
+            from properrate_o_equipmentGroup
+            where equipmentGroupName = #{equipmentGroupName,jdbcType=VARCHAR} 
+            AND validFlag=1 
+        </select>
+        
+        <select id="getByClass" resultMap="equipmentGroup"  
+            parameterType="java.lang.Integer">  
+            select  
+            <include refid="equipmentGroup_Column_List" />  
+            from properrate_o_equipmentGroup
+            where class_fk = #{class_fk,jdbcType=INTEGER}  
+            AND validFlag=1
+        </select>
+        
+        <insert id="saveEquipmentGroup" parameterType="com.ivo.model.equipment.EquipmentGroup">  
+   			insert into properrate_o_equipmentGroup
+    			(equipmentGroupName, class_fk, validFlag, creater, dateOfCreate)  
+    			values  
+    			( #{equipmentGroupName}, #{class_fk}, #{validFlag}, #{creater}, #{dateOfCreate})
+		</insert>
+		
+		<update id="updateEquipment" parameterType="com.ivo.model.equipment.EquipmentGroup">  
+	        	update properrate_o_equipmentGroup  
+	        <set>
+	        		<if test="equipmentGroupName != null">equipmentGroupName = #{equipmentGroupName},</if> 
+             	<if test="class_fk != null">class_fk = #{class_fk},</if>
+          		<if test="updater != null">updater = #{updater},</if> 
+             	<if test="dateOfUpdate != null">dateOfUpdate = #{dateOfUpdate},</if> 
+        		</set>
+           	<where>
+                   equipmentGroupID = #{equipmentGroupID}
+          	 </where>     
+		</update>
+		
+		<update id="deleteEquipment" parameterType="com.ivo.model.equipment.EquipmentGroup">  
+	        	update properrate_o_equipmentGroup  
+	        set  validFlag=#{validFlag} AND updater=#{updater} AND dateOfUpdate=#{dateOfUpdate}
+	        where equipmentGroupID = #{equipmentGroupID};
+		</update>
+    </mapper>

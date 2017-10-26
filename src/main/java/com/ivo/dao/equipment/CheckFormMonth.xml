@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+    <mapper namespace="com.ivo.dao.equipment.ICheckFormMonthDao" >    
+        <resultMap id="checkFormMonthMap" type="com.ivo.model.equipment.CheckFormMonth">  
+            <id column="id" property="id" jdbcType="INTEGER" />  
+        		<result column="year" property="year" jdbcType="INTEGER" />
+        		<result column="month" property="month" jdbcType="INTEGER" />
+			<result column="equipmentGroupID" property="equipmentGroupID" jdbcType="INTEGER" />
+			<result column="depOfclassID" property="depOfclassID" jdbcType="INTEGER" />
+			<result column="day1" property="day1" jdbcType="FLOAT" />
+			<result column="day2" property="day2" jdbcType="FLOAT" />
+			<result column="day3" property="day3" jdbcType="FLOAT" />
+			<result column="day4" property="day4" jdbcType="FLOAT" />
+			<result column="day5" property="day5" jdbcType="FLOAT" />
+			<result column="day6" property="day6" jdbcType="FLOAT" />
+			<result column="day7" property="day7" jdbcType="FLOAT" />
+			<result column="day8" property="day8" jdbcType="FLOAT" />
+			<result column="day9" property="day9" jdbcType="FLOAT" />
+			<result column="day10" property="day10" jdbcType="FLOAT" />
+			<result column="day11" property="day11" jdbcType="FLOAT" />
+			<result column="day12" property="day12" jdbcType="FLOAT" />
+			<result column="day13" property="day13" jdbcType="FLOAT" />
+			<result column="day14" property="day14" jdbcType="FLOAT" />
+			<result column="day15" property="day15" jdbcType="FLOAT" />
+			<result column="day16" property="day16" jdbcType="FLOAT" />
+			<result column="day17" property="day17" jdbcType="FLOAT" />
+			<result column="day18" property="day18" jdbcType="FLOAT" />
+			<result column="day19" property="day19" jdbcType="FLOAT" />
+			<result column="day20" property="day20" jdbcType="FLOAT" />
+			<result column="day21" property="day21" jdbcType="FLOAT" />
+			<result column="day22" property="day22" jdbcType="FLOAT" />
+			<result column="day23" property="day23" jdbcType="FLOAT" />
+			<result column="day24" property="day24" jdbcType="FLOAT" />
+			<result column="day25" property="day25" jdbcType="FLOAT" />
+			<result column="day26" property="day26" jdbcType="FLOAT" />
+			<result column="day27" property="day27" jdbcType="FLOAT" />
+			<result column="day28" property="day28" jdbcType="FLOAT" />
+			<result column="day29" property="day29" jdbcType="FLOAT" />
+			<result column="day30" property="day30" jdbcType="FLOAT" />
+			<result column="day31" property="day31" jdbcType="FLOAT" />
+        </resultMap>  
+      
+        <select id="getCheckFormMonthByEquipmentGroupID" resultMap="checkFormMonthMap">
+        		select *, (select DISTINCT equipmentGroupName from properrate_o_equipmentGroup o where o.equipmentGroupID=t.equipmentGroupID) AS equipmentGroupName
+        			,(select DISTINCT spec from properrate_o_spec s where s.year=t.year and s.month=t.month and s.equipmentGroup=t.equipmentGroupID) AS spec
+        		from (
+      		select * from ProperRate_D_CheckFormMonth 
+      		where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER} and equipmentGroupID=#{equipmentGroupID, jdbcType=INTEGER}
+    			) t
+    		</select>
+    		
+    		<select id="getCheckFormMonthByClassID" resultMap="checkFormMonthMap">
+        		select *, (select DISTINCT equipmentGroupName from properrate_o_equipmentGroup o where o.equipmentGroupID=t.equipmentGroupID) AS equipmentGroupName
+        			,(select DISTINCT spec from properrate_o_spec s where s.year=t.year and s.month=t.month and s.equipmentGroup=t.equipmentGroupID) AS spec
+        		from (
+      		select * from ProperRate_D_CheckFormMonth 
+      		where depOfClassID=#{depOfClassID, jdbcType=INTEGER} and year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER}
+    			) t
+    		</select>
+    		
+    		<select id="getCheckFormMonthALL" resultMap="checkFormMonthMap">
+        		select *, (select DISTINCT equipmentGroupName from properrate_o_equipmentGroup o where o.equipmentGroupID=t.equipmentGroupID) AS equipmentGroupName
+        			,(select DISTINCT spec from properrate_o_spec s where s.year=t.year and s.month=t.month and s.equipmentGroup=t.equipmentGroupID) AS spec
+        		from (
+      		select * from ProperRate_D_CheckFormMonth 
+      		where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER}
+    			) t
+    		</select>
+    		
+        <insert id="saveCheckFormMonth" parameterType="com.ivo.model.equipment.CheckFormMonth">  
+   			insert into properrate_d_checkFormMonth
+    			(year, month, equipmentGroupID, depOfclassID, day1, day2, day3, day4, day5, day6, day7,
+    			day8, day9, day10, day11, day12, day13, day14, day15, day16, day17, day18, day19, day20, day21,
+    			day22, day23, day24, day25, day26, day27, day28, day29, day30, day31)  
+    			values  
+    			(#{year}, #{month}, #{equipmentGroupID}, #{depOfclassID}, #{day1}, #{day2}, #{day3}, #{day4}, #{day5}, #{day6}, #{day7},
+    			#{day8}, #{day9}, #{day10}, #{day11}, #{day12}, #{day13}, #{day14}, #{day15}, #{day16}, #{day17}, #{day18}, #{day19}, #{day20}, #{day21},
+    			#{day22}, #{day23}, #{day24}, #{day25}, #{day26}, #{day27}, #{day28}, #{day29}, #{day30}, #{day31}) 
+		</insert>
+		
+		<update id="updateCheckFormMonth" parameterType="com.ivo.model.equipment.CheckFormMonth">  
+	        	update properrate_d_checkFormMonth  
+	        <set>
+          		<if test="day1 != 0">day1 = #{day1},</if> 
+             	<if test="day2 != 0">day2 = #{day2},</if> 
+             	<if test="day3 != 0">day3 = #{day3},</if> 
+             	<if test="day4 != 0">day4 = #{day4},</if>
+             	<if test="day5 != 0">day5 = #{day5},</if>
+             	<if test="day6 != 0">day6 = #{day6},</if>
+             	<if test="day7 != 0">day7 = #{day7},</if>
+             	<if test="day8 != 0">day8 = #{day8},</if>
+             	<if test="day9 != 0">day9 = #{day9},</if>
+             	<if test="day10 != 0">day10 = #{day10},</if>
+             	<if test="day11 != 0">day11 = #{day11},</if>
+             	<if test="day12 != 0">day12 = #{day12},</if>
+             	<if test="day13 != 0">day13 = #{day13},</if>
+             	<if test="day14 != 0">day14 = #{day14},</if>
+             	<if test="day15 != 0">day15 = #{day15},</if>
+             	<if test="day16 != 0">day16 = #{day16},</if>
+             	<if test="day17 != 0">day17 = #{day17},</if>
+             	<if test="day18 != 0">day18 = #{day18},</if>
+             	<if test="day19 != 0">day19 = #{day19},</if>
+             	<if test="day20 != 0">day20 = #{day20},</if>
+             	<if test="day21 != 0">day21 = #{day21},</if>
+             	<if test="day22 != 0">day22 = #{day22},</if>
+             	<if test="day23 != 0">day23 = #{day23},</if>
+             	<if test="day24 != 0">day24 = #{day24},</if>
+             	<if test="day25 != 0">day25 = #{day25},</if>
+             	<if test="day26 != 0">day26 = #{day26},</if>
+             	<if test="day27 != 0">day27 = #{day27},</if>
+             	<if test="day28 != 0">day28 = #{day28},</if>
+             	<if test="day29 != 0">day29 = #{day29},</if>
+             	<if test="day30 != 0">day30 = #{day30},</if>
+             	<if test="day31 != 0">day31 = #{day31},</if>
+        		</set>
+           	<where>
+                   id = #{id} 
+          	 </where>     
+		</update>
+        
+    </mapper>

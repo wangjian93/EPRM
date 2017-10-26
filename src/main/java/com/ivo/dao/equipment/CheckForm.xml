@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+    <mapper namespace="com.ivo.dao.equipment.ICheckFormDao" >    
+        <resultMap id="checkFormMap" type="com.ivo.model.equipment.CheckForm">  
+            <id column="checkFormID" property="checkFormID" jdbcType="INTEGER" />  
+            <result column="trackingNumber" property="trackingNumber" jdbcType="VARCHAR" />  
+            <result column="equipmentGroup_fk" property="equipmentGroup_fk" jdbcType="INTEGER" />  
+        		<result column="class_fk" property="class_fk" jdbcType="INTEGER" />
+        		<result column="year" property="year" jdbcType="INTEGER" />
+        		<result column="month" property="month" jdbcType="INTEGER" />
+        		<result column="day" property="day" jdbcType="INTEGER" />
+			<result column="properRate" property="properRate" jdbcType="FLOAT" />
+        </resultMap>  
+      
+        <select id="getCheckForm" resultMap="checkFormMap" parameterType="String">
+      		select m.checkFormID, m.trackingNumber, m.equipmentGroup_fk, m.class_fk, m.year, m.month, m.day, m.properRate
+       		from ProperRate_M_CheckForm m
+    			where m.trackingNumber=#{user_id}
+    		</select>
+    		
+    		<insert id="saveCheckForm" useGeneratedKeys="true" keyProperty="checkFormID" parameterType="com.ivo.model.equipment.CheckForm">  
+    			insert into ProperRate_M_CheckForm
+    			(checkFormID, trackingNumber, equipmentGroup_fk, class_fk, year, month, day, properRate)  
+    			values
+    			(#{checkFormID}, #{trackingNumber}, #{equipmentGroup_fk}, #{class_fk}, #{year}, #{month}, #{day}, #{properRate})   
+		</insert>
+		
+		<update id="updateCheckForm" parameterType="com.ivo.model.equipment.CheckForm">  
+	        	update ProperRate_M_CheckForm  
+	        set  properRate=#{properRate}
+	        where checkFormID = #{checkFormID};     
+		</update>
+		
+		<select id="getCheckFormMonth" resultMap="checkFormMap" >
+      		select m.checkFormID, m.trackingNumber, m.equipmentGroup_fk, m.class_fk, m.year, m.month, m.day, m.properRate
+       		from ProperRate_M_CheckForm m
+			where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER} and equipmentGroup_fk=#{equipmentGroup, jdbcType=INTEGER}
+    		</select>
+    </mapper>

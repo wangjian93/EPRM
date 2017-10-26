@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+    <mapper namespace="com.ivo.dao.hr.IDepartmentDao" >    
+        <resultMap id="department" type="com.ivo.model.hr.Department">  
+            <result column="department_ID" property="department_ID" jdbcType="VARCHAR" />  
+            <result column="deptName" property="deptName" jdbcType="VARCHAR" />  
+            <result column="parent_FK" property="parent_FK" jdbcType="VARCHAR" />  
+            <result column="srcDept_FK" property="srcDept_FK" jdbcType="VARCHAR" />  
+            <result column="sucDept_FK" property="sucDept_FK" jdbcType="VARCHAR" />
+            <result column="deptHead_FK" property="deptHead_FK" jdbcType="VARCHAR" />
+            <result column="deptName_EN" property="deptName_EN" jdbcType="VARCHAR" />
+            <result column="deptName_S" property="deptName_S" jdbcType="VARCHAR" />
+            <result column="deptLevel" property="deptLevel" jdbcType="INTEGER" />
+            <result column="deptPath" property="deptPath" jdbcType="VARCHAR" />
+            <result column="costCenter_FK" property="costCenter_FK" jdbcType="VARCHAR" />
+            <result column="transparentFlag" property="transparentFlag" jdbcType="INTEGER" />
+            <result column="collapseFlag" property="collapseFlag" jdbcType="INTEGER" />
+        </resultMap>  
+      
+        <sql id="department_Column_List">  
+            department_ID, deptName, parent_FK, srcDept_FK, sucDept_FK, deptHead_FK, deptName_EN, 
+            deptName_S, deptLevel,  deptPath, costCenter_FK, transparentFlag, collapseFlag
+       </sql>  
+      
+        <!-- 查询用户-->  
+        <select id="getByID" resultMap="department"  
+            parameterType="java.lang.String">  
+            select  
+            <include refid="department_Column_List" />  
+            from HR_O_Department 
+            where department_ID = #{id,jdbcType=VARCHAR}  
+        </select>  
+        
+        <!-- 查询用户-->  
+        <select id="getByEmployee" resultMap="department"  
+            parameterType="com.ivo.model.hr.Employee">  
+            select  
+            <include refid="department_Column_List" />  
+            from HR_O_Department 
+            where department_ID = #{department_FK,jdbcType=VARCHAR}  
+        </select>
+    </mapper>  

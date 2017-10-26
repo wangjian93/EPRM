@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mubatis.org/dtd/mybatis-3-mapper.dtd" >
+	<mapper namespace="com.ivo.dao.abnormalRecord.IAbnormalDao">
+		<resultMap id="abnormalMap" type="com.ivo.model.abnormalRecord.Abnormal">
+			<id column="id" property="id" jdbcType="INTEGER" />  
+        		<result column="year" property="year" jdbcType="INTEGER" />
+        		<result column="month" property="month" jdbcType="INTEGER" />
+        		<result column="day" property="day" jdbcType="INTEGER" />
+			<result column="equipmentGroup_fk" property="equipmentGroup_fk" jdbcType="INTEGER" />
+			<result column="equipmentID_fk" property="equipmentID_fk" jdbcType="INTEGER" />
+			<result column="dates" property="dates" jdbcType="VARCHAR" />
+			<result column="sipecification" property="sipecification" jdbcType="VARCHAR" />
+			<result column="solutions" property="solutions" jdbcType="VARCHAR" />
+			<result column="expectedTime" property="expectedTime" jdbcType="VARCHAR" />
+			<result column="actualTime" property="actualTime" jdbcType="VARCHAR" />
+			<result column="ifCompleted" property="ifCompleted" jdbcType="VARCHAR" />
+			<result column="memo" property="memo" jdbcType="VARCHAR" />
+		</resultMap>
+		
+		<select id="getAbnormalMonth" resultMap="abnormalMap">
+			select *, (select DISTINCT equipmentName from properrate_o_equipment o where o.equipmentID=t.equipmentID_FK) AS equipmentName
+    			from (
+    			select * from ProperRate_M_AbnormalRecord 
+    			where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER} and equipmentGroup_fk=#{equipmentGroup, jdbcType=INTEGER}
+    			)t
+		</select>
+		
+		<select id="getAbnormalDay" resultMap="abnormalMap">
+			select *, (select DISTINCT equipmentName from properrate_o_equipment o where o.equipmentID=t.equipmentID_FK) AS equipmentName
+    			from (
+    			select * from ProperRate_M_AbnormalRecord 
+    			where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER} and day=#{day, jdbcType=INTEGER} and equipmentGroup_fk=#{equipmentGroup, jdbcType=INTEGER}
+    			)t
+		</select>
+		
+		<select id="getAbnormalEquipmentMonth" resultMap="abnormalMap">
+			select *, (select DISTINCT equipmentName from properrate_o_equipment o where o.equipmentID=t.equipmentID_FK) AS equipmentName
+    			from (
+    			select * from ProperRate_M_AbnormalRecord 
+    			where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER} and equipmentID_fk=#{equipmentID, jdbcType=INTEGER}
+    			)t
+		</select>
+		
+		<select id="getAbnormalEquipmentDay" resultMap="abnormalMap">
+			select *, (select DISTINCT equipmentName from properrate_o_equipment o where o.equipmentID=t.equipmentID_FK) AS equipmentName
+    			from (
+    			select * from ProperRate_M_AbnormalRecord 
+    			where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER} and day=#{day, jdbcType=INTEGER} and equipmentID_fk=#{equipmentID, jdbcType=INTEGER}
+    			)t
+		</select>
+		
+		<insert id="saveAbnormal" parameterType="com.ivo.model.abnormalRecord.Abnormal">  
+   			insert into ProperRate_M_AbnormalRecord
+    			(year, month, day, equipmentGroup_fk, equipmentID_fk, checkForm_fk,
+    			dates, sipecification, solutions, expectedTime, actualTime, ifCompleted, memo)  
+    			values  
+    			(#{year, jdbcType=INTEGER}, #{month, jdbcType=INTEGER}, #{day, jdbcType=INTEGER}, #{equipmentGroup_fk, jdbcType=INTEGER}, #{equipmentID_fk, jdbcType=INTEGER}, #{checkForm_fk, jdbcType=VARCHAR},
+    			#{dates, jdbcType=VARCHAR}, #{sipecification, jdbcType=VARCHAR}, #{solutions, jdbcType=VARCHAR}, #{expectedTime, jdbcType=VARCHAR}, 
+    			#{actualTime, jdbcType=VARCHAR}, #{ifCompleted, jdbcType=VARCHAR}, #{memo, jdbcType=VARCHAR}) 
+		</insert>
+	</mapper>

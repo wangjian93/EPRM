@@ -22,7 +22,7 @@ import com.ivo.util.HttpRequest;
 /**
  *@author wangjian
  *@time 2017年8月29日 - 下午2:58:08
- *@description:
+ *@description:登录
  */
 @Controller  
 public class LoginController {

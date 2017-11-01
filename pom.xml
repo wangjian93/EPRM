@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.chillax</groupId>
-  <artifactId>Maven_Project</artifactId>
+  <groupId>com.ivo</groupId>
+  <artifactId>EPRM</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Maven_Project Maven Webapp</name>
+  <name>EPRM</name>
   <url>http://maven.apache.org</url>
   
   <!-- 用来设置版本号 -->  
@@ -222,7 +222,7 @@
   </dependencies>
   
   <build>  
-    <finalName>Maven_Project</finalName>  
+    <finalName>EPRM</finalName>  
     <plugins>  
       <plugin>  
         <groupId>org.apache.maven.plugins</groupId>  

@@ -54,4 +54,9 @@ public class SpecServiceImpl implements ISpecService{
 		specDao.updateSpec(spec);
 	}
 
+	@Override
+	public Spec getSpecByEquipmentGroup(int year, int month, int equipmentGroup) {
+		return specDao.getSpecByEquipmentGroup(year, month, equipmentGroup);
+	}
+
 }

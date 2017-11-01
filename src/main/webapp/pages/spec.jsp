@@ -128,6 +128,44 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <!-- END CONTAINER -->
         <!-- BEGIN FOOTER -->
         <jsp:include page="common/footer.jsp"/>
-        <!-- END FOOTER -->  
+        <!-- END FOOTER -->
+        
+        <!-- 模态框 -->  
+        <div id="updateSpec" class="modal fade" tabindex="-1" data-width="460">
+        	<div class="modal-header">
+        		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+              	<h4 class="modal-title">设置SPEC</h4>
+            </div>
+            <div class="modal-body">
+            	<form class="form-horizontal" role="form">
+               		<div class="form-body">
+                    	<div class="form-group">
+                        	<label class="col-md-3 control-label">所属课别：</label>
+                            	<div class="col-md-5">
+									<input class="form-control input-sm" type="text" name="depClassName" placeholder="输入设备编号" readonly>
+									<input name="depClassID" type="text" value="" hidden/>						
+                                </div>
+                    	</div>
+                        <div class="form-group">
+                        	<label class="col-md-3 control-label">所属系统：</label>
+                        	<div class="col-md-5">
+								<input class="form-control input-sm" type="text" name="equipmentGroupName" placeholder="输入设备编号" readonly>						
+                        		<input name="equipmentGroupID" type="text" value="" hidden/>
+                        	</div>
+                        </div>
+                        <div class="form-group">
+                           	<label class="col-md-3 control-label">SPEC值：</label>
+                            <div class="col-md-5">
+								<input class="form-control input-sm" type="text" name="spec" placeholder="输入Spec值">						
+                        	</div>
+                        </div>
+        			</div>
+     			</form>
+   			</div>
+          	<div class="modal-footer">
+  				<button type="button" data-dismiss="modal" class="btn btn-outline dark">取消</button>
+   				<button type="button" class="btn green" onclick="updateSpec()">提交</button>
+       		</div>
+    	</div>
     </body>
 </html>

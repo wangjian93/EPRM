@@ -1,4 +1,4 @@
- <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>  
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>  
 <%  
 String path = request.getContextPath();  
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";  
@@ -108,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						                                                <i class="fa fa-cogs"></i>Responsive Flip Scroll Tables 
 						                                            </div>
 						                                            <div class="actions">
-                                        <a class="btn btn-circle btn-default btn-sm" data-toggle="modal" href="#responsive" >
+                                        <a class="btn btn-circle btn-default btn-sm" href="javascript:;" onclick="showModal()" >
                                             <i class="fa fa-plus"></i> 设备添加 </a>
                                         <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"></a>
                                     </div>
@@ -152,6 +152,44 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <!-- END CONTAINER -->
         <!-- BEGIN FOOTER -->
         <jsp:include page="common/footer.jsp"/>
-        <!-- END FOOTER -->  
+        <!-- END FOOTER -->
+        
+        <!-- 模态框 -->
+                                    <div id="responsive" class="modal fade" tabindex="-1" data-width="460">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                            <h4 class="modal-title">添加设备</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="form-horizontal" role="form">
+                                            		<div class="form-body">
+                                            			<div class="form-group">
+                                                			<label class="col-md-3 control-label">所属课别：</label>
+                                                			<div class="col-md-5">
+																<input class="form-control input-sm" type="text" name="depClassName" placeholder="输入设备编号" readonly>
+																<input name="depClassID" type="text" value="" hidden/>						
+                                                			</div>
+                                            			</div>
+                                            			<div class="form-group">
+                                                			<label class="col-md-3 control-label">所属系统：</label>
+                                                			<div class="col-md-5">
+																<input class="form-control input-sm" type="text" name="equipmentGroupName" placeholder="输入设备编号" readonly>						
+                                                				<input name="equipmentGroupID" type="text" value="" hidden/>
+                                                			</div>
+                                            			</div>
+                                           				<div class="form-group">
+                                                			<label class="col-md-3 control-label">设备编号：</label>
+                                                			<div class="col-md-5">
+																<input class="form-control input-sm" type="text" name="equipmentName" placeholder="输入设备编号">						
+                                                			</div>
+                                            			</div>
+                                            		</div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" data-dismiss="modal" class="btn btn-outline dark">取消</button>
+                                            <button type="button" class="btn green" onclick="addEquipment()">保存</button>
+                                        </div>
+                                    </div>  
     </body>
 </html>

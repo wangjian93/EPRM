@@ -26,7 +26,8 @@ public class CreateCurrentCheckForm {
 	}
 
 	public void execute() {
-		checkService.createCurrentCheck();
+		//checkService.createCurrentCheck();
+		System.out.println("定时器");
 	}
 	
 	 

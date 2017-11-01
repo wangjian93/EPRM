@@ -75,6 +75,7 @@ function submitAbnormal(){
 		success:function(data){
 			if(data.success=="true"){
 				alert("提交成功");
+				$("#responsive").modal('hide');
 				var year = $("input[name='year']").val();
 				var month = $("input[name='month']").val();
 				var equipmentGroup = $("input[name='equipmentGroup']").val();

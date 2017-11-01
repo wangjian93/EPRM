@@ -14,6 +14,7 @@ import com.ivo.model.equipment.Spec;
 public interface ISpecDao {
 	public List<Spec> getAllSpec();
 	public List<Spec> getSpecByMonth(@Param("year")int year, @Param("month")int month);
+	public Spec getSpecByEquipmentGroup(@Param("year")int year, @Param("month")int month, @Param("equipmentGroup")int equipmentGroup);
  	public Spec getSpec(int specID);
 	public void saveSpec(Spec spec);
 	public void updateSpec(Spec spec);

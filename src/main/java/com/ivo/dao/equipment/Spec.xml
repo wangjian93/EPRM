@@ -11,7 +11,7 @@
         </resultMap>  
       
         <sql id="spec_Column_List">  
-            year, month, equipmentGroup, spec,depClassID
+           id, year, month, equipmentGroup, spec,depClassID
        </sql>  
         
         <select id="getSpec" resultMap="spec" parameterType="java.lang.Integer">  
@@ -32,6 +32,19 @@
             		where year = #{year,jdbcType=INTEGER} and month = #{month,jdbcType=INTEGER} 
         		)t order by depClassID,equipmentGroup desc 
         </select>  
+          
+        <select id="getSpecByEquipmentGroup" resultMap="spec" parameterType="java.lang.Integer">  
+            select * ,
+            		(select DISTINCT className from properrate_o_class p where p.classID=t.depClassID) AS depClassName,
+            		(select DISTINCT equipmentGroupName from properrate_o_equipmentGroup o where o.equipmentGroupID=t.equipmentGroup) AS equipmentGroupName
+            
+            from (select  
+            		<include refid="spec_Column_List" />  
+            		from properrate_o_spec 
+            		where year = #{year,jdbcType=INTEGER} and month = #{month,jdbcType=INTEGER}
+            			and equipmentGroup = #{equipmentGroup,jdbcType=INTEGER}
+        		)t
+        </select>
           
         <select id="getAllSpec" resultMap="spec">  
             select  

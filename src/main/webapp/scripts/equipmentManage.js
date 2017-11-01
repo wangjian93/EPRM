@@ -1,4 +1,4 @@
-var equipmentGroupID;
+var equipmentGroupID="";
 function getEquipment(equipmentGroupID,depClassID,equipmentID){
 	$.ajax({
 	    url:'getEquipment.do',
@@ -135,7 +135,8 @@ function customDblClickFun(){
     //节点取消选中时触发
     $('#tree').on('nodeUnselected', function(event, data) {
         //clickNode(event, data);
-    		setEquipmentTable("0","","","");
+    	equipmentGroupID = "";
+    	setEquipmentTable("0","","","");
     });
 }
 
@@ -155,6 +156,54 @@ function deleteEquipment(e){
 	    },
 	    error:function(data){
 	    		alert("设备获取失败，未能与服务器连接");
+	    }
+	});
+}
+
+function showModal(){
+	if(equipmentGroupID!=""){
+		$.ajax({
+		    url:'getEquipmentGroupAndDepClass.do',
+		    type:'POST',
+		    data:{
+		    		"equipmentGroupID" : equipmentGroupID
+		    },
+		    dataType:'JSON',
+		    success:function(data){
+		    		$("input[name='equipmentGroupID']").val(data.equipmentGroupID);
+		    		$("input[name='equipmentGroupName']").val(data.equipmentGroupName);
+		    		$("input[name='depClassID']").val(data.depClassID);
+		    		$("input[name='depClassName']").val(data.depClassName);
+		    		$("input[name='equipmentName']").val("");
+		    		$("#responsive").modal('show');
+		    },
+		    error:function(data){
+		    		alert("设备获取失败，未能与服务器连接");
+		    }
+		});
+		
+	}else{
+		alert("请先选择要添加设备所属课别和所属设备系统");
+	}
+}
+
+function addEquipment(){
+	$("#responsive").modal('hide');
+	$.ajax({
+	    url:'addEquipment.do',
+	    type:'POST',
+	    data:{
+	    		"equipmentGroupID" : $("input[name='equipmentGroupID']").val(),
+	    		"depClassID" : $("input[name='depClassID']").val(),
+	    		"equipmentName" : $("input[name='equipmentName']").val()
+	    },
+	    dataType:'JSON',
+	    success:function(data){
+	    	alert("设备添加成功");
+	    	setEquipmentTable(equipmentGroupID,"","","");
+	    },
+	    error:function(data){
+	    		alert("设备添加失败，未能与服务器连接");
 	    }
 	});
 }

@@ -15,6 +15,7 @@ import com.ivo.model.equipment.Spec;
 public interface ISpecService{
 	public List<Spec> getAllSpec();
 	public List<Spec> getSpecByMonth(int year, int month);
+	public Spec getSpecByEquipmentGroup(int year, int month, int equipmentGroup);
  	public Spec getSpec(int specID);
 	public void saveSpec(Spec spec);
 	public void updateSpec(Spec spec);

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.ivo.model.equipment.Spec;
 import com.ivo.service.ISpecService;
 import com.ivo.util.CurrentUtil;
@@ -43,7 +44,17 @@ public class SpecController {
 	}
 	
 	@RequestMapping("updateSpec.do")
-	public void updateSpec(HttpServletRequest request, HttpServletResponse response){
-		
+	public void updateSpec(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String equipmentGroupID = request.getParameter("equipmentGroupID");
+		String depClassID = request.getParameter("depClassID");
+		String specValue = request.getParameter("spec");
+		int year = CurrentUtil.CurrentYear();
+		int month = CurrentUtil.CurrentMonth();
+		Spec spec = specService.getSpecByEquipmentGroup(year, month, Integer.parseInt(equipmentGroupID));
+		spec.setSpec(Float.parseFloat(specValue));
+		specService.updateSpec(spec);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("sueccess", true);
+		response.getWriter().print(jsonObject.toJSONString());
 	}
 }

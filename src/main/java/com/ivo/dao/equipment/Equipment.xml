@@ -4,7 +4,7 @@
         <resultMap id="equipment" type="com.ivo.model.equipment.Equipment">  
             <result column="equipmentID" property="equipmentID" jdbcType="INTEGER" />  
             <result column="equipmentName" property="equipmentName" jdbcType="VARCHAR" />  
-            <result column="equipment_fk" property="equipment_fk" jdbcType="INTEGER" />  
+            <result column="equipmentGroup_fk" property="equipmentGroup_fk" jdbcType="INTEGER" />  
         		
         		<result column="validFlag" property="validFlag" jdbcType="INTEGER" />
         		<result column="creater" property="creater" jdbcType="VARCHAR" />
@@ -52,9 +52,9 @@
         
         <insert id="saveEquipment" parameterType="com.ivo.model.equipment.Equipment">  
    			insert into properrate_o_equipment
-    			(equipmentName, equipment_fk, validFlag, creater, dateOfCreate)  
+    			(equipmentName, equipmentGroup_fk, validFlag, creater, dateOfCreate)  
     			values  
-    			( #{equipmentName}, #{equipment_fk}, 1, #{creater}, #{dateOfCreate})
+    			( #{equipmentName}, #{equipmentGroup_fk}, 1, #{creater}, #{dateOfCreate})
 		</insert>
 		
 		<update id="updateEquipment" parameterType="com.ivo.model.equipment.Equipment">  

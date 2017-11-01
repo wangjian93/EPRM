@@ -141,12 +141,30 @@ public class EquipmentManageController {
 	
 	@RequestMapping("/addEquipment.do")
 	public void addEquipment(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String equipmentID = request.getParameter("equipmentID");
-		Equipment equipment = equipmentManageService.getEquipment(Integer.parseInt(equipmentID));
-		if(equipment!=null)
-		equipmentManageService.deleteEquipment(equipment);
+		String equipmentGroupID = request.getParameter("equipmentGroupID");
+		String depClassID = request.getParameter("depClassID");
+		String equipmentName = request.getParameter("equipmentName");
+		Equipment equipment = new Equipment();
+		equipment.setEquipmentGroup_fk(Integer.parseInt(equipmentGroupID));
+		equipment.setEquipmentName(equipmentName);
+		equipment.setValidFlag(1);
+		equipmentManageService.saveEquipment(equipment);
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("sueccess", true);
+		response.getWriter().print(jsonObject.toJSONString());
+	}
+	
+	@RequestMapping("/getEquipmentGroupAndDepClass.do")
+	public void getEquipmentGroupAndDepClass(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String equipmentGroupID = request.getParameter("equipmentGroupID");
+		EquipmentGroup equipmentGroup = equipmentManageService.getEquipmentGroup(Integer.parseInt(equipmentGroupID));
+		DepOfClass depClass = equipmentManageService.getDepClass(equipmentGroup.getClass_fk());
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("equipmentGroupID", equipmentGroup.getEquipmentGroupID());
+		jsonObject.put("equipmentGroupName", equipmentGroup.getEquipmentGroupName());
+		jsonObject.put("depClassID", depClass.getClassID());
+		jsonObject.put("depClassName", depClass.getClassName());
 		response.getWriter().print(jsonObject.toJSONString());
 	}
 }

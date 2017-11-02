@@ -16,7 +16,7 @@
 
 	<!-- 要调用的工作类 -->  
           
-         <bean id="exampleBusinessObject" class="com.ivo.quartz.CreateCurrentCheckForm" />  
+    <bean id="exampleBusinessObject" class="com.ivo.quartz.CreateCurrentCheckForm" />  
     <bean id="jobDetail"  
         class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
         <property name="targetObject" ref="exampleBusinessObject" />  
@@ -27,14 +27,28 @@
         class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
         <!-- see the example of method invoking job above -->  
         <property name="jobDetail" ref="jobDetail" />  
-        <property name="cronExpression" value="0 07 * * * ?" />
+        <property name="cronExpression" value="0 28 0 * * ?" />
+    </bean> 
+    
+    <bean id="specQuartzObject" class="com.ivo.quartz.CreateMonthSpec" />  
+    <bean id="specQuartzDetail"  
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject" ref="specQuartzObject" />  
+        <property name="targetMethod" value="execute" />  
+        <property name="concurrent" value="false" />  
     </bean>  
+    <bean id="specQuartzTrigger"  
+        class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <!-- see the example of method invoking job above -->  
+        <property name="jobDetail" ref="specQuartzDetail" />  
+        <property name="cronExpression" value="0 30 0 1 * ?" />
+    </bean> 
   
     <!-- 总调度用于启动Spring定时器 -->  
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
         <property name="triggers">  
             <list>  
-                  
+                <ref bean="specQuartzTrigger" />
                 <ref bean="simpleTrigger" />  
             </list>  
         </property>  

@@ -15,27 +15,45 @@
         <property name="location" value="classpath:jdbc.properties" />  
     </bean>  
       
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">  
+    <!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">  
         <property name="driverClassName" value="${driver}" />  
         <property name="url" value="${url}" />  
         <property name="username" value="${username}" />  
         <property name="password" value="${password}" />  
-        <!-- 初始化连接大小 -->  
+        初始化连接大小  
         <property name="initialSize" value="${initialSize}"></property>  
-        <!-- 连接池最大数量 -->  
+        连接池最大数量  
         <property name="maxActive" value="${maxActive}"></property>  
-        <!-- 连接池最大空闲 -->  
+        连接池最大空闲  
         <property name="maxIdle" value="${maxIdle}"></property>  
-        <!-- 连接池最小空闲 -->  
+        连接池最小空闲  
         <property name="minIdle" value="${minIdle}"></property>  
-        <!-- 获取连接最大等待时间 -->  
+        获取连接最大等待时间  
         <property name="maxWait" value="${maxWait}"></property>  
         
-         <!-- 是否在自动回收超时连接的时候打印连接的超时错误 -->
+         是否在自动回收超时连接的时候打印连接的超时错误
 		<property name="logAbandoned" value="true"></property>
-		<!-- 是否自动回收超时连接 -->
+		是否自动回收超时连接
 		<property name="removeAbandoned" value="true"></property>
 		
+    </bean> -->
+    
+    <!-- 使用c3p0数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${driver}"/>
+        <property name="jdbcUrl" value="${url}"/>
+        <property name="user" value="${username}"/>
+        <property name="password" value="${password}"/>
+        <property name="acquireIncrement" value="${c3p0.acquireIncrement}"/>
+        <property name="initialPoolSize" value="${c3p0.initialPoolSize}"/>
+        <property name="minPoolSize" value="${c3p0.minPoolSize}"/>
+        <property name="maxPoolSize" value="${c3p0.maxPoolSize}"/>
+        <property name="maxIdleTime" value="${c3p0.maxIdleTime}"/>
+        <property name="idleConnectionTestPeriod" value="${c3p0.idleConnectionTestPeriod}"/>
+        <property name="maxStatements" value="${c3p0.maxStatements}"/>
+        <property name="numHelperThreads" value="${c3p0.numHelperThreads}"/>
+        <!-- <property name="preferredTestQuery" value="${c3p0.preferredTestQuery}"/> -->
+        <property name="testConnectionOnCheckout" value="${c3p0.testConnectionOnCheckout}"/>
     </bean>
     
     <!-- <bean id="dataSourceMyivo" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">  

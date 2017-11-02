@@ -1,8 +1,61 @@
 $(function(){
 	menuInit();
 	setDate();
+	initDate();
 	initTabbableLine();
 });
+
+function initDate(){
+	$('#datetimepicker1').datetimepicker({  
+		minView: "month", //选择日期后，不会再跳转去选择时分秒 
+	    language:  'zh-CN',
+	    format: 'yyyy-mm-dd',
+	    todayBtn:  1,
+	    autoclose: 1,
+        pickerPosition: "bottom-left"
+    }); 
+	$('#datetimepicker2').datetimepicker({  
+		minView: "month", //选择日期后，不会再跳转去选择时分秒 
+	    language:  'zh-CN',
+	    format: 'yyyy-mm-dd',
+	    todayBtn:  1,
+	    autoclose: 1,
+        pickerPosition: "bottom-left"
+    });
+	$('#datetimepicker3').datetimepicker({  
+		minView: "month", //选择日期后，不会再跳转去选择时分秒 
+	    language:  'zh-CN',
+	    format: 'yyyy-mm-dd',
+	    todayBtn:  1,
+	    autoclose: 1,
+        pickerPosition: "bottom-left"
+    });
+	$('#datetimepicker4').datetimepicker({  
+		minView: "month", //选择日期后，不会再跳转去选择时分秒 
+	    language:  'zh-CN',
+	    format: 'yyyy-mm-dd',
+	    todayBtn:  1,
+	    autoclose: 1,
+        pickerPosition: "bottom-left"
+    });
+	$('#datetimepicker5').datetimepicker({  
+		minView: "month", //选择日期后，不会再跳转去选择时分秒 
+	    language:  'zh-CN',
+	    format: 'yyyy-mm-dd',
+	    todayBtn:  1,
+	    autoclose: 1,
+        pickerPosition: "bottom-left"
+    });
+	$('#datetimepicker6').datetimepicker({  
+		minView: "month", //选择日期后，不会再跳转去选择时分秒 
+	    language:  'zh-CN',
+	    format: 'yyyy-mm-dd',
+	    todayBtn:  1,
+	    autoclose: 1,
+        pickerPosition: "bottom-left"
+    });
+}
+
 //charts图使用
 jQuery(document).ready(function() {    
     ChartsFlotcharts.init();
@@ -145,6 +198,9 @@ function selectTabbableLine(element){
 	var year = $("#year").val();
 	var month = $("#month").val();
 	$("#month2").html(month);
+	$("input[name='equipmentGroup']").val(equipmentGroup);
+	$("input[name='year']").val(year);
+	$("input[name='month']").val(month);
 	getCheckDataDetail(year, month, equipmentGroup);
 	loadAbnormalTable(year,month,'',equipmentGroup,'');
 }

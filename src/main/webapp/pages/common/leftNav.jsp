@@ -26,7 +26,7 @@
                             </a>
                         </li>
                         <li class="heading " id="now">
-                            <h3 class="uppercase">今日设备妥善率</h3>
+                            <h3 class="uppercase">昨日设备妥善率状况</h3>
                         </li>
                         <li class="heading " id="history">
                             <h3 class="uppercase">历史数据记录</h3>

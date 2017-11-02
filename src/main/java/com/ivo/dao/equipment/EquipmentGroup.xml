@@ -29,7 +29,7 @@
             select  
             <include refid="equipmentGroup_Column_List" />  
             from properrate_o_equipmentGroup 
-            AND validFlag=1 
+            where validFlag=1 
         </select>
         
         <select id="getByName" resultMap="equipmentGroup"  

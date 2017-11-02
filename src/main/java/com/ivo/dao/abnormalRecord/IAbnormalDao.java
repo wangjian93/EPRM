@@ -12,9 +12,11 @@ import com.ivo.model.abnormalRecord.Abnormal;
  *@description:
  */
 public interface IAbnormalDao {
+	public Abnormal getAbnotmalByID(@Param("abnormalID")int abnormalID);
 	public List<Abnormal> getAbnormalMonth(@Param("year")int year, @Param("month")int month, @Param("equipmentGroup")int equipmentGroup);
 	public List<Abnormal> getAbnormalDay(@Param("year")int year, @Param("month")int month, @Param("day")int day, @Param("equipmentGroup")int equipmentGroup);
 	public List<Abnormal> getAbnormalEquipmentMonth(@Param("year")int year, @Param("month")int month, @Param("equipmentID")int equipmentID);
 	public List<Abnormal> getAbnormalEquipmentDay(@Param("year")int year,  @Param("month")int month, @Param("day")int day, @Param("equipmentID")int equipmentID);
 	public void saveAbnormal(Abnormal abnormla);
+	public void updateAbnormal(Abnormal abnormla);
 }

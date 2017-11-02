@@ -26,14 +26,8 @@ public class CreateCurrentCheckForm {
 	}
 
 	public void execute() {
-		//checkService.createCurrentCheck();
-		System.out.println("定时器");
+		System.out.println("开始定时器");
+		checkService.createCurrentCheck();
+		System.out.println("结束定时器");
 	}
-	
-	 
-	    
-	    public void doIt(){  
-	    	logger.info("-----定时任务执行-----");  
-	          
-	    }
 }

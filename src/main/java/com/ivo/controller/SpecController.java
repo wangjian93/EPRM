@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.ivo.dao.equipment.IEquipmentGroupDao;
+import com.ivo.model.equipment.EquipmentGroup;
 import com.ivo.model.equipment.Spec;
 import com.ivo.service.ISpecService;
 import com.ivo.util.CurrentUtil;
@@ -26,6 +28,8 @@ import com.ivo.util.CurrentUtil;
 public class SpecController {
 	@Resource
 	private ISpecService specService;
+	@Resource
+	private IEquipmentGroupDao equipmentGroupDao;
 	
 	@RequestMapping("/specView.do")
 	public ModelAndView specView(HttpServletRequest request, HttpServletResponse response){
@@ -56,5 +60,15 @@ public class SpecController {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("sueccess", true);
 		response.getWriter().print(jsonObject.toJSONString());
+	}
+	
+	@RequestMapping("createCurrentMonthSpec.do")
+	public void createCurrentMonthSpec(){
+		specService.createCurrentMonthSpec();
+	}
+	
+	@RequestMapping("updateCurrentMonthSpec.do")
+	public void updateCurrentMonthSpec(){
+		specService.updateCurrentMonthSpec();
 	}
 }

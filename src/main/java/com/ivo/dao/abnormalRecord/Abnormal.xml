@@ -17,6 +17,14 @@
 			<result column="memo" property="memo" jdbcType="VARCHAR" />
 		</resultMap>
 		
+		<select id="getAbnotmalByID" resultMap="abnormalMap">
+			select *, (select DISTINCT equipmentName from properrate_o_equipment o where o.equipmentID=t.equipmentID_FK) AS equipmentName
+    			from (
+    			select * from ProperRate_M_AbnormalRecord 
+    			where id=#{abnormalID, jdbcType=INTEGER} 
+    			)t
+		</select>
+		
 		<select id="getAbnormalMonth" resultMap="abnormalMap">
 			select *, (select DISTINCT equipmentName from properrate_o_equipment o where o.equipmentID=t.equipmentID_FK) AS equipmentName
     			from (
@@ -58,4 +66,14 @@
     			#{dates, jdbcType=VARCHAR}, #{sipecification, jdbcType=VARCHAR}, #{solutions, jdbcType=VARCHAR}, #{expectedTime, jdbcType=VARCHAR}, 
     			#{actualTime, jdbcType=VARCHAR}, #{ifCompleted, jdbcType=VARCHAR}, #{memo, jdbcType=VARCHAR}) 
 		</insert>
+		
+		<update id="updateAbnormal" parameterType="com.ivo.model.abnormalRecord.Abnormal">  
+	        	update ProperRate_M_AbnormalRecord  
+	        set  equipmentID_fk=#{equipmentID_fk} , dates=#{dates} , sipecification=#{sipecification} , solutions=#{solutions}
+	        		, expectedTime=#{expectedTime} , actualTime=#{actualTime}
+	        		, ifCompleted=#{ifCompleted} , memo=#{memo}
+	        where id = #{id};
+		</update>
+		
+		
 	</mapper>

@@ -40,9 +40,7 @@ public class LoginController {
 		logger.info("Log --> :login.do 开始登陆用户"+username);
 		Employee employee = null;
 		try{
-			System.out.println("1111");
 			employee = employeeService.getEmployee(username);
-			System.out.println("2222");
 		}catch(Exception e){
 			//防止客户端一段时间不访问,第一次访问数据库自动断开连接,刷新可以正常连接
 			//再向数据库发送请求
@@ -56,10 +54,8 @@ public class LoginController {
 			logger.info("Log --> :登录失败..");
 			return mv;
 		}else{
-			System.out.println("3333");
 			String param = "eid="+username+"&password="+password;
 //			String result = HttpRequest.sendPost("http://myivo.ivo.com.cn/org/org/verify", param);
-			System.out.println("4444");
 			String result = "true";
 			if(result.equals("false")){
 				ModelAndView mv = new ModelAndView("login");

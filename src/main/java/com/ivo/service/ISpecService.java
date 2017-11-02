@@ -19,4 +19,6 @@ public interface ISpecService{
  	public Spec getSpec(int specID);
 	public void saveSpec(Spec spec);
 	public void updateSpec(Spec spec);
+	public void createCurrentMonthSpec();
+	public void updateCurrentMonthSpec();
 }

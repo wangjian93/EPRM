@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.ivo.dao.abnormalRecord.IAbnormalDao;
 import com.ivo.model.abnormalRecord.Abnormal;
 import com.ivo.model.equipment.CheckForm;
@@ -44,6 +45,15 @@ public class AbnormalController {
 			jsonArray.addAll(list);
 			response.getWriter().print(jsonArray.toString());
 		}
+	}
+	
+	@RequestMapping("/getAbnormalByID.do")
+	public void getAbnormalByID(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		int abnormalID = Integer.parseInt(request.getParameter("abnormalID"));
+		Abnormal abnormal = abnormalDao.getAbnotmalByID(abnormalID);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("abnormal", abnormal);
+		response.getWriter().print(jsonObject.toJSONString());
 	}
 	
 	@RequestMapping("/getAbnormalData.do")
@@ -95,7 +105,6 @@ public class AbnormalController {
 	
 	@RequestMapping("/submitAbnormal.do")
 	public void submitAbnormal(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		System.out.println("ddd");
 		String trackingNumber = request.getParameter("trackingNumber");
 		String dates = request.getParameter("dates");
 		String sipecification = request.getParameter("sipecification");
@@ -122,5 +131,31 @@ public class AbnormalController {
 		abnormal.setMemo(memo);
 		abnormalDao.saveAbnormal(abnormal);
 		response.getWriter().print("{\"success\":\"true\"}");
+	}
+	
+	@RequestMapping("/modifyAbnormal.do")
+	public void modifyAbnormal(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String abnormalID = request.getParameter("abnormalID");
+		String dates = request.getParameter("dates");
+		String sipecification = request.getParameter("sipecification");
+		String solutions = request.getParameter("solutions");
+		String expectedTime = request.getParameter("expectedTime");
+		String actualTime = request.getParameter("actualTime");
+		String ifCompleted = request.getParameter("ifCompleted");
+		String memo = request.getParameter("memo");
+		String equipmentID = request.getParameter("equipmentID");
+		
+		Abnormal abnormal = abnormalDao.getAbnotmalByID(Integer.parseInt(abnormalID));
+		abnormal.setDates(dates);
+		abnormal.setSipecification(sipecification);
+		abnormal.setSolutions(solutions);
+		abnormal.setExpectedTime(expectedTime);
+		abnormal.setActualTime(actualTime);		
+		abnormal.setIfCompleted(ifCompleted);
+		abnormal.setMemo(memo);
+		abnormal.setEquipmentID_fk(Integer.parseInt(equipmentID));
+		abnormalDao.updateAbnormal(abnormal);
+		response.getWriter().print("{\"success\":\"true\"}");
+
 	}
 }

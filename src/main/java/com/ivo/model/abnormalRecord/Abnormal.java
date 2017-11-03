@@ -2,12 +2,14 @@ package com.ivo.model.abnormalRecord;
 
 import java.util.Date;
 
+import com.ivo.core.Model;
+
 /**
  *@author wangjian
  *@time 2017年9月14日 - 上午9:05:19
  *@description:设备异常记录
  */
-public class Abnormal {
+public class Abnormal extends Model {
 	private long id;
 	private int year;
 	private int month;

@@ -37,6 +37,23 @@
 		<property name="removeAbandoned" value="true"></property>
 		
     </bean> -->
+       
+    <!-- <bean id="dataSourceMyivo" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">  
+        <property name="driverClassName" value="${driver2}" />  
+        <property name="url" value="${url2}" />  
+        <property name="username" value="${username2}" />  
+        <property name="password" value="${password2}" />  
+        初始化连接大小  
+        <property name="initialSize" value="${initialSize2}"></property>  
+        连接池最大数量  
+        <property name="maxActive" value="${maxActive2}"></property>  
+        连接池最大空闲  
+        <property name="maxIdle" value="${maxIdle2}"></property>  
+        连接池最小空闲  
+        <property name="minIdle" value="${minIdle2}"></property>  
+        获取连接最大等待时间  
+        <property name="maxWait" value="${maxWait2}"></property>  
+    </bean> -->
     
     <!-- 使用c3p0数据源 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
@@ -56,22 +73,23 @@
         <property name="testConnectionOnCheckout" value="${c3p0.testConnectionOnCheckout}"/>
     </bean>
     
-    <!-- <bean id="dataSourceMyivo" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">  
-        <property name="driverClassName" value="${driver2}" />  
-        <property name="url" value="${url2}" />  
-        <property name="username" value="${username2}" />  
-        <property name="password" value="${password2}" />  
-        初始化连接大小  
-        <property name="initialSize" value="${initialSize2}"></property>  
-        连接池最大数量  
-        <property name="maxActive" value="${maxActive2}"></property>  
-        连接池最大空闲  
-        <property name="maxIdle" value="${maxIdle2}"></property>  
-        连接池最小空闲  
-        <property name="minIdle" value="${minIdle2}"></property>  
-        获取连接最大等待时间  
-        <property name="maxWait" value="${maxWait2}"></property>  
-    </bean> -->  
+    <!-- 使用c3p0数据源 -->
+	<bean id="dataSourceMyivo" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${driver2}"/>
+        <property name="jdbcUrl" value="${url2}"/>
+        <property name="user" value="${username2}"/>
+        <property name="password" value="${password2}"/>
+        <property name="acquireIncrement" value="${c3p0.acquireIncrement}"/>
+        <property name="initialPoolSize" value="${c3p0.initialPoolSize}"/>
+        <property name="minPoolSize" value="${c3p0.minPoolSize}"/>
+        <property name="maxPoolSize" value="${c3p0.maxPoolSize}"/>
+        <property name="maxIdleTime" value="${c3p0.maxIdleTime}"/>
+        <property name="idleConnectionTestPeriod" value="${c3p0.idleConnectionTestPeriod}"/>
+        <property name="maxStatements" value="${c3p0.maxStatements}"/>
+        <property name="numHelperThreads" value="${c3p0.numHelperThreads}"/>
+        <!-- <property name="preferredTestQuery" value="${c3p0.preferredTestQuery}"/> -->
+        <property name="testConnectionOnCheckout" value="${c3p0.testConnectionOnCheckout}"/>
+    </bean> 
   
     <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->  
    <!--  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
@@ -87,15 +105,15 @@
         		<array>
         			<value>classpath:com/ivo/dao/equipment/*.xml</value>
         			<value>classpath:com/ivo/dao/abnormalRecord/*.xml</value>
-        			<value>classpath:com/ivo/dao/hr/*.xml</value>
+        			<!-- <value>classpath:com/ivo/dao/hr/*.xml</value> -->
         		</array>
         	</property>
     </bean>
     
-    <!-- <bean id="sqlSessionFactoryMyivo" class="org.mybatis.spring.SqlSessionFactoryBean">  
+    <bean id="sqlSessionFactoryMyivo" class="org.mybatis.spring.SqlSessionFactoryBean">  
         <property name="dataSource" ref="dataSourceMyivo" />  
-        自动扫描mapping.xml文件  
+        <!-- 自动扫描mapping.xml文件 -->  
         <property name="mapperLocations" value="classpath:com/ivo/dao/hr/*.xml"></property>  
-    </bean> -->  
+    </bean>  
       
 </beans>

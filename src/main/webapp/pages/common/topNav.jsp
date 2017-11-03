@@ -1,6 +1,7 @@
 <%@page pageEncoding="UTF-8"%>
 		<%
-			String user = (String) session.getAttribute("user");
+			String userName = (String) session.getAttribute("userName");
+			String userID = (String)session.getAttribute("userID");
 			String department = (String) session.getAttribute("department");
 		%>
 		<div class="page-header navbar navbar-fixed-top">
@@ -24,7 +25,7 @@
                         <li class="dropdown dropdown-user">
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                 <i class="icon-user"></i>
-                                <span class="username username-hide-on-mobile"> <%=user%> <%=department %></span>
+                                <span class="username username-hide-on-mobile"> <span id="userID">[<%=userID%>]</span><%=userName%> <%=department %></span>
                             </a>
                         </li>
                         <li class="dropdown dropdown-user">

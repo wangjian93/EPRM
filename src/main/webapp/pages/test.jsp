@@ -132,6 +132,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 		   		<option value="1">模组厂务课</option>
                                 		   		<option value="2">仪电课</option>
                                 		   		<option value="3">气化课</option>
+                                		   		<option value="4">机械空调课</option>
+                                		   		<option value="5">设施课</option>
+                                		   		<option value="6">水务课</option>
                                 		   </select>
                                 		   <span>&nbsp;&nbsp;</span>
                                 		   <span>系统:</span>

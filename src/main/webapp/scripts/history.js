@@ -76,6 +76,7 @@ function getCheckDataDetail(year, month, equipmentGroup){
 		type:'post',
 		success:function(data){
 			var checkFormMonth = data.checkFormMonth;
+			var spec = data.spec;
 			var pageviews = new Array();
 			for(var i=1; i<32; i++){
 				var day = "day"+i;
@@ -88,43 +89,14 @@ function getCheckDataDetail(year, month, equipmentGroup){
 					arrayObj.push(properRate);
 				pageviews.push(arrayObj);
 			}
+			var visitors = new Array();
+			for(var i=1; i<32; i++){
+				var visitorsObj = new Array();
+				visitorsObj.push(i);
+				visitorsObj.push(spec*100);
+				visitors.push(visitorsObj);
+			}
 			
-			
-			              visitors = [
-			                    [1, 60],
-			                    [2, 50],
-			                    [3, 50],
-			                    [4, 50],
-			                    [5, 50],
-			                    [6, 50],
-			                    [7, 50],
-			                    [8, 50],
-			                    [9, 50],
-			                    [10, 50],
-			                    [11, 50],
-			                    [12, 50],
-			                    [13, 50],
-			                    [14, 50],
-			                    [15, 50],
-			                    [16, 50],
-			                    [17, 50],
-			                    [18, 50],
-			                    [19, 50],
-			                    [20, 50],
-			                    [21, 50],
-			                    [22, 50],
-			                    [23, 50],
-			                    [24, 50],
-			                    [25, 50],
-			                    [26, 50],
-			                    [27, 50],
-			                    [28, 50],
-			                    [29, 50],
-			                    [30, 50],
-			                    [31, 50]
-			                ];
-			  			
-
 		  plot.setData([{
                 data: pageviews,
                 label: "妥善率",
@@ -135,7 +107,7 @@ function getCheckDataDetail(year, month, equipmentGroup){
 
             }, {
                 data: visitors,
-                label: "标准",
+                label: "Spec标准",
                 lines: {
                     lineWidth: 1,
                 },
@@ -227,11 +199,15 @@ function setDate(){
 	}
 	$("#year").val(yearS);
 	$("#month").val(monthS);
+	$("input[name='year']").val(year);
+	$("input[name='month']").val(month);
 }
 function dateChange(){
 	$("#yearS").html($("#year").val());
 	$("#monthS").html($("#month").val());
 	$("#month2").html($("#month").val());
+	$("input[name='year']").val($("#year").val());
+	$("input[name='month']").val($("#month").val());
 	var year = $("#year").val();
 	var month = $("#month").val();
 	var li = $("ul.nav-tabs").children("li").filter(".active");

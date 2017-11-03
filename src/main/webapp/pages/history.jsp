@@ -473,6 +473,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		</div>
       		<div class="modal-footer">
          		<button type="button" data-dismiss="modal" class="btn btn-outline dark">取消</button>
+         		<button type="button" class="btn green" onclick="deleteAbnormal()">删除</button>
            		<button type="button" class="btn green" onclick="modifyAbnormal()">保存</button>
          	</div>
     		</div>

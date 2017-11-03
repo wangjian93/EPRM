@@ -225,3 +225,33 @@ function modifyAbnormal(){
 		}
 	});
 }
+
+function deleteAbnormal(){
+	var abnormalID = $("input[name='abnormalID_b'").val();
+	$.ajax({
+		url:'modifyAbnormal.do',
+		type:'post',
+		dataType:'json',
+		data:{
+			"abnormalID" : abnormalID,
+			"validFlag":0
+		},
+		success:function(data){
+			if(data.success=="true"){
+				alert("删除成功");
+				$("#responsive2").modal('hide');
+				var year = $("input[name='year']").val();
+				var month = $("input[name='month']").val();
+				var equipmentGroup = $("input[name='equipmentGroup']").val();
+				var day = "";
+				var equipmentID = "";
+				loadAbnormalTable(year,month,day,equipmentGroup,equipmentID);
+			}else{
+				alert(data.message);
+			}
+		},
+		error:function(data){
+			alert("数据提交失败，请重新登录提交！");
+		}
+	});
+}

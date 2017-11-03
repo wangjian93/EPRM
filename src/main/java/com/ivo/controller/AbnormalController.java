@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -19,6 +20,7 @@ import com.ivo.dao.abnormalRecord.IAbnormalDao;
 import com.ivo.model.abnormalRecord.Abnormal;
 import com.ivo.model.equipment.CheckForm;
 import com.ivo.model.equipment.Equipment;
+import com.ivo.model.hr.Employee;
 import com.ivo.service.ICheckService;
 import com.ivo.service.IMenuService;
 
@@ -129,6 +131,9 @@ public class AbnormalController {
 		abnormal.setActualTime(actualTime);		
 		abnormal.setIfCompleted(ifCompleted);
 		abnormal.setMemo(memo);
+		Employee employee =  (Employee) request.getSession().getAttribute("LOGIN_USER");
+		abnormal.setCreator(employee.getEmployee_ID());
+		abnormal.setDateOfCreate(new Date());
 		abnormalDao.saveAbnormal(abnormal);
 		response.getWriter().print("{\"success\":\"true\"}");
 	}
@@ -144,18 +149,35 @@ public class AbnormalController {
 		String ifCompleted = request.getParameter("ifCompleted");
 		String memo = request.getParameter("memo");
 		String equipmentID = request.getParameter("equipmentID");
+		String validFlag =  request.getParameter("validFlag");
 		
+		Employee employee = (Employee) request.getSession().getAttribute("LOGIN_USER");
 		Abnormal abnormal = abnormalDao.getAbnotmalByID(Integer.parseInt(abnormalID));
-		abnormal.setDates(dates);
-		abnormal.setSipecification(sipecification);
-		abnormal.setSolutions(solutions);
-		abnormal.setExpectedTime(expectedTime);
-		abnormal.setActualTime(actualTime);		
-		abnormal.setIfCompleted(ifCompleted);
-		abnormal.setMemo(memo);
-		abnormal.setEquipmentID_fk(Integer.parseInt(equipmentID));
+		//判断删除或修改
+		if(validFlag!=null && validFlag.equals("0")){
+			if(employee.getEmployee_ID().equals(abnormal.getCreater()) 
+					|| employee.getEmployee_ID().toUpperCase().equals("C0711009")){
+				
+				abnormal.setValidFlag(0);
+				abnormal.setUpdater(employee.getEmployee_ID());
+				abnormal.setDateOfUpdate(new Date());
+			}else{
+				response.getWriter().print("{\"success\":\"false\",\"message\":\"你没有权限删除\"}");
+				return;
+			}
+		}else{
+			abnormal.setDates(dates);
+			abnormal.setSipecification(sipecification);
+			abnormal.setSolutions(solutions);
+			abnormal.setExpectedTime(expectedTime);
+			abnormal.setActualTime(actualTime);		
+			abnormal.setIfCompleted(ifCompleted);
+			abnormal.setMemo(memo);
+			abnormal.setEquipmentID_fk(Integer.parseInt(equipmentID));
+			abnormal.setUpdater(employee.getEmployee_ID());
+			abnormal.setDateOfUpdate(new Date());
+		}
 		abnormalDao.updateAbnormal(abnormal);
 		response.getWriter().print("{\"success\":\"true\"}");
-
 	}
 }

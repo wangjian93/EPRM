@@ -61,7 +61,7 @@ public class MenuController {
 			JSONArray jsonArray = new JSONArray();
 			for(EquipmentGroup  e : egList){
 				JSONObject jsonObject = new JSONObject();
-				String trackingNumber = CurrentUtil.CurrentTracking(e.getEquipmentGroupID());
+				String trackingNumber = CurrentUtil.CurrentPerTracking(e.getEquipmentGroupID());
 				CheckForm checkForm = checkService.getCheckForm(trackingNumber);
 				float properRate = checkForm.getProperRate();
 				jsonObject.put("class_fk",e.getClass_fk());
@@ -89,7 +89,7 @@ public class MenuController {
 		if(module.equals("first")){
 			request.getRequestDispatcher("firstView.do").forward(request, response);
 		}else if(module.equals("now")){
-			String trackingNumber = CurrentUtil.CurrentTracking(Integer.parseInt(groupID));
+			String trackingNumber = CurrentUtil.CurrentPerTracking(Integer.parseInt(groupID));
 			request.setAttribute("trackingNumber", trackingNumber);
 			request.getRequestDispatcher("checkFormView.do").forward(request, response);
 		}else if(module.equals("history")){

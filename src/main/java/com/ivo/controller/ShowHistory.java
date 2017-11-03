@@ -20,6 +20,7 @@ import com.ivo.model.equipment.CheckForm;
 import com.ivo.model.equipment.CheckFormMonth;
 import com.ivo.model.equipment.DepOfClass;
 import com.ivo.model.equipment.EquipmentGroup;
+import com.ivo.model.equipment.Spec;
 import com.ivo.service.ICheckService;
 import com.ivo.service.IMenuService;
 import com.ivo.service.ISpecService;
@@ -89,7 +90,8 @@ public class ShowHistory {
 		jsonObject.put("checkDetail", checkDataDetaiList);
 		if(checkFormMonth==null) checkFormMonth = new CheckFormMonth();
 		jsonObject.put("checkFormMonth", checkFormMonth);
-//		/Spec spec = specService.getSpecByMonth(year, month);
+		Spec spec = specService.getSpecByEquipmentGroup(year, month, equipmentGroup);
+		jsonObject.put("spec", spec==null ? "0.5": spec.getSpec());
 		
 		PrintWriter out = response.getWriter();
 		out.println(jsonObject.toString());

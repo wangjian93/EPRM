@@ -34,7 +34,6 @@ public class LoginController {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	@RequestMapping("/login")
 	public ModelAndView login(HttpServletRequest request,HttpServletResponse response){
-		
 		String username = request.getParameter("username").toUpperCase();
 		String password = request.getParameter("password");
 		logger.info("Log --> :login.do 开始登陆用户"+username);
@@ -42,11 +41,10 @@ public class LoginController {
 		try{
 			employee = employeeService.getEmployee(username);
 		}catch(Exception e){
-			//防止客户端一段时间不访问,第一次访问数据库自动断开连接,刷新可以正常连接
-			//再向数据库发送请求
-//			System.out.println("dddd er ci");
-//			employee = employeeService.getEmployee(username);
-//			e.printStackTrace();
+//			防止客户端一段时间不访问,第一次访问数据库自动断开连接,刷新可以正常连接
+//			再向数据库发送请求
+			employee = employeeService.getEmployee(username);
+			e.printStackTrace();
 		}
 		if(employee==null){
 			ModelAndView mv = new ModelAndView("login");
@@ -67,7 +65,8 @@ public class LoginController {
 				Department department = departmentService.getDepartment(employee);
 				HttpSession session = request.getSession();
 				session.setAttribute("LOGIN_USER",employee);
-				session.setAttribute("user",employee.getEmployeeName());
+				session.setAttribute("userID", employee.getEmployee_ID());
+				session.setAttribute("userName",employee.getEmployeeName());
 				session.setAttribute("department", department.getDeptName());
 				logger.info("Log --> :login.do 登录成功..");
 				return mv;

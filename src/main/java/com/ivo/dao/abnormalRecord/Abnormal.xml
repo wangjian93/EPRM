@@ -15,6 +15,12 @@
 			<result column="actualTime" property="actualTime" jdbcType="VARCHAR" />
 			<result column="ifCompleted" property="ifCompleted" jdbcType="VARCHAR" />
 			<result column="memo" property="memo" jdbcType="VARCHAR" />
+			
+			<result column="validFlag" property="validFlag" jdbcType="INTEGER" />
+        		<result column="creater" property="creater" jdbcType="VARCHAR" />
+        		<result column="dateOfCreate" property="dateOfCreate" jdbcType="DATE" />
+        		<result column="updater" property="updater" jdbcType="VARCHAR" />
+        		<result column="dateOfUpdate" property="dateOfUpdate" jdbcType="DATE" />
 		</resultMap>
 		
 		<select id="getAbnotmalByID" resultMap="abnormalMap">
@@ -30,7 +36,7 @@
     			from (
     			select * from ProperRate_M_AbnormalRecord 
     			where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER} and equipmentGroup_fk=#{equipmentGroup, jdbcType=INTEGER}
-    			)t
+    			and validFlag=1)t
 		</select>
 		
 		<select id="getAbnormalDay" resultMap="abnormalMap">
@@ -38,7 +44,7 @@
     			from (
     			select * from ProperRate_M_AbnormalRecord 
     			where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER} and day=#{day, jdbcType=INTEGER} and equipmentGroup_fk=#{equipmentGroup, jdbcType=INTEGER}
-    			)t
+    			and validFlag=1)t
 		</select>
 		
 		<select id="getAbnormalEquipmentMonth" resultMap="abnormalMap">
@@ -46,7 +52,7 @@
     			from (
     			select * from ProperRate_M_AbnormalRecord 
     			where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER} and equipmentID_fk=#{equipmentID, jdbcType=INTEGER}
-    			)t
+    			and validFlag=1)t
 		</select>
 		
 		<select id="getAbnormalEquipmentDay" resultMap="abnormalMap">
@@ -54,24 +60,29 @@
     			from (
     			select * from ProperRate_M_AbnormalRecord 
     			where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER} and day=#{day, jdbcType=INTEGER} and equipmentID_fk=#{equipmentID, jdbcType=INTEGER}
-    			)t
+    			and validFlag=1)t
 		</select>
 		
 		<insert id="saveAbnormal" parameterType="com.ivo.model.abnormalRecord.Abnormal">  
    			insert into ProperRate_M_AbnormalRecord
     			(year, month, day, equipmentGroup_fk, equipmentID_fk, checkForm_fk,
-    			dates, sipecification, solutions, expectedTime, actualTime, ifCompleted, memo)  
+    			dates, sipecification, solutions, expectedTime, actualTime, ifCompleted, memo,
+    			validFlag, creater, dateOfCreate)  
     			values  
     			(#{year, jdbcType=INTEGER}, #{month, jdbcType=INTEGER}, #{day, jdbcType=INTEGER}, #{equipmentGroup_fk, jdbcType=INTEGER}, #{equipmentID_fk, jdbcType=INTEGER}, #{checkForm_fk, jdbcType=VARCHAR},
     			#{dates, jdbcType=VARCHAR}, #{sipecification, jdbcType=VARCHAR}, #{solutions, jdbcType=VARCHAR}, #{expectedTime, jdbcType=VARCHAR}, 
-    			#{actualTime, jdbcType=VARCHAR}, #{ifCompleted, jdbcType=VARCHAR}, #{memo, jdbcType=VARCHAR}) 
+    			#{actualTime, jdbcType=VARCHAR}, #{ifCompleted, jdbcType=VARCHAR}, #{memo, jdbcType=VARCHAR}, 
+    			1, #{creater}, #{dateOfCreate}) 
 		</insert>
 		
 		<update id="updateAbnormal" parameterType="com.ivo.model.abnormalRecord.Abnormal">  
 	        	update ProperRate_M_AbnormalRecord  
 	        set  equipmentID_fk=#{equipmentID_fk} , dates=#{dates} , sipecification=#{sipecification} , solutions=#{solutions}
 	        		, expectedTime=#{expectedTime} , actualTime=#{actualTime}
-	        		, ifCompleted=#{ifCompleted} , memo=#{memo}
+	        		, ifCompleted=#{ifCompleted} , memo=#{memo},
+	        		updater = #{updater},
+             	dateOfUpdate = #{dateOfUpdate},
+             	validFlag = #{validFlag}
 	        where id = #{id};
 		</update>
 		

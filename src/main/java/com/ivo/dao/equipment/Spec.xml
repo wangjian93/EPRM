@@ -30,7 +30,7 @@
             		<include refid="spec_Column_List" />  
             		from properrate_o_spec 
             		where year = #{year,jdbcType=INTEGER} and month = #{month,jdbcType=INTEGER} 
-        		)t order by depClassID,equipmentGroup desc 
+        		)t order by depClassID,equipmentGroup 
         </select>  
           
         <select id="getSpecByEquipmentGroup" resultMap="spec" parameterType="java.lang.Integer">  

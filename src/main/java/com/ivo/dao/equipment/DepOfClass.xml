@@ -23,6 +23,6 @@
         <select id="getAll" resultMap="depOfClass">  
             select  
             <include refid="depOfClass_Column_List" />  
-            from properrate_o_class  
+            from properrate_o_class order by classID  
         </select>
     </mapper>

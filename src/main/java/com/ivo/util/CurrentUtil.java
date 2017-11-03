@@ -9,10 +9,36 @@ import java.util.Date;
  *@description:
  */
 public class CurrentUtil {
-	public static String CurrentTracking(int equipmentGroupID){  
+	public static String CurrentPerTracking(int equipmentGroupID){  
         int year = CurrentPerYear();  
         int month = CurrentPerMonth();
         int day = CurrentPerDay();
+        String returnStr = "DAR"+year;
+        if(month<10) {
+        		returnStr = returnStr+"0"+month;    
+        } else {
+        		returnStr = returnStr+month;
+        	}
+        if(day<10){
+        	returnStr = returnStr +"0"+ day;
+        	}else{
+        		returnStr = returnStr + day;
+        	}
+     
+        if(equipmentGroupID<10){
+        		returnStr = returnStr +"00"+ equipmentGroupID;
+        } else if(equipmentGroupID<100){
+        		returnStr = returnStr +"0"+ equipmentGroupID;
+        } else {
+        		returnStr = returnStr+equipmentGroupID;
+        }
+        return returnStr;
+	}
+	
+	public static String CurrentTracking(int equipmentGroupID){  
+        int year = CurrentYear();  
+        int month = CurrentMonth();
+        int day = CurrentDay();
         String returnStr = "DAR"+year;
         if(month<10) {
         		returnStr = returnStr+"0"+month;    

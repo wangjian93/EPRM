@@ -42,7 +42,7 @@ function setActive(){
 		$("li[groupid='"+groupID+"']").parent().siblings('a')
 					.children("span:last-child").addClass("open");
 		$("li[groupid='"+groupID+"']").parent().siblings('a')
-			.children("span:last-child").prepend($("<span class='selected'></span>"));
+			.append($("<span class='selected'></span>"));
 	}else if(module=="history"){
 		$("li[depClassID='"+depClassID+"']").addClass("active open");
 		$("li[depClassID='"+depClassID+"']").children("a").children("span:last-child").addClass("selected");
@@ -68,7 +68,7 @@ function SetHistory(depOfClass, eqGroup){
     var a = $("<a></a>");
     a.addClass("nav-link nav-toggle");
     var i = $("<i></i>");
-    i.addClass("icon-diamond");
+    i.addClass("icon-puzzle");
     var span = $("<span></span>");
     span.addClass("title");
     span.html(depOfClass);
@@ -84,7 +84,7 @@ function SetNow(depOfClass,eqGroup){
     var a = $("<a></a>");
     a.addClass("nav-link nav-toggle");
     var i = $("<i></i>");
-    i.addClass("icon-diamond");
+    i.addClass("icon-bar-chart");
     var span = $("<span></span>");
     span.addClass("title");
     span.html(depOfClass);

@@ -34,6 +34,29 @@
                                 <span class="username username-hide-on-mobile">退出</span>
                             </a>
                         </li>
+                       <li class="dropdown dropdown-user">
+                        	   <a id="theme" href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <i class="icon-settings"></i>
+                            </a>
+                        </li>
+                        <script type="text/javascript">
+                        		$(function(){
+                        			var themeShow=true;
+                        			$("#theme").click(function(){
+	                        			 if(themeShow){
+	                        			 	$(".toggler").hide(); 
+	                        			 	$(".toggler-close").show(); 
+	                        				$(".theme-panel > .theme-options").show();
+	                        				themeShow=false;
+	                        			 }else{
+	                        			 	$(".toggler").show();
+	                        			 	$(".toggler-close").hide(); 
+	                        				$(".theme-panel > .theme-options").hide();
+	                        				themeShow=true;
+	                        			 }
+                        			});
+                        		});
+                        </script>
                         <!-- END USER LOGIN DROPDOWN -->
                     </ul>
                 </div>

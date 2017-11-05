@@ -18,10 +18,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <script src="scripts/check.js" type="text/javascript"></script>
         	<script src="scripts/abnormal.js" type="text/javascript"></script>
         <style type="text/css">
-        		.bootstrap-select > .dropdown-toggle{
+        		.bootstrap-select{
         			width:70%;
         		}
-        		.bootstrap-select.btn-group .dropdown-menu {
+        		.bootstrap-select.btn-group {
     				min-width: 70%;
     			}
         </style>
@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="page-content">
                     <!-- BEGIN PAGE HEADER-->
                     <!-- BEGIN THEME PANEL -->
-                    <%-- <jsp:include page="common/themePanel.jsp"/> --%>
+                    <jsp:include page="common/themePanel.jsp"/>
                     <!-- END THEME PANEL -->
                     <!-- BEGIN PAGE BAR -->
                     <div class="page-bar">

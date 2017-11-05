@@ -48,7 +48,7 @@
         <script src="styles/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script>
         <script src="styles/global/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>
         
-        <script src="styles//global/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
+        <script src="styles/global/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
         <script src="styles/global/plugins/flot/jquery.flot.resize.min.js" type="text/javascript"></script>
         <script src="styles/global/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
         <script src="styles/global/plugins/flot/jquery.flot.pie.min.js" type="text/javascript"></script>

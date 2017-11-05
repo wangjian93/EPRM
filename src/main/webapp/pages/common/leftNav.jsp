@@ -36,14 +36,14 @@
                         </li>
                         <li module="equipmentManage" class="nav-item">
                         		<a class="nav-link nav-toggle">
-                        			<i class="icon-diamond"></i>
+                        			<i class="icon-wrench"></i>
                         			<span class="title">设备管理</span>
                         			<span></span>
                         		</a>
                         	</li>
                         	<li module="spec" class="nav-item">
                         		<a class="nav-link nav-toggle">
-                        			<i class="icon-diamond"></i>
+                        			<i class="icon-paper-plane"></i>
                         			<span class="title">SPEC管理</span>
                         			<span></span>
                         		</a>

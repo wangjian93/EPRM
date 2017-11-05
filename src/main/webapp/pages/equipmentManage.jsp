@@ -57,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="page-content">
                     <!-- BEGIN PAGE HEADER-->
                     <!-- BEGIN THEME PANEL -->
-                    <%-- <jsp:include page="common/themePanel.jsp"/> --%>
+                    <jsp:include page="common/themePanel.jsp"/>
                     <!-- END THEME PANEL -->
                     <!-- BEGIN PAGE BAR -->
                     <div class="page-bar">

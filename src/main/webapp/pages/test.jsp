@@ -57,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="page-content">
                     <!-- BEGIN PAGE HEADER-->
                     <!-- BEGIN THEME PANEL -->
-                    <%-- <jsp:include page="common/themePanel.jsp"/> --%>
+                    <jsp:include page="common/themePanel.jsp"/>
                     <!-- END THEME PANEL -->
                     <!-- BEGIN PAGE BAR -->
                     <div class="page-bar">
@@ -85,15 +85,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <div class="portlet light bordered">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="icon-social-dribbble font-blue-sharp"></i>
-                                        <span class="caption-subject font-blue-sharp bold uppercase"><span id="equipmentGroupName"></span>厂务设备妥善性报表</span>
+                                        <i class="icon-layers font-blue-sharp"></i>
+                                        <span class="caption-subject font-blue-sharp bold uppercase"><span id="equipmentGroupName"></span>厂务设备妥善率报表</span>
                                     </div>
                                     <div class="actions">
                                 		   <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"></a>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                		<div class="bg-default bg-font-default">
+                                		<div style="padding-left:10px;">
                                 		   <span>时间:</span>
                                         <select id="year">
                                         		<option value="2017">2017</option>
@@ -146,11 +146,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 		</div>
                                 		<div class="table-scrollable">
 	                                		<table style="text-align:center;cursor:pointer;" class="table table-bordered table-hover table-striped  flip-content">
-	                                        <thead class="bg-default bg-font-default">
+	                                        <thead   class="bg-grey bg-font-grey">
 	                                        		<tr>
-	                                        			<th rowspan="2">课别</th>
-	                                            		<th rowspan="2">系统</th>
-	                                            		<th rowspan="2">SPEC</th>
+	                                        			<th style="text-align:center;" rowspan="2">课别</th>
+	                                            		<th style="text-align:center;" rowspan="2">系统</th>
+	                                            		<th style="text-align:center;" rowspan="2">SPEC</th>
 	                                            		<th style="text-align:center;" colspan="31">日期</th>
 	                                            </tr>
 	                                            <tr style="text-align:center;">

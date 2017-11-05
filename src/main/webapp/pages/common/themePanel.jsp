@@ -1,6 +1,6 @@
 <%@page pageEncoding="UTF-8"%>	
 					<div class="theme-panel hidden-xs hidden-sm">
-                        <div class="toggler"> </div>
+                        <!-- <div class="toggler"> </div> -->
                         <div class="toggler-close"> </div>
                         <div class="theme-options">
                             <div class="theme-option theme-colors clearfix">

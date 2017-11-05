@@ -55,7 +55,7 @@ function reloadEquipmentTable(depClass){
 				var td5 = $("<td></td>");
 				var a = $("<a></a>");
 				
-				$(a).addClass("btn btn-outline btn-circle dark btn-sm black");
+				$(a).addClass("btn btn-outline btn-circle dark btn-xs black");
 				$(a).attr("href","javascript:;");
 				$(a).attr("value",equipmentID);
 				var i =$("<i></i>");

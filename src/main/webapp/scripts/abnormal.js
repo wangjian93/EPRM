@@ -44,7 +44,7 @@ function setAbnormalTable(data){
 		var td_action = $("<td></td>");
 		
 		var a = $("<a></a>");
-		$(a).addClass("btn btn-outline btn-circle dark btn-sm black");
+		$(a).addClass("btn btn-outline btn-circle dark btn-xs black");
 		$(a).attr("href","javascript:;");
 		$(a).attr("abnormalID",data[i].id);
 		var ii = $("<i></i>");

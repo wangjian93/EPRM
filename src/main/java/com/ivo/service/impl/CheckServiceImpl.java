@@ -206,9 +206,7 @@ public class CheckServiceImpl implements ICheckService{
 						}
 					}
 				}
-				System.out.println("      ->"+equipmentGroup.getEquipmentGroupName()+"结束");
 			}
-			System.out.println("##"+depOfClass.getClassName()+"结束");
 		}		
 	}
 

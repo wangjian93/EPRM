@@ -27,7 +27,7 @@
         class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
         <!-- see the example of method invoking job above -->  
         <property name="jobDetail" ref="jobDetail" />  
-        <property name="cronExpression" value="0 28 0 * * ?" />
+        <property name="cronExpression" value="0 01 0 * * ?" />
     </bean> 
     
     <bean id="specQuartzObject" class="com.ivo.quartz.CreateMonthSpec" />  
@@ -41,7 +41,7 @@
         class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
         <!-- see the example of method invoking job above -->  
         <property name="jobDetail" ref="specQuartzDetail" />  
-        <property name="cronExpression" value="0 30 0 1 * ?" />
+        <property name="cronExpression" value="0 10 0 1 * ?" />
     </bean> 
   
     <!-- 总调度用于启动Spring定时器 -->  

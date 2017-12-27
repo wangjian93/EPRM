@@ -86,7 +86,10 @@ public class MenuController {
 		request.setAttribute("module", module);
 		request.setAttribute("groupID", groupID);
 		request.setAttribute("depClassID", depClassID);
-		if(module.equals("first")){
+		if(module.equals("abnormal")){
+			request.getRequestDispatcher("abnormalView.do").forward(request, response);
+		}
+		else if(module.equals("first")){
 			request.getRequestDispatcher("firstView.do").forward(request, response);
 		}else if(module.equals("now")){
 			String trackingNumber = CurrentUtil.CurrentPerTracking(Integer.parseInt(groupID));

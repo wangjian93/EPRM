@@ -33,12 +33,6 @@ public class CheckController {
 	@Resource  
     private ICheckService checkService;
 	
-	@RequestMapping("/firstView.do")
-	public ModelAndView goFirst(HttpServletRequest request, HttpServletResponse response){
-		ModelAndView mv = new ModelAndView("test");
-		return mv;
-	}
-	
 	@RequestMapping("/checkFormView.do")
 	public ModelAndView checkFormView(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String trackingNumber = request.getParameter("trackingNumber");

@@ -40,6 +40,8 @@ function setAbnormalTable(data){
 		td_actualTime.html(data[i].actualTime);
 		var td_ifCompleted = $("<td></td>");
 		td_ifCompleted.html(data[i].ifCompleted=="1"?"是":"否");
+		var td_engineer = $("<td></td>");
+		td_engineer.html(data[i].engineer);
 		var td_memo = $("<td></td>");
 		var td_action = $("<td></td>");
 		
@@ -59,20 +61,21 @@ function setAbnormalTable(data){
 		td_memo.html(data[i].memo);
 		tr.append(td_dates).append(td_equipmentName).append(td_sipecification).append(td_solutions)
 			.append(td_expectedTime).append(td_actualTime).append(td_ifCompleted).append(td_memo)
-			.append(td_action);
+			.append(td_engineer).append(td_action);
 		$("#abnormal tbody").append(tr);
 	}
 }
 function submitAbnormal(){
-	var trackingNumber = $("input[name='trackingNumber'").val();
+	var trackingNumber = $("input[name='trackingNumber']").val();
 	var dates = $("input[name='dates_a']").val();
-	var sipecification = $("textarea[name='sipecification_a'").val();
-	var solutions = $("textarea[name='solutions_a'").val();
-	var expectedTime = $("input[name='expectedTime_a'").val();
-	var actualTime = $("input[name='actualTime_a'").val();
-	var ifCompleted = $("select[name='ifCompleted_a'").val();
+	var sipecification = $("textarea[name='sipecification_a']").val();
+	var solutions = $("textarea[name='solutions_a']").val();
+	var expectedTime = $("input[name='expectedTime_a']").val();
+	var actualTime = $("input[name='actualTime_a']").val();
+	var ifCompleted = $("select[name='ifCompleted_a']").val();
 	var memo = $("textarea[name='memo_a']").val();
-	var equipmentID = $("select[name='equipmentID_a'").val();
+	var equipmentID = $("select[name='equipmentID_a']").val();
+	var engineer = $("input[name='engineer_a']").val();
 	$.ajax({
 		url:'submitAbnormal.do',
 		type:'post',
@@ -86,7 +89,8 @@ function submitAbnormal(){
 			"actualTime" :actualTime,
 			"ifCompleted" :ifCompleted,
 			"memo" :memo,
-			"equipmentID":equipmentID
+			"equipmentID":equipmentID,
+			"engineer":engineer
 		},
 		success:function(data){
 			if(data.success=="true"){
@@ -126,15 +130,15 @@ function setEquipment(){
 	});
 }
 function setSelect(data){
-	$("select[name='equipmentID_a'").empty();
-	$("select[name='equipmentID_b'").empty();
+	$("select[name='equipmentID_a']").empty();
+	$("select[name='equipmentID_b']").empty();
 	for(var i=0; i<data.length; i++){
 		var equipmentID = data[i].equipmentID;
 		var equipmentName = data[i].equipmentName;
 		var option = $("<option></option>");
 		option.html(equipmentName);
 		option.attr("value",equipmentID);
-		$("select[name='equipmentID_a'").append(option);
+		$("select[name='equipmentID_a']").append(option);
 	}
 	for(var i=0; i<data.length; i++){
 		var equipmentID = data[i].equipmentID;
@@ -142,7 +146,7 @@ function setSelect(data){
 		var option = $("<option></option>");
 		option.html(equipmentName);
 		option.attr("value",equipmentID);
-		$("select[name='equipmentID_b'").append(option);
+		$("select[name='equipmentID_b']").append(option);
 	}
 	$('select').selectpicker('render');
     $('select').selectpicker('refresh');
@@ -164,15 +168,16 @@ function modifyShowModal(abnormalID){
 		},
 		success:function(data){
 			var abnormal = data.abnormal;
-			$("input[name='abnormalID_b'").val(abnormal.id);
+			$("input[name='abnormalID_b']").val(abnormal.id);
 			$("input[name='dates_b']").val(abnormal.dates);
-			$("textarea[name='sipecification_b'").val(abnormal.sipecification);
-			$("textarea[name='solutions_b'").val(abnormal.solutions);
-			$("input[name='expectedTime_b'").val(abnormal.expectedTime);
-			$("input[name='actualTime_b'").val(abnormal.actualTime);
-			$("select[name='ifCompleted_b'").selectpicker('val',abnormal.ifCompleted);
+			$("textarea[name='sipecification_b']").val(abnormal.sipecification);
+			$("textarea[name='solutions_b']").val(abnormal.solutions);
+			$("input[name='expectedTime_b']").val(abnormal.expectedTime);
+			$("input[name='actualTime_b']").val(abnormal.actualTime);
+			$("select[name='ifCompleted_b']").selectpicker('val',abnormal.ifCompleted);
 			$("textarea[name='memo_b']").val(abnormal.memo);
-			$("select[name='equipmentID_b'").selectpicker('val',abnormal.equipmentID_b);
+			$("select[name='equipmentID_b']").selectpicker('val',abnormal.equipmentID_b);
+			$("input[name='engineer_b']").val(abnormal.engineer);
 		},
 		error:function(data){
 			alert("获取设备编号失败，请重新登录再试!");
@@ -182,15 +187,16 @@ function modifyShowModal(abnormalID){
 }
 
 function modifyAbnormal(){
-	var abnormalID = $("input[name='abnormalID_b'").val();
+	var abnormalID = $("input[name='abnormalID_b']").val();
 	var dates = $("input[name='dates_b']").val();
-	var sipecification = $("textarea[name='sipecification_b'").val();
-	var solutions = $("textarea[name='solutions_b'").val();
-	var expectedTime = $("input[name='expectedTime_b'").val();
-	var actualTime = $("input[name='actualTime_b'").val();
-	var ifCompleted = $("select[name='ifCompleted_b'").val();
+	var sipecification = $("textarea[name='sipecification_b']").val();
+	var solutions = $("textarea[name='solutions_b']").val();
+	var expectedTime = $("input[name='expectedTime_b']").val();
+	var actualTime = $("input[name='actualTime_b']").val();
+	var ifCompleted = $("select[name='ifCompleted_b']").val();
 	var memo = $("textarea[name='memo_b']").val();
-	var equipmentID = $("select[name='equipmentID_b'").val();
+	var equipmentID = $("select[name='equipmentID_b']").val();
+	var engineer = $("input[name='engineer_b']").val();
 	$.ajax({
 		url:'modifyAbnormal.do',
 		type:'post',
@@ -204,7 +210,8 @@ function modifyAbnormal(){
 			"actualTime" :actualTime,
 			"ifCompleted" :ifCompleted,
 			"memo" :memo,
-			"equipmentID":equipmentID
+			"equipmentID":equipmentID,
+			"engineer":engineer
 		},
 		success:function(data){
 			if(data.success=="true"){
@@ -227,7 +234,7 @@ function modifyAbnormal(){
 }
 
 function deleteAbnormal(){
-	var abnormalID = $("input[name='abnormalID_b'").val();
+	var abnormalID = $("input[name='abnormalID_b']").val();
 	$.ajax({
 		url:'modifyAbnormal.do',
 		type:'post',

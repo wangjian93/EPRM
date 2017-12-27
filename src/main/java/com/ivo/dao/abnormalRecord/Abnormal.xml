@@ -15,6 +15,8 @@
 			<result column="actualTime" property="actualTime" jdbcType="VARCHAR" />
 			<result column="ifCompleted" property="ifCompleted" jdbcType="VARCHAR" />
 			<result column="memo" property="memo" jdbcType="VARCHAR" />
+			<result column="engineer" property="engineer" jdbcType="VARCHAR" />
+			<result column="deptClass" property="deptClass" jdbcType="INTEGER" />
 			
 			<result column="validFlag" property="validFlag" jdbcType="INTEGER" />
         		<result column="creater" property="creater" jdbcType="VARCHAR" />
@@ -28,7 +30,7 @@
     			from (
     			select * from ProperRate_M_AbnormalRecord 
     			where id=#{abnormalID, jdbcType=INTEGER} 
-    			)t
+    			)t order by year,month,day desc
 		</select>
 		
 		<select id="getAbnormalMonth" resultMap="abnormalMap">
@@ -36,7 +38,7 @@
     			from (
     			select * from ProperRate_M_AbnormalRecord 
     			where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER} and equipmentGroup_fk=#{equipmentGroup, jdbcType=INTEGER}
-    			and validFlag=1)t
+    			and validFlag=1)t order by year,month,day desc
 		</select>
 		
 		<select id="getAbnormalDay" resultMap="abnormalMap">
@@ -44,7 +46,7 @@
     			from (
     			select * from ProperRate_M_AbnormalRecord 
     			where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER} and day=#{day, jdbcType=INTEGER} and equipmentGroup_fk=#{equipmentGroup, jdbcType=INTEGER}
-    			and validFlag=1)t
+    			and validFlag=1)t order by year,month,day desc
 		</select>
 		
 		<select id="getAbnormalEquipmentMonth" resultMap="abnormalMap">
@@ -52,7 +54,7 @@
     			from (
     			select * from ProperRate_M_AbnormalRecord 
     			where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER} and equipmentID_fk=#{equipmentID, jdbcType=INTEGER}
-    			and validFlag=1)t
+    			and validFlag=1)t order by year,month,day desc
 		</select>
 		
 		<select id="getAbnormalEquipmentDay" resultMap="abnormalMap">
@@ -60,31 +62,56 @@
     			from (
     			select * from ProperRate_M_AbnormalRecord 
     			where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER} and day=#{day, jdbcType=INTEGER} and equipmentID_fk=#{equipmentID, jdbcType=INTEGER}
-    			and validFlag=1)t
+    			and validFlag=1)t order by year,month,day desc
 		</select>
 		
 		<insert id="saveAbnormal" parameterType="com.ivo.model.abnormalRecord.Abnormal">  
    			insert into ProperRate_M_AbnormalRecord
     			(year, month, day, equipmentGroup_fk, equipmentID_fk, checkForm_fk,
     			dates, sipecification, solutions, expectedTime, actualTime, ifCompleted, memo,
-    			validFlag, creater, dateOfCreate)  
+    			validFlag, creater, dateOfCreate, engineer)  
     			values  
     			(#{year, jdbcType=INTEGER}, #{month, jdbcType=INTEGER}, #{day, jdbcType=INTEGER}, #{equipmentGroup_fk, jdbcType=INTEGER}, #{equipmentID_fk, jdbcType=INTEGER}, #{checkForm_fk, jdbcType=VARCHAR},
     			#{dates, jdbcType=VARCHAR}, #{sipecification, jdbcType=VARCHAR}, #{solutions, jdbcType=VARCHAR}, #{expectedTime, jdbcType=VARCHAR}, 
     			#{actualTime, jdbcType=VARCHAR}, #{ifCompleted, jdbcType=VARCHAR}, #{memo, jdbcType=VARCHAR}, 
-    			1, #{creater}, #{dateOfCreate}) 
+    			1, #{creater}, #{dateOfCreate}, #{engineer}) 
 		</insert>
 		
 		<update id="updateAbnormal" parameterType="com.ivo.model.abnormalRecord.Abnormal">  
 	        	update ProperRate_M_AbnormalRecord  
 	        set  equipmentID_fk=#{equipmentID_fk} , dates=#{dates} , sipecification=#{sipecification} , solutions=#{solutions}
 	        		, expectedTime=#{expectedTime} , actualTime=#{actualTime}
-	        		, ifCompleted=#{ifCompleted} , memo=#{memo},
+	        		, ifCompleted=#{ifCompleted} , memo=#{memo}, engineer=#{engineer},
 	        		updater = #{updater},
              	dateOfUpdate = #{dateOfUpdate},
              	validFlag = #{validFlag}
 	        where id = #{id};
 		</update>
+		
+		<select id="getAbnormalByMonth" resultMap="abnormalMap">
+			select *, (select DISTINCT equipmentName from properrate_o_equipment o where o.equipmentID=t.equipmentID_FK) AS equipmentName
+    			from (
+    			select * from ProperRate_M_AbnormalRecord 
+    			where year=#{year, jdbcType=INTEGER} and month=#{month, jdbcType=INTEGER}
+    			and validFlag=1)t order by year,month,day desc
+		</select>
+		
+		<select id="queryAbnormal" resultMap="abnormalMap">
+			select *, (select DISTINCT equipmentName from properrate_o_equipment o where o.equipmentID=t.equipmentID_FK) AS equipmentName,
+			(select DISTINCT className from properrate_o_class c where c.classID=t.deptClass) AS deptClassName,
+			(select DISTINCT equipmentGroupName from properrate_o_equipmentGroup g where g.equipmentGroupID=t.equipmentGroup_fk) AS equipmentGroupName
+    			from (
+    			select * from ProperRate_M_AbnormalRecord 
+    			where 
+    				<if test="year != 0">year=#{year, jdbcType=INTEGER} and</if>
+	    			<if test="month != 0">month=#{month, jdbcType=INTEGER} and</if>
+	    			<if test="day != 0">day=#{day, jdbcType=INTEGER} and</if>
+	    			<if test="deptClass != 0">deptClass=#{deptClass, jdbcType=INTEGER} and</if>
+	    			<if test="equipmentGroup_fk != 0">equipmentGroup_fk=#{equipmentGroup_fk, jdbcType=INTEGER} and</if>
+	    			<if test="equipmentID_fk != 0">equipmentID_fk=#{equipmentID_fk, jdbcType=INTEGER} and</if>
+	    			 validFlag=1
+    			)t order by year,month,day desc
+		</select>
 		
 		
 	</mapper>

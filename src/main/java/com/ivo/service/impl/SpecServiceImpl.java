@@ -71,7 +71,7 @@ public class SpecServiceImpl implements ISpecService{
 			Spec spec = new Spec();
 			spec.setYear(CurrentUtil.CurrentYear());
 			spec.setMonth(CurrentUtil.CurrentMonth());
-			spec.setSpec(0.90f);
+			spec.setSpec(1.00f);
 			spec.setDepClassID(equipmentGroup.getClass_fk());
 			spec.setEquipmentGroup(equipmentGroup.getEquipmentGroupID());
 			this.saveSpec(spec);
@@ -81,17 +81,22 @@ public class SpecServiceImpl implements ISpecService{
 	@Override
 	public void updateCurrentMonthSpec(){
 		int year = CurrentUtil.CurrentPerYear();
-		int month = CurrentUtil.CurrentMonth();
+		int month = CurrentUtil.CurrentPerMonth();
 		List<Spec> specList = this.getSpecByMonth(year, month);
 		for(Spec spec : specList){
-			Spec newSpec = new Spec();
-			newSpec.setYear(CurrentUtil.CurrentYear());
-			newSpec.setMonth(CurrentUtil.CurrentMonth());
-			newSpec.setDepClassID(spec.getDepClassID());
-			newSpec.setEquipmentGroup(spec.getEquipmentGroup());
-			newSpec.setSpec(spec.getSpec());
-			System.out.println(newSpec.getYear() + " " + newSpec.getMonth() + "   " + newSpec.getEquipmentGroupName() + "    " + newSpec.getSpec());
-//			this.saveSpec(newSpec);
+			Spec newSpec = getSpecByEquipmentGroup(
+					CurrentUtil.CurrentYear(), CurrentUtil.CurrentMonth(), spec.getEquipmentGroup());
+			if(newSpec!=null){
+				
+			}else{
+				newSpec = new Spec();
+				newSpec.setYear(CurrentUtil.CurrentYear());
+				newSpec.setMonth(CurrentUtil.CurrentMonth());
+				newSpec.setDepClassID(spec.getDepClassID());
+				newSpec.setEquipmentGroup(spec.getEquipmentGroup());
+				newSpec.setSpec(spec.getSpec());
+				this.saveSpec(newSpec);
+			}
 		}
 	}
 

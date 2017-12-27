@@ -19,4 +19,8 @@ public interface IAbnormalDao {
 	public List<Abnormal> getAbnormalEquipmentDay(@Param("year")int year,  @Param("month")int month, @Param("day")int day, @Param("equipmentID")int equipmentID);
 	public void saveAbnormal(Abnormal abnormla);
 	public void updateAbnormal(Abnormal abnormla);
+	public List<Abnormal> getAbnormalByMonth(@Param("year")int year, @Param("month")int month);
+	public List<Abnormal> queryAbnormal(
+			@Param("year")int year, @Param("month")int month, @Param("day")int day, 
+			@Param("deptClass")int deptClass, @Param("equipmentGroup_fk")int equipmentGroup_fk, @Param("equipmentID_fk")int equipmentID_fk);
 }

@@ -227,6 +227,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                             		<th>实际完成时间</th>
                                             		<th>是否完成</th>
                                             		<th>备注</th>
+                                            		<th>工程师</th>
                                             		<th>修改</th>
                                             </tr>
                                         </thead>
@@ -303,93 +304,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <!-- END FOOTER -->
         
         <!-- 模态框 -->
-        <div id="responsive" class="modal fade" tabindex="-1" data-width="760">
-        		<div class="modal-header">
-            		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                		<h4 class="modal-title">添加异常记录</h4>
-          	</div>
-            <div class="modal-body">
-            		<form class="form-horizontal" role="form">
-            			<div class="form-body">
-                			<div class="form-group">
-		             		<label class="col-md-3 control-label">日期：</label>
-		                    	<div class="col-md-4">
-			            			<div class='input-group date' id='datetimepicker1'>  
-									<input type='text' class="form-control" readonly name="dates_a"/>  
-									<span class="input-group-addon">  
-										<span class="glyphicon glyphicon-calendar"></span>  
-									</span>  
-								</div>  
-		                   	</div>
-		           		</div>
-                   		<div class="form-group">
-                        		<label class="col-md-3 control-label">设备编号：</label>
-                        		<div class="col-md-5">
-                             <select class="form-control" name="equipmentID_a">
-		                                                      
-		                     </select>
-                            	 </div>
-                      	</div>
-                        	<div class="form-group">
-		               		<label class="col-md-3 control-label">异常详述：</label>
-		                   	<div class="col-md-9">
-		                    		<textarea class="form-control" rows="3" name="sipecification_a"></textarea>
-		                   	</div>
-		          		</div>
-		             	<div class="form-group">
-		            			<label class="col-md-3 control-label">解决方案：</label>
-		               		<div class="col-md-9">
-		                 		<textarea class="form-control" rows="3" name="solutions_a"></textarea>
-		                		</div>
-		           		</div>
-		            		<div class="form-group">
-		             		<label class="col-md-3 control-label">预计完成时间：</label>
-		               		<div class="col-md-4">
-		                 		<div class='input-group date' id='datetimepicker2'>  
-									<input type='text' class="form-control" readonly name="expectedTime_a"/>  
-									<span class="input-group-addon">  
-										<span class="glyphicon glyphicon-calendar"></span>  
-									</span>  
-								</div>             
-		               		</div>
-		          		</div>
-		           		<div class="form-group">
-		               		<label class="col-md-3 control-label">实际完成时间：</label>
-		               		<div class="col-md-4">
-		                 		<div class='input-group date' id='datetimepicker3'>  
-									<input type='text' class="form-control" readonly name="actualTime_a"/>  
-									<span class="input-group-addon">  
-										<span class="glyphicon glyphicon-calendar"></span>  
-									</span>  
-								</div> 
-		                   	</div>
-		            		</div>
-		                	<div class="form-group">
-		              		<label class="col-md-3 control-label">是否完成：</label>
-		                 	<div class="col-md-2">
-		                 		<select class="form-control" name="ifCompleted_a">
-		                        		<option value="0">否</option>
-		                        		<option value="1">是</option>                 
-		                     	</select>
-		                   		<!-- <input class="form-control"  type="text" name="ifCompleted_b"> --> 
-		                     </div>
-		                	</div>
-		                	<div class="form-group">
-		                		<label class="col-md-3 control-label">备注：</label>
-		                		<div class="col-md-9">
-		                    		<textarea class="form-control" rows="3" name="memo_a"></textarea>
-		                 	</div>
-		             	</div>
-               		</div>
-           		</form>
-        		</div>
-      		<div class="modal-footer">
-         		<button type="button" data-dismiss="modal" class="btn btn-outline dark">取消</button>
-           		<button type="button" class="btn green" onclick="submitAbnormal()">保存</button>
-         	</div>
-    		</div>
-    		
-    		<!-- 模态框 -->
         <div id="responsive2" class="modal fade" tabindex="-1" data-width="760">
         		<div class="modal-header">
             		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -454,13 +368,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		            		</div>
 		                	<div class="form-group">
 		              		<label class="col-md-3 control-label">是否完成：</label>
-		                 		<div class="col-md-2">
-		                 			<select class="form-control" name="ifCompleted_b">
-		                                <option value="0">否</option>
-		                                <option value="1">是</option>                 
-		                     		</select>
-		                   			<!-- <input class="form-control"  type="text" name="ifCompleted_b"> --> 
-		                      	</div>
+		                 	<div class="col-md-2">
+		                 		<select class="form-control" name="ifCompleted_b">
+		                        		<option value="0">否</option>
+		                            	<option value="1">是</option>                 
+		                    		</select>
+		                   		<!-- <input class="form-control"  type="text" name="ifCompleted_b"> --> 
+		                    	</div>
+		                		<label class="col-md-3 control-label">工程师：</label>
+		               		<div class="col-md-4">
+		                 		<input class="form-control" name="engineer_b"></input>
+		                		</div>
 		                	</div>
 		                	<div class="form-group">
 		                		<label class="col-md-3 control-label">备注：</label>
@@ -473,7 +391,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		</div>
       		<div class="modal-footer">
          		<button type="button" data-dismiss="modal" class="btn btn-outline dark">取消</button>
-         		<button type="button" class="btn green" onclick="deleteAbnormal()">删除</button>
+           		<button type="button" class="btn green" onclick="deleteAbnormal()">删除</button>
            		<button type="button" class="btn green" onclick="modifyAbnormal()">保存</button>
          	</div>
     		</div>

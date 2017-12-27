@@ -25,9 +25,13 @@
         <!-- BEGIN THEME LAYOUT STYLES -->
         <link href="styles/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
         <link href="styles/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
+        <!-- <link href="styles/layouts/layout/css/themes/grey.min.css" rel="stylesheet" type="text/css" id="style_color"/> -->
+        <!-- <link href="styles/layouts/layout/css/themes/light2.min.css" rel="stylesheet" type="text/css" id="style_color"/> -->
+        
         <link href="styles/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
         <!-- END THEME LAYOUT STYLES -->
         <link rel="shortcut icon" href="favicon.ico" />
+        
         
         <!--[if lt IE 9]>
 		<script src="styles/global/plugins/respond.min.js"></script>

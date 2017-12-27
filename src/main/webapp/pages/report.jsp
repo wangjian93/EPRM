@@ -188,45 +188,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                                            </tr>
 	                                        </thead>
 	                                        <tbody id="reportTable">
-	                                        		<tr>
-	                                        			<td>MFC</td>
-	                                        			<td>锅炉</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        			<td>80%</td>
-	                                        		</tr>
-	                                        		<tr>
 	                                        		
-	                                        		</tr>
 	                                        </tbody>
 	                                    </table>
                                     </div>  	  

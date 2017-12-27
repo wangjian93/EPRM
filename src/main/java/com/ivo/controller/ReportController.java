@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -31,6 +32,14 @@ public class ReportController {
 	private ICheckService checkService;
 	@Resource  
     private IMenuService menuService;
+	
+	
+	@RequestMapping("/firstView.do")
+	public ModelAndView goFirst(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView("report");
+		return mv;
+	}
+	
 	@RequestMapping("/getReportData.do")
 	public void getReportData(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		int year = Integer.parseInt(request.getParameter("year"));

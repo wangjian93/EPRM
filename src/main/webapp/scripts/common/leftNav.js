@@ -32,8 +32,11 @@ function setMenu(data){
 	setMenuClick();
 }
 function setActive(){
-	
-	if(module=="first" || module==null){
+	if(module=="abnormal"){
+		$("li[module='abnormal']").addClass("active open");
+		$("li[module='abnormal']").children("a").children("span:last-child").addClass("selected");
+	}
+	else if(module=="first" || module==null){
 		$("li[module='first']").addClass("active open");
 		$("li[module='first']").children("a").children("span:last-child").addClass("selected");
 	}else if(module=="now"){
@@ -133,6 +136,10 @@ function setMenuClick(){
 		event.stopPropagation(); 
 	});
 	$("li[module='first']").bind("click",function(event){
+		menuClick(this); 
+		event.stopPropagation(); 
+	});
+	$("li[module='abnormal']").bind("click",function(event){
 		menuClick(this); 
 		event.stopPropagation(); 
 	});

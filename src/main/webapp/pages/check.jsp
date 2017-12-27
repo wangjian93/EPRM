@@ -161,6 +161,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                             		<th>实际完成时间</th>
                                             		<th>是否完成</th>
                                             		<th>备注</th>
+                                            		<th>工程师</th>
                                             		<th>修改</th>
                                             </tr>
                                         </thead>
@@ -258,6 +259,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		                     	</select>
 		                   		<!-- <input class="form-control"  type="text" name="ifCompleted_b"> --> 
 		                     </div>
+		                     <label class="col-md-2 control-label">工程师：</label>
+		               		<div class="col-md-4">
+		                 		<input class="form-control" name="engineer_a"></input>
+		                		</div>
 		                	</div>
 		                	<div class="form-group">
 		                		<label class="col-md-3 control-label">备注：</label>
@@ -339,13 +344,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		            		</div>
 		                	<div class="form-group">
 		              		<label class="col-md-3 control-label">是否完成：</label>
-		                 		<div class="col-md-2">
-		                 			<select class="form-control" name="ifCompleted_b">
-		                                <option value="0">否</option>
-		                                <option value="1">是</option>                 
-		                     		</select>
-		                   			<!-- <input class="form-control"  type="text" name="ifCompleted_b"> --> 
-		                      	</div>
+		                 	<div class="col-md-2">
+		                 		<select class="form-control" name="ifCompleted_b">
+		                        		<option value="0">否</option>
+		                            	<option value="1">是</option>                 
+		                    		</select>
+		                   		<!-- <input class="form-control"  type="text" name="ifCompleted_b"> --> 
+		                    	</div>
+		                		<label class="col-md-3 control-label">工程师：</label>
+		               		<div class="col-md-4">
+		                 		<input class="form-control" name="engineer_b"></input>
+		                		</div>
 		                	</div>
 		                	<div class="form-group">
 		                		<label class="col-md-3 control-label">备注：</label>

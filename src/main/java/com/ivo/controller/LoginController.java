@@ -61,7 +61,7 @@ public class LoginController {
 				logger.info("Log --> :login.do 登录失败..");
 				return mv;
 			}else{
-				ModelAndView mv = new ModelAndView("test");
+				ModelAndView mv = new ModelAndView("report");
 				Department department = departmentService.getDepartment(employee);
 				HttpSession session = request.getSession();
 				session.setAttribute("LOGIN_USER",employee);

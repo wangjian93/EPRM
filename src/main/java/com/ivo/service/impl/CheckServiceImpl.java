@@ -101,6 +101,8 @@ public class CheckServiceImpl implements ICheckService{
 	public void updateCheckFormDetail(CheckDataDetail checkDataDetail) {
 		checkDataDetailDao.updateCheckDataDetail(checkDataDetail);
 	}
+	
+	
 
 	@Override
 	public void createCurrentCheck() {
@@ -113,6 +115,9 @@ public class CheckServiceImpl implements ICheckService{
 			for(EquipmentGroup equipmentGroup : equipmentGroupList){
 				String trackingNumber = CurrentUtil.CurrentTracking(equipmentGroup.getEquipmentGroupID());
 				CheckForm checkForm = checkFormDao.getCheckForm(trackingNumber);
+				/**前一天的CheckFrom**/
+				String perTrackingNumber = CurrentUtil.CurrentPerTracking(equipmentGroup.getEquipmentGroupID());
+				CheckForm pertheckForm = checkFormDao.getCheckForm(perTrackingNumber);
 				if(checkForm==null){
 					checkForm = new CheckForm();
 					checkForm.setTrackingNumber(trackingNumber);
@@ -125,7 +130,59 @@ public class CheckServiceImpl implements ICheckService{
 					checkForm.setCreator("sys");
 					checkForm.setDateOfCreate(new Date());
 					checkForm.setDateOfUpdate(new Date());
+					/**设置妥善率和前一天的相同**/
+					if(pertheckForm!=null)
+						checkForm.setProperRate(pertheckForm.getProperRate());
 					checkFormDao.saveCheckForm(checkForm);
+					
+					/**同步checkFormmoNTH**/
+					CheckFormMonth checkFormMonth = checkFormMonthDao.getCheckFormMonthByEquipmentGroupID(
+							checkForm.getEquipmentGroup_fk(), checkForm.getYear(), checkForm.getMonth());
+					if(checkFormMonth==null){
+						checkFormMonth = new CheckFormMonth();
+						checkFormMonth.setDepOfclassID(checkForm.getClass_fk());
+						checkFormMonth.setEquipmentGroupID(checkForm.getEquipmentGroup_fk());
+						checkFormMonth.setYear(checkForm.getYear());
+						checkFormMonth.setMonth(checkForm.getMonth());
+						checkFormMonth.SetCurrentDay(checkForm.getDay(), checkForm.getProperRate());
+						checkFormMonthDao.saveCheckFormMonth(checkFormMonth);
+					}else{
+						checkFormMonth.SetCurrentDay(checkForm.getDay(), checkForm.getProperRate());
+						checkFormMonthDao.updateCheckFormMonth(checkFormMonth);
+					}
+					
+					/**同步CheckDataDetail**/
+					List<Equipment> equipmentList = equipmentDao.getByEquipmentGroup(equipmentGroup.getEquipmentGroupID());
+					for(Equipment equipment : equipmentList){
+						CheckDataDetail checkDataDetail = checkDataDetailDao.getCheckData(year, month, equipment.getEquipmentID());
+						if(checkDataDetail==null){
+							int yearPer = CurrentUtil.CurrentPerYear();
+							int monthPer = CurrentUtil.CurrentPerMonth();
+							int dayPer = CurrentUtil.CurrentPerDay();
+							CheckDataDetail perCheckDataDetail = checkDataDetailDao.getCheckData(yearPer, monthPer, equipment.getEquipmentID());
+							
+							checkDataDetail = new CheckDataDetail();
+							checkDataDetail.setYear(year);
+							checkDataDetail.setMonth(month);
+							checkDataDetail.setEquipmentGroup_fk(equipmentGroup.getEquipmentGroupID());
+							checkDataDetail.setEquipmentID_fk(equipment.getEquipmentID());
+							if(perCheckDataDetail!=null)
+								checkDataDetail.SetCurrentDay(day, perCheckDataDetail.getCurrentDay(dayPer));
+							checkDataDetailDao.saveCheckDataDetail(checkDataDetail);
+						}else{
+							int yearPer = CurrentUtil.CurrentPerYear();
+							int monthPer = CurrentUtil.CurrentPerMonth();
+							int dayPer = CurrentUtil.CurrentPerDay();
+							CheckDataDetail perCheckDataDetail = checkDataDetailDao.getCheckData(yearPer, monthPer, equipment.getEquipmentID());
+							checkDataDetail.getCurrentDay(dayPer);
+							if(perCheckDataDetail!=null)
+							checkDataDetail.SetCurrentDay(day, perCheckDataDetail.getCurrentDay(dayPer));
+							checkDataDetailDao.updateCheckDataDetail(checkDataDetail);
+						}
+					}
+					
+					
+				}else{
 					
 					List<Equipment> equipmentList = equipmentDao.getByEquipmentGroup(equipmentGroup.getEquipmentGroupID());
 					for(Equipment equipment : equipmentList){
@@ -137,23 +194,21 @@ public class CheckServiceImpl implements ICheckService{
 							checkDataDetail.setEquipmentGroup_fk(equipmentGroup.getEquipmentGroupID());
 							checkDataDetail.setEquipmentID_fk(equipment.getEquipmentID());
 							checkDataDetailDao.saveCheckDataDetail(checkDataDetail);
-						}
-					}
-				}else{
-					List<Equipment> equipmentList = equipmentDao.getByEquipmentGroup(equipmentGroup.getEquipmentGroupID());
-					for(Equipment equipment : equipmentList){
-						CheckDataDetail checkDataDetail = checkDataDetailDao.getCheckData(year, month, equipment.getEquipmentID());
-						if(checkDataDetail==null){
-							checkDataDetail = new CheckDataDetail();
-							checkDataDetail.setYear(year);
-							checkDataDetail.setMonth(month);
-							checkDataDetail.setEquipmentGroup_fk(equipmentGroup.getEquipmentGroupID());
-							checkDataDetail.setEquipmentID_fk(equipment.getEquipmentID());
-							checkDataDetailDao.saveCheckDataDetail(checkDataDetail);
+						}else{
+							int yearPer = CurrentUtil.CurrentPerYear();
+							int monthPer = CurrentUtil.CurrentPerMonth();
+							int dayPer = CurrentUtil.CurrentPerDay();
+							CheckDataDetail perCheckDataDetail = checkDataDetailDao.getCheckData(yearPer, monthPer, equipment.getEquipmentID());
+							checkDataDetail.getCurrentDay(dayPer);
+							if(perCheckDataDetail!=null)
+							checkDataDetail.SetCurrentDay(day, perCheckDataDetail.getCurrentDay(dayPer));
+							checkDataDetailDao.updateCheckDataDetail(checkDataDetail);
 						}
 					}
 				}
+				System.out.println("      ->"+equipmentGroup.getEquipmentGroupName()+"结束");
 			}
+			System.out.println("##"+depOfClass.getClassName()+"结束");
 		}		
 	}
 

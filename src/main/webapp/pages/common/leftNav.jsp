@@ -24,6 +24,14 @@
                                 <span class="title">报表</span>
                                 <span class="selected"></span>
                             </a>
+                            
+                        </li>
+                        <li module="abnormal" class="nav-item">
+                        		<a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-layers"></i>
+                                <span class="title">设备异常报表</span>
+                                <span class="selected"></span>
+                            </a>
                         </li>
                         <li class="heading " id="now">
                             <h3 class="uppercase">昨日设备妥善率状况</h3>

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -38,6 +39,12 @@ public class AbnormalController {
 	@Resource  
     private IMenuService menuService;
 	
+	@RequestMapping("/abnormalView.do")
+	public ModelAndView abnormalView(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView("abnormal");
+		return mv;
+	}
+	
 	@RequestMapping("/getEquipmentByGroup")
 	public void getEquipmentByGroup(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String equipmentGroup = request.getParameter("equipmentGroup");
@@ -58,6 +65,9 @@ public class AbnormalController {
 		response.getWriter().print(jsonObject.toJSONString());
 	}
 	
+//	/**用于报表**/
+//	@RequestMapping("/getAbnormal.do")
+	
 	@RequestMapping("/getAbnormalData.do")
 	public void getAbnormalData(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String yearS = request.getParameter("year");
@@ -65,11 +75,13 @@ public class AbnormalController {
 		String dayS = request.getParameter("day");
 		String equipmentGroupS = request.getParameter("equipmentGroup");
 		String equipmentIDS = request.getParameter("equipmentID");
+		String deptClassS = request.getParameter("deptClass");
 		int year = 0;
 		int month = 0;
 		int day = 0;
 		int equipmentGroup = 0;
 		int equipmentID = 0;
+		int deptClass = 0;
 		if(yearS!=null && !yearS.equals("")){
 			year = Integer.parseInt(yearS);
 		}
@@ -85,20 +97,30 @@ public class AbnormalController {
 		if(equipmentIDS!=null && !equipmentIDS.equals("")){
 			equipmentID = Integer.parseInt(equipmentIDS);
 		}
-		List<Abnormal> abnormalList = new ArrayList<Abnormal>();
-		if(day==0){
-			if(equipmentID==0){
-				abnormalList = (List<Abnormal>) abnormalDao.getAbnormalMonth(year, month, equipmentGroup);
-			}else{
-				abnormalList = (List<Abnormal>) abnormalDao.getAbnormalEquipmentMonth(year, month, equipmentID);
-			}
-		}else{
-			if(equipmentID==0){
-				abnormalList = (List<Abnormal>) abnormalDao.getAbnormalDay(year, month, day, equipmentGroup);
-			}else{
-				abnormalList = (List<Abnormal>) abnormalDao.getAbnormalEquipmentDay(year, month, day, equipmentID);
-			}
+		if(deptClassS!=null && !deptClassS.equals("")){
+			deptClass = Integer.parseInt(deptClassS);
 		}
+		List<Abnormal> abnormalList = new ArrayList<Abnormal>();
+		
+		abnormalList = abnormalDao.queryAbnormal(
+				year, month, day, deptClass, equipmentGroup, equipmentID);
+//		if(day==0){
+//			if(equipmentID==0){
+//				if(equipmentGroup==0){
+//					abnormalList = (List<Abnormal>) abnormalDao.getAbnormalByMonth(year, month);
+//				}else{
+//					abnormalList = (List<Abnormal>) abnormalDao.getAbnormalMonth(year, month, equipmentGroup);
+//				}
+//			}else{
+//				abnormalList = (List<Abnormal>) abnormalDao.getAbnormalEquipmentMonth(year, month, equipmentID);
+//			}
+//		}else{
+//			if(equipmentID==0){
+//				abnormalList = (List<Abnormal>) abnormalDao.getAbnormalDay(year, month, day, equipmentGroup);
+//			}else{
+//				abnormalList = (List<Abnormal>) abnormalDao.getAbnormalEquipmentDay(year, month, day, equipmentID);
+//			}
+//		}
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.addAll(abnormalList);
 		PrintWriter out = response.getWriter();
@@ -116,6 +138,7 @@ public class AbnormalController {
 		String ifCompleted = request.getParameter("ifCompleted");
 		String memo = request.getParameter("memo");
 		String equipmentID = request.getParameter("equipmentID");
+		String engineer = request.getParameter("engineer");
 		CheckForm checkForm = checkService.getCheckForm(trackingNumber);
 		Abnormal abnormal = new Abnormal();
 		abnormal.setYear(checkForm.getYear());
@@ -131,6 +154,7 @@ public class AbnormalController {
 		abnormal.setActualTime(actualTime);		
 		abnormal.setIfCompleted(ifCompleted);
 		abnormal.setMemo(memo);
+		abnormal.setEngineer(engineer);
 		Employee employee =  (Employee) request.getSession().getAttribute("LOGIN_USER");
 		abnormal.setCreator(employee.getEmployee_ID());
 		abnormal.setDateOfCreate(new Date());
@@ -150,7 +174,7 @@ public class AbnormalController {
 		String memo = request.getParameter("memo");
 		String equipmentID = request.getParameter("equipmentID");
 		String validFlag =  request.getParameter("validFlag");
-		
+		String engineer = request.getParameter("engineer");
 		Employee employee = (Employee) request.getSession().getAttribute("LOGIN_USER");
 		Abnormal abnormal = abnormalDao.getAbnotmalByID(Integer.parseInt(abnormalID));
 		//判断删除或修改
@@ -173,6 +197,7 @@ public class AbnormalController {
 			abnormal.setActualTime(actualTime);		
 			abnormal.setIfCompleted(ifCompleted);
 			abnormal.setMemo(memo);
+			abnormal.setEngineer(engineer);
 			abnormal.setEquipmentID_fk(Integer.parseInt(equipmentID));
 			abnormal.setUpdater(employee.getEmployee_ID());
 			abnormal.setDateOfUpdate(new Date());

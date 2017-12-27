@@ -25,6 +25,35 @@ public class Abnormal extends Model {
 	private String actualTime;
 	private String ifCompleted;
 	private String memo;
+	private String engineer;
+	private String deptClass;
+	private String deptClassName;
+	private String equipmentGroupName;
+	
+	public String getDeptClassName() {
+		return deptClassName;
+	}
+	public void setDeptClassName(String deptClassName) {
+		this.deptClassName = deptClassName;
+	}
+	public String getEquipmentGroupName() {
+		return equipmentGroupName;
+	}
+	public void setEquipmentGroupName(String equipmentGroupName) {
+		this.equipmentGroupName = equipmentGroupName;
+	}
+	public String getDeptClass() {
+		return deptClass;
+	}
+	public void setDeptClass(String deptClass) {
+		this.deptClass = deptClass;
+	}
+	public String getEngineer() {
+		return engineer;
+	}
+	public void setEngineer(String engineer) {
+		this.engineer = engineer;
+	}
 	public long getId() {
 		return id;
 	}

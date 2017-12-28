@@ -215,13 +215,16 @@ function modifyAbnormal(){
 		},
 		success:function(data){
 			if(data.success=="true"){
-				alert("修改成功");
+				//alert("修改成功");
 				$("#responsive2").modal('hide');
 				var year = $("input[name='year']").val();
 				var month = $("input[name='month']").val();
 				var equipmentGroup = $("input[name='equipmentGroup']").val();
 				var day = "";
 				var equipmentID = "";
+				if(ifCompleted=="1"){
+					alert("异常完成提醒：请及时确认该设备异常是否解决！！");
+				}
 				loadAbnormalTable(year,month,day,equipmentGroup,equipmentID);
 			}else{
 				alert("数据提交失败");

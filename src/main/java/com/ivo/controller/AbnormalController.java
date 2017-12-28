@@ -158,6 +158,7 @@ public class AbnormalController {
 		Employee employee =  (Employee) request.getSession().getAttribute("LOGIN_USER");
 		abnormal.setCreator(employee.getEmployee_ID());
 		abnormal.setDateOfCreate(new Date());
+		abnormal.setDeptClass(Integer.toString(checkForm.getClass_fk()));
 		abnormalDao.saveAbnormal(abnormal);
 		response.getWriter().print("{\"success\":\"true\"}");
 	}

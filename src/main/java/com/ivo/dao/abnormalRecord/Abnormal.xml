@@ -69,12 +69,12 @@
    			insert into ProperRate_M_AbnormalRecord
     			(year, month, day, equipmentGroup_fk, equipmentID_fk, checkForm_fk,
     			dates, sipecification, solutions, expectedTime, actualTime, ifCompleted, memo,
-    			validFlag, creater, dateOfCreate, engineer)  
+    			validFlag, creater, dateOfCreate, engineer, deptClass)  
     			values  
     			(#{year, jdbcType=INTEGER}, #{month, jdbcType=INTEGER}, #{day, jdbcType=INTEGER}, #{equipmentGroup_fk, jdbcType=INTEGER}, #{equipmentID_fk, jdbcType=INTEGER}, #{checkForm_fk, jdbcType=VARCHAR},
     			#{dates, jdbcType=VARCHAR}, #{sipecification, jdbcType=VARCHAR}, #{solutions, jdbcType=VARCHAR}, #{expectedTime, jdbcType=VARCHAR}, 
     			#{actualTime, jdbcType=VARCHAR}, #{ifCompleted, jdbcType=VARCHAR}, #{memo, jdbcType=VARCHAR}, 
-    			1, #{creater}, #{dateOfCreate}, #{engineer}) 
+    			1, #{creater}, #{dateOfCreate}, #{engineer}, #{deptClass}) 
 		</insert>
 		
 		<update id="updateAbnormal" parameterType="com.ivo.model.abnormalRecord.Abnormal">  

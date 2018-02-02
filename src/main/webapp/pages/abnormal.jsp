@@ -36,6 +36,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	.table thead tr th{
         			font-size: 12px;
         	}
+			.btn {
+				padding: 2px 2px 2px 2px;
+			}
+			.input-small {
+				width: 110px !important;
+			}
+			.checkbox-inline {
+				padding-left: 0px !important;
+			}
         </style>
     </head>
     <!-- END HEAD -->
@@ -97,6 +106,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 		<div style="padding-left:10px;">
                                 		   <span>时间:</span>
                                         <select id="year" class="input-small">
+												<option value="0">---All---</option>
                                         		<option value="1015">2015</option>
                                 		   		<option value="2016">2016</option>
                                         		<option value="2017">2017</option>
@@ -113,6 +123,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                         </select>
                                 		   <span>年</span>
                                 		   <select id="month" class="input-small">
+											   	<option value="0">---All---</option>
                                 		   		<option value="1">1</option>
                                 		   		<option value="2">2</option>
                                 		   		<option value="3">3</option>
@@ -131,7 +142,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 		    <span>&nbsp;&nbsp;</span>
                                 		   <span>课别:</span>
                                 		   <select id="deptClass" onchange="selectEquipmentGroup()" class="input-small">
-                                		   		<option value="all">---All---</option>
+                                		   		<option value="0">---All---</option>
                                 		   		<option value="1">模组厂务课</option>
                                 		   		<option value="2">仪电课</option>
                                 		   		<option value="3">气化课</option>
@@ -143,28 +154,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 		    <span>&nbsp;&nbsp;</span>
                                 		   <span>系统:</span>
                                 		   <select id="equipmentGroup" class="input-small">
-                                		   		<option value="all">---All---</option>
+                                		   		<option value="0">---All---</option>
                                 		   </select>
-                                		   <span>&nbsp;&nbsp;</span>
-                                		   <span>&nbsp;&nbsp;</span>
-                                		   <button type="button" class="btn btn-primary" onclick="selectData()">查找</button>
+											<span>&nbsp;&nbsp;</span>
+											<span>&nbsp;&nbsp;</span>
+
+											<span>是否完成:</span>
+											<label class="checkbox-inline">
+												<input type="radio" name="ifCompleted" value="0" checked> 否
+											</label>
+											<label class="checkbox-inline">
+												<input type="radio" name="ifCompleted" value="1" > 是
+											</label>
+
+
+											<button type="button" class="btn btn-primary" onclick="selectData()">查找</button>
                                 		</div>
                                 		<div class="table-scrollable">
 	                                		<table style="text-align:center;cursor:pointer;" class="table table-bordered table-hover table-striped  flip-content">
 	                                        <thead   class="bg-grey bg-font-grey">
 	                                        		<tr style="text-align:center;" >
-	                                        			<th style="text-align:center;">日期</th>
-	                                        			<th style="text-align:center;">课</th>
-	                                        			<th style="text-align:center;">系统</th>
-	                                            		<th style="text-align:center;">设备编号</th>
-	                                            		<th style="text-align:center;">异常状况详述</th>
-	                                            		<th style="text-align:center;">拟定解决方案</th>
-	                                            		<th style="text-align:center;">预计完成时间</th>
-	                                            		<th style="text-align:center;">实际完成时间</th>
-	                                            		<th style="text-align:center;">是否完成</th>
-	                                            		<th style="text-align:center;">备注</th>
-	                                            		<th style="text-align:center;">工程师</th>
-	                                            		<th style="text-align:center;">修改</th>
+	                                        			<th style="text-align:center;width:8%;">日期</th>
+	                                        			<th style="text-align:center;width:8%;">课</th>
+	                                        			<th style="text-align:center;width:8%;">系统</th>
+	                                            		<th style="text-align:center;width:8%;">设备编号</th>
+	                                            		<th style="text-align:center;width:15%;">异常状况详述</th>
+	                                            		<th style="text-align:center;width:15%;">拟定解决方案</th>
+	                                            		<th style="text-align:center;width:6%;">预计完成时间</th>
+	                                            		<th style="text-align:center;width:6%;">实际完成时间</th>
+	                                            		<th style="text-align:center;width:6%;">是否完成</th>
+	                                            		<th style="text-align:center;width:8%;">备注</th>
+	                                            		<th style="text-align:center;width:6%;">工程师</th>
+	                                            		<th style="text-align:center;width:6%;">修改</th>
                                             		</tr>
 	                                        </thead>
 	                                        <tbody id="abnormalTable">
@@ -189,98 +210,204 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <!-- END CONTAINER -->
         <!-- BEGIN FOOTER -->
         <jsp:include page="common/footer.jsp"/>
-        <!-- END FOOTER --> 
-        
-        <!-- 模态框 -->
-        <div id="responsive2" class="modal fade" tabindex="-1" data-width="760">
-        		<div class="modal-header">
-            		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                		<h4 class="modal-title">修改异常记录</h4>
-          	</div>
-            <div class="modal-body">
-            		<form class="form-horizontal" role="form">
-            			<input type="text" name="abnormalID_b" hidden/>
-            			<input type="text" name="equipmentID" hidden/>
-            			<div class="form-body">
-                			<div class="form-group">
-		             		<label class="col-md-3 control-label">日期：</label>
-		                    	<div class="col-md-4">
-			            			<div class='input-group date' id='datetimepicker4'>  
-									<input type='text' class="form-control" readonly name="dates_b"/>  
-									<span class="input-group-addon">  
-										<span class="glyphicon glyphicon-calendar"></span>  
-									</span>  
-								</div>  
-		                   	</div>
-		           		</div>
-                   		<div class="form-group">
-                        		<label class="col-md-3 control-label">设备编号：</label>
-                        		<div class="col-md-5">
-                             	<input class="form-control" name="equipmentID_b" readonly>
-                            	 </div>
-                      	</div>
-                        	<div class="form-group">
-		               		<label class="col-md-3 control-label">异常详述：</label>
-		                   	<div class="col-md-9">
-		                    		<textarea class="form-control" rows="3" name="sipecification_b"></textarea>
-		                   	</div>
-		          		</div>
-		             	<div class="form-group">
-		            			<label class="col-md-3 control-label">解决方案：</label>
-		               		<div class="col-md-9">
-		                 		<textarea class="form-control" rows="3" name="solutions_b"></textarea>
-		                		</div>
-		           		</div>
-		            		<div class="form-group">
-		             		<label class="col-md-3 control-label">预计完成时间：</label>
-		               		<div class="col-md-4">
-		                 		<div class='input-group date' id='datetimepicker5'>  
-									<input type='text' class="form-control"  name="expectedTime_b"/>  
-									<span class="input-group-addon">  
-										<span class="glyphicon glyphicon-calendar"></span>  
-									</span>  
-								</div>             
-		               		</div>
-		          		</div>
-		           		<div class="form-group">
-		               		<label class="col-md-3 control-label">实际完成时间：</label>
-		               		<div class="col-md-4">
-		                 		<div class='input-group date' id='datetimepicker6'>  
-									<input type='text' class="form-control"  name="actualTime_b"/>  
-									<span class="input-group-addon">  
-										<span class="glyphicon glyphicon-calendar"></span>  
-									</span>  
-								</div> 
-		                   	</div>
-		            		</div>
-		                	<div class="form-group">
-		              		<label class="col-md-3 control-label">是否完成：</label>
-		                 	<div class="col-md-2">
-		                 		<select class="form-control" name="ifCompleted_b">
-		                        		<option value="0">否</option>
-		                            	<option value="1">是</option>                 
-		                    		</select>
-		                   		<!-- <input class="form-control"  type="text" name="ifCompleted_b"> --> 
-		                    	</div>
-		                		<label class="col-md-3 control-label">工程师：</label>
-		               		<div class="col-md-4">
-		                 		<input class="form-control" name="engineer_b"/>
-		                		</div>
-		                	</div>
-		                	<div class="form-group">
-		                		<label class="col-md-3 control-label">备注：</label>
-		                		<div class="col-md-9">
-		                    		<textarea class="form-control" rows="3" name="memo_b"></textarea>
-		                 	</div>
-		             	</div>
-               		</div>
-           		</form>
-        		</div>
-      		<div class="modal-footer">
-         		<button type="button" data-dismiss="modal" class="btn btn-outline dark">取消</button>
-           		<button type="button" class="btn green" onclick="deleteAbnormal()">删除</button>
-           		<button type="button" class="btn green" onclick="modifyAbnormal()">保存</button>
-         	</div>
-    		</div> 
-    </body>
+        <!-- END FOOTER -->
+
+		<!-- 模态框 -->
+		<div id="responsive" class="modal fade" tabindex="-1" data-width="760">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">添加异常记录</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form">
+					<div class="form-body">
+						<div class="form-group">
+							<label class="col-md-3 control-label">日期<span class="required" aria-required="true">*</span> ：</label>
+							<div class="col-md-4">
+								<div class='input-group date' id='datetimepicker1'>
+									<input type='text' class="form-control" readonly name="dates_a"/>
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">设备编号 <span class="required" aria-required="true">*</span> ：</label>
+							<div class="col-md-5">
+								<select class="form-control" name="equipmentID_a">
+
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">异常详述<span class="required" aria-required="true">*</span> ：</label>
+							<div class="col-md-9">
+								<textarea class="form-control" rows="3" name="sipecification_a"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">
+								工程师<span class="required" aria-required="true">*</span> :
+							</label>
+							<div class="col-md-5">
+								<input class="form-control" name="engineer_a" onclick="empTree()"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">解决方案：</label>
+							<div class="col-md-9">
+								<textarea class="form-control" rows="3" name="solutions_a"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">预计完成时间：</label>
+							<div class="col-md-4">
+								<div class='input-group date' id='datetimepicker2'>
+									<input type='text' class="form-control" readonly name="expectedTime_a"/>
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">是否完成：</label>
+							<div class="col-md-2">
+								<select class="form-control" name="ifCompleted_a">
+									<option value="0">否</option>
+									<option value="1">是</option>
+								</select>
+								<!-- <input class="form-control"  type="text" name="ifCompleted_b"> -->
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">实际完成时间：</label>
+							<div class="col-md-4">
+								<div class='input-group date' id='datetimepicker3'>
+									<input type='text' class="form-control" readonly name="actualTime_a"/>
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">备注：</label>
+							<div class="col-md-9">
+								<textarea class="form-control" rows="3" name="memo_a"></textarea>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" data-dismiss="modal" class="btn btn-outline dark">取消</button>
+				<button type="button" class="btn green" onclick="submitAbnormal()">保存</button>
+			</div>
+		</div>
+
+		<!-- 模态框 -->
+		<div id="responsive2" class="modal fade" tabindex="-1" data-width="760">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">修改异常记录</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form">
+					<input type="text" name="abnormalID_b" hidden/>
+					<input type="text" name="equipmentID" hidden/>
+					<div class="form-body">
+						<div class="form-group">
+							<label class="col-md-3 control-label">日期：</label>
+							<div class="col-md-4">
+								<div class='input-group date' id='datetimepicker4'>
+									<input type='text' class="form-control" readonly name="dates_b"/>
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">设备编号：</label>
+							<div class="col-md-5">
+								<input class="form-control" name="equipmentID_b" readonly></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">异常详述：</label>
+							<div class="col-md-9">
+								<textarea class="form-control" readonly rows="3" name="sipecification_b"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">工程师：</label>
+							<div class="col-md-4">
+								<input class="form-control" readonly name="engineer_b" onclick="empTree()"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">解决方案：</label>
+							<div class="col-md-9">
+								<textarea class="form-control" rows="3" name="solutions_b"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">预计完成时间：</label>
+							<div class="col-md-4">
+								<div class='input-group date' id='datetimepicker5'>
+									<input type='text' class="form-control" name="expectedTime_b"/>
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">是否完成：</label>
+							<div class="col-md-2">
+								<select class="form-control" name="ifCompleted_b">
+									<option value="0">否</option>
+									<option value="1">是</option>
+								</select>
+								<!-- <input class="form-control"  type="text" name="ifCompleted_b"> -->
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">实际完成时间：</label>
+							<div class="col-md-4">
+								<div class='input-group date' id='datetimepicker6'>
+									<input type='text' class="form-control" name="actualTime_b"/>
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">备注：</label>
+							<div class="col-md-9">
+								<textarea class="form-control" rows="3" name="memo_b"></textarea>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" data-dismiss="modal" class="btn btn-outline dark">取消</button>
+				<button type="button" class="btn green" onclick="deleteAbnormal()">删除</button>
+				<button type="button" class="btn green" onclick="modifyAbnormal()">保存</button>
+			</div>
+		</div>
+
+		<div id="responsive3" class="modal fade" tabindex="-1" data-width="300">
+			<div class="portlet light bordered">
+				<!--人员组织树-->
+				<div id="memo"></div>
+				<div id="treeArea"></div>
+			</div>
+		</div>
+
+	</body>
 </html>

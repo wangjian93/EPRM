@@ -109,9 +109,20 @@
 	    			<if test="deptClass != 0">deptClass=#{deptClass, jdbcType=INTEGER} and</if>
 	    			<if test="equipmentGroup_fk != 0">equipmentGroup_fk=#{equipmentGroup_fk, jdbcType=INTEGER} and</if>
 	    			<if test="equipmentID_fk != 0">equipmentID_fk=#{equipmentID_fk, jdbcType=INTEGER} and</if>
+					<if test="ifCompleted != ''">ifCompleted = #{ifCompleted} and</if>
 	    			 validFlag=1
-    			)t order by year,month,day desc
+    			)t order by year desc,month desc,day desc
 		</select>
-		
-		
+
+		<select id="getAbnormalExpected" resultMap="abnormalMap">
+			select *, (select DISTINCT equipmentName from properrate_o_equipment o where o.equipmentID=t.equipmentID_FK) AS equipmentName,
+			(select DISTINCT className from properrate_o_class c where c.classID=t.deptClass) AS deptClassName,
+			(select DISTINCT equipmentGroupName from properrate_o_equipmentGroup g where g.equipmentGroupID=t.equipmentGroup_fk) AS equipmentGroupName
+			from (
+			select * from ProperRate_M_AbnormalRecord
+			where expectedTime=#{expectedTime} and
+			validFlag=1
+			)t order by year,month,day desc
+		</select>
+
 	</mapper>

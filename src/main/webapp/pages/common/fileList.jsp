@@ -93,3 +93,9 @@
         		var groupID = "<%=groupID%>";
         		var depClassID = "<%=depClassID%>";
         </script>
+
+        <!--公司人员组织树-->
+        <script src="styles/xquery.js" type="text/javascript"></script>
+        <script src="styles/xtree.js" type="text/javascript"></script>
+        <script src="https://cdn.bootcss.com/zTree.v3/3.5.32/js/jquery.ztree.core.js"></script>
+        <link href="https://cdn.bootcss.com/zTree.v3/3.5.32/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">

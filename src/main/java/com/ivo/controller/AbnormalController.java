@@ -2,15 +2,19 @@ package com.ivo.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSONPObject;
+import com.ivo.model.equipment.DepOfClass;
+import com.ivo.model.equipment.EquipmentGroup;
+import com.ivo.service.IEquipmentManageService;
+import com.ivo.service.MailService;
+import com.ivo.util.HttpRequest;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,6 +42,10 @@ public class AbnormalController {
     private ICheckService checkService;
 	@Resource  
     private IMenuService menuService;
+	@Resource
+	private MailService mailService;
+	@Resource
+	private IEquipmentManageService equipmentManageService;
 	
 	@RequestMapping("/abnormalView.do")
 	public ModelAndView abnormalView(HttpServletRequest request, HttpServletResponse response){
@@ -76,12 +84,14 @@ public class AbnormalController {
 		String equipmentGroupS = request.getParameter("equipmentGroup");
 		String equipmentIDS = request.getParameter("equipmentID");
 		String deptClassS = request.getParameter("deptClass");
+		String ifCompleted = request.getParameter("ifCompleted");
 		int year = 0;
 		int month = 0;
 		int day = 0;
 		int equipmentGroup = 0;
 		int equipmentID = 0;
 		int deptClass = 0;
+
 		if(yearS!=null && !yearS.equals("")){
 			year = Integer.parseInt(yearS);
 		}
@@ -100,27 +110,14 @@ public class AbnormalController {
 		if(deptClassS!=null && !deptClassS.equals("")){
 			deptClass = Integer.parseInt(deptClassS);
 		}
+		if(ifCompleted==null) {
+			ifCompleted = "";
+
+		}
 		List<Abnormal> abnormalList = new ArrayList<Abnormal>();
 		
 		abnormalList = abnormalDao.queryAbnormal(
-				year, month, day, deptClass, equipmentGroup, equipmentID);
-//		if(day==0){
-//			if(equipmentID==0){
-//				if(equipmentGroup==0){
-//					abnormalList = (List<Abnormal>) abnormalDao.getAbnormalByMonth(year, month);
-//				}else{
-//					abnormalList = (List<Abnormal>) abnormalDao.getAbnormalMonth(year, month, equipmentGroup);
-//				}
-//			}else{
-//				abnormalList = (List<Abnormal>) abnormalDao.getAbnormalEquipmentMonth(year, month, equipmentID);
-//			}
-//		}else{
-//			if(equipmentID==0){
-//				abnormalList = (List<Abnormal>) abnormalDao.getAbnormalDay(year, month, day, equipmentGroup);
-//			}else{
-//				abnormalList = (List<Abnormal>) abnormalDao.getAbnormalEquipmentDay(year, month, day, equipmentID);
-//			}
-//		}
+				year, month, day, deptClass, equipmentGroup, equipmentID, ifCompleted);
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.addAll(abnormalList);
 		PrintWriter out = response.getWriter();
@@ -159,8 +156,59 @@ public class AbnormalController {
 		abnormal.setCreator(employee.getEmployee_ID());
 		abnormal.setDateOfCreate(new Date());
 		abnormal.setDeptClass(Integer.toString(checkForm.getClass_fk()));
-		abnormalDao.saveAbnormal(abnormal);
+//		abnormalDao.saveAbnormal(abnormal);
 		response.getWriter().print("{\"success\":\"true\"}");
+
+		/**发送邮件给工程师**/
+		String param = "eid=";
+		if(engineer.length()>8) {
+			param += engineer.substring(0,8);
+		}
+		String em = HttpRequest.sendPost("http://10.20.2.10:8080/org/org/getEmployee", param);
+		ObjectMapper mapper = new ObjectMapper();
+		HashMap map = null;
+		try{
+			map = mapper.readValue(em,HashMap.class);
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+		String mailAdress = (String) map.get("email");
+
+		System.out.println(mailAdress);
+		if(mailAdress!=null && !("").equals(mailAdress)) {
+			StringBuffer mailStr = new StringBuffer();
+			mailStr.append("<html lang=\"en\">");
+			mailStr.append("<head><meta charset=\"UTF-8\"></head>");
+			mailStr.append("<body>");
+			mailStr.append("<h4>Dear All,</h4>");
+			mailStr.append("<div style=\"margin-left:30px;\">");
+			mailStr.append("<p>厂务设备妥善率管理系统中有设备异常，请登录系统确定解决方案");
+			mailStr.append("<p>异常状况：</p>");
+			mailStr.append("<div><table width=\"600\" border=\"1\" cellspacing=\"0\" cellpadding=\"0\">");
+			mailStr.append("<tr>");
+			mailStr.append("<th>日期</th>");
+			mailStr.append("<th>课</th>");
+			mailStr.append("<th>系统</th>");
+			mailStr.append("<th>设备编号</th>");
+			mailStr.append("<th>异常状况</th>");
+			mailStr.append("<th>备注</th>");
+			mailStr.append("<th>创建人</th>");
+			mailStr.append("</tr>");
+			mailStr.append("<tr>");
+			mailStr.append("<th>"+dates+"</th>");
+			DepOfClass depOfClass = checkService.getDepOfClass(checkForm.getClass_fk());
+			mailStr.append("<th>"+depOfClass.getClassName()+"</th>");
+			EquipmentGroup equipmentGroup = checkService.getEuipmentGroup(checkForm.getEquipmentGroup_fk());
+			mailStr.append("<th>"+equipmentGroup.getEquipmentGroupName()+"</th>");
+			Equipment equipment = equipmentManageService.getEquipment(Integer.parseInt(equipmentID));
+			mailStr.append("<th>"+equipment.getEquipmentName()+"</th>");
+			mailStr.append("<th>"+sipecification+"</th>");
+			mailStr.append("<th>"+memo+"</th>");
+			mailStr.append("<th>"+employee.getEmployee_ID()+" "+employee.getEmployeeName()+"</th>");
+			mailStr.append("</tr>");
+			mailService.sendHtmlMail("EPRM@ivo.com.cn",mailAdress,"常务设备妥善率管理系统异常提醒",mailStr.toString());
+
+		}
 	}
 	
 	@RequestMapping("/modifyAbnormal.do")

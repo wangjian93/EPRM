@@ -198,10 +198,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             		<form class="form-horizontal" role="form">
             			<div class="form-body">
                 			<div class="form-group">
-		             		<label class="col-md-3 control-label">日期：</label>
+		             		<label class="col-md-3 control-label">日期<span class="required" aria-required="true">*</span> ：</label>
 		                    	<div class="col-md-4">
 			            			<div class='input-group date' id='datetimepicker1'>  
-									<input type='text' class="form-control" readonly name="dates_a"/>  
+									<input type='text' class="form-control"  name="dates_a"/>
 									<span class="input-group-addon">  
 										<span class="glyphicon glyphicon-calendar"></span>  
 									</span>  
@@ -209,7 +209,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		                   	</div>
 		           		</div>
                    		<div class="form-group">
-                        		<label class="col-md-3 control-label">设备编号：</label>
+                        		<label class="col-md-3 control-label">设备编号 <span class="required" aria-required="true">*</span> ：</label>
                         		<div class="col-md-5">
                              <select class="form-control" name="equipmentID_a">
 		                                                      
@@ -217,11 +217,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             	 </div>
                       	</div>
                         	<div class="form-group">
-		               		<label class="col-md-3 control-label">异常详述：</label>
+		               		<label class="col-md-3 control-label">异常详述<span class="required" aria-required="true">*</span> ：</label>
 		                   	<div class="col-md-9">
 		                    		<textarea class="form-control" rows="3" name="sipecification_a"></textarea>
 		                   	</div>
 		          		</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">
+									工程师<span class="required" aria-required="true">*</span> :
+								</label>
+								<div class="col-md-5">
+									<input class="form-control" name="engineer_a" onclick="empTree()"></input>
+								</div>
+							</div>
 		             	<div class="form-group">
 		            			<label class="col-md-3 control-label">解决方案：</label>
 		               		<div class="col-md-9">
@@ -232,38 +240,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		             		<label class="col-md-3 control-label">预计完成时间：</label>
 		               		<div class="col-md-4">
 		                 		<div class='input-group date' id='datetimepicker2'>  
-									<input type='text' class="form-control" readonly name="expectedTime_a"/>  
+									<input type='text' class="form-control"  name="expectedTime_a"/>
 									<span class="input-group-addon">  
 										<span class="glyphicon glyphicon-calendar"></span>  
 									</span>  
 								</div>             
 		               		</div>
 		          		</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">是否完成：</label>
+								<div class="col-md-2">
+									<select class="form-control" name="ifCompleted_a">
+										<option value="0">否</option>
+										<option value="1">是</option>
+									</select>
+									<!-- <input class="form-control"  type="text" name="ifCompleted_b"> -->
+								</div>
+							</div>
 		           		<div class="form-group">
 		               		<label class="col-md-3 control-label">实际完成时间：</label>
 		               		<div class="col-md-4">
 		                 		<div class='input-group date' id='datetimepicker3'>  
-									<input type='text' class="form-control" readonly name="actualTime_a"/>  
+									<input type='text' class="form-control"  name="actualTime_a"/>
 									<span class="input-group-addon">  
 										<span class="glyphicon glyphicon-calendar"></span>  
 									</span>  
 								</div> 
 		                   	</div>
 		            		</div>
-		                	<div class="form-group">
-		              		<label class="col-md-3 control-label">是否完成：</label>
-		                 	<div class="col-md-2">
-		                 		<select class="form-control" name="ifCompleted_a">
-		                        		<option value="0">否</option>
-		                        		<option value="1">是</option>                 
-		                     	</select>
-		                   		<!-- <input class="form-control"  type="text" name="ifCompleted_b"> --> 
-		                     </div>
-		                     <label class="col-md-2 control-label">工程师：</label>
-		               		<div class="col-md-4">
-		                 		<input class="form-control" name="engineer_a"></input>
-		                		</div>
-		                	</div>
 		                	<div class="form-group">
 		                		<label class="col-md-3 control-label">备注：</label>
 		                		<div class="col-md-9">
@@ -288,12 +292,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="modal-body">
             		<form class="form-horizontal" role="form">
             			<input type="text" name="abnormalID_b" hidden/>
-            			<div class="form-body">
+						<input type="text" name="equipmentID" hidden/>
+						<div class="form-body">
                 			<div class="form-group">
 		             		<label class="col-md-3 control-label">日期：</label>
 		                    	<div class="col-md-4">
 			            			<div class='input-group date' id='datetimepicker4'>  
-									<input type='text' class="form-control" readonly name="dates_b"/>  
+									<input type='text' class="form-control" readonly name="dates_b"/>
 									<span class="input-group-addon">  
 										<span class="glyphicon glyphicon-calendar"></span>  
 									</span>  
@@ -303,17 +308,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                    		<div class="form-group">
                         		<label class="col-md-3 control-label">设备编号：</label>
                         		<div class="col-md-5">
-                             <select class="form-control" name="equipmentID_b">
-		                                                      
-		                     </select>
+                             	<input class="form-control" readonly name="equipmentID_b"></input>
                             	 </div>
                       	</div>
                         	<div class="form-group">
 		               		<label class="col-md-3 control-label">异常详述：</label>
 		                   	<div class="col-md-9">
-		                    		<textarea class="form-control" rows="3" name="sipecification_b"></textarea>
+		                    		<textarea class="form-control" readonly rows="3" name="sipecification_b"></textarea>
 		                   	</div>
 		          		</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">工程师：</label>
+								<div class="col-md-4">
+									<input class="form-control" readonly name="engineer_b"></input>
+								</div>
+							</div>
 		             	<div class="form-group">
 		            			<label class="col-md-3 control-label">解决方案：</label>
 		               		<div class="col-md-9">
@@ -324,38 +333,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		             		<label class="col-md-3 control-label">预计完成时间：</label>
 		               		<div class="col-md-4">
 		                 		<div class='input-group date' id='datetimepicker5'>  
-									<input type='text' class="form-control" readonly name="expectedTime_b"/>  
+									<input type='text' class="form-control"  name="expectedTime_b"/>
 									<span class="input-group-addon">  
 										<span class="glyphicon glyphicon-calendar"></span>  
 									</span>  
 								</div>             
 		               		</div>
 		          		</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">是否完成：</label>
+								<div class="col-md-2">
+									<select class="form-control" name="ifCompleted_b">
+										<option value="0">否</option>
+										<option value="1">是</option>
+									</select>
+									<!-- <input class="form-control"  type="text" name="ifCompleted_b"> -->
+								</div>
+							</div>
 		           		<div class="form-group">
 		               		<label class="col-md-3 control-label">实际完成时间：</label>
 		               		<div class="col-md-4">
-		                 		<div class='input-group date' id='datetimepicker6'>  
-									<input type='text' class="form-control" readonly name="actualTime_b"/>  
-									<span class="input-group-addon">  
-										<span class="glyphicon glyphicon-calendar"></span>  
-									</span>  
-								</div> 
+		                 		<div class='input-group date' id='datetimepicker6'>
+									<input type='text' class="form-control"  name="actualTime_b"/>
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
 		                   	</div>
 		            		</div>
-		                	<div class="form-group">
-		              		<label class="col-md-3 control-label">是否完成：</label>
-		                 	<div class="col-md-2">
-		                 		<select class="form-control" name="ifCompleted_b">
-		                        		<option value="0">否</option>
-		                            	<option value="1">是</option>                 
-		                    		</select>
-		                   		<!-- <input class="form-control"  type="text" name="ifCompleted_b"> --> 
-		                    	</div>
-		                		<label class="col-md-3 control-label">工程师：</label>
-		               		<div class="col-md-4">
-		                 		<input class="form-control" name="engineer_b"></input>
-		                		</div>
-		                	</div>
 		                	<div class="form-group">
 		                		<label class="col-md-3 control-label">备注：</label>
 		                		<div class="col-md-9">
@@ -370,6 +375,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            		<button type="button" class="btn green" onclick="deleteAbnormal()">删除</button>
            		<button type="button" class="btn green" onclick="modifyAbnormal()">保存</button>
          	</div>
-    		</div>
+		</div>
+
+			<div id="responsive3" class="modal fade" tabindex="-1" data-width="300">
+				<div class="portlet light bordered">
+					<!--人员组织树-->
+					<div id="memo"></div>
+					<div id="treeArea"></div>
+				</div>
+			</div>
     </body>
 </html>

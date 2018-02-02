@@ -1,7 +1,7 @@
 $(function(){
 	initDate();
 	menuInit();
-	setDate();
+	//setDate();
 	setReportTableData();
 	$('select').selectpicker({size: 6});
 });
@@ -16,20 +16,20 @@ function setReportTableData(){
 	var month = $("#month").val();
 	var deptClass = $("#deptClass").val();
 	var equipmentGroup = $("#equipmentGroup").val();
-	
-	if(deptClass=="all") deptClass="";
-	if(equipmentGroup=="all") equipmentGroup="";
-	getReportTableData(year,month,deptClass,equipmentGroup);
+	var ifCompleted = $("input[name='ifCompleted']:checked").val();
+
+	getReportTableData(year,month,deptClass,equipmentGroup,ifCompleted);
 }
 
-function getReportTableData(year,month,deptClass,equipmentGroup){
+function getReportTableData(year,month,deptClass,equipmentGroup,ifCompleted){
 	$.ajax({
 		url:'getAbnormalData.do',
 		data:{
 			"year":year,
 			"month":month,
 			"deptClass":deptClass,
-			"equipmentGroup":equipmentGroup
+			"equipmentGroup":equipmentGroup,
+            "ifCompleted":ifCompleted
 		},
 		type:'POST',
 		dataType:'json',
@@ -97,10 +97,10 @@ function selectData(){
 }
 function selectEquipmentGroup(){
 	var deptClass = $("#deptClass").val();
-	if(deptClass=="all"){
+	if(deptClass=="0"){
 		$("#equipmentGroup").empty();
 		var optionAll = $("<option></option>");
-		$(optionAll).attr("value","all");
+		$(optionAll).attr("value","0");
 		$(optionAll).html("---All---");
 		$("#equipmentGroup").append(optionAll);
 	}else{
@@ -115,7 +115,7 @@ function selectEquipmentGroup(){
 				var equipmentGroup = data[i];
 				$("#equipmentGroup").empty();
 				var optionAll = $("<option></option>");
-				$(optionAll).attr("value","all");
+				$(optionAll).attr("value","0");
 				$(optionAll).html("---All---");
 				$("#equipmentGroup").append(optionAll);
 				for(var i=0;i<data.length; i++){
@@ -137,38 +137,6 @@ function selectEquipmentGroup(){
 }
 
 function initDate(){
-//	$('#datetimepicker1').datetimepicker({  
-//		minView: "month", //选择日期后，不会再跳转去选择时分秒 
-//	    language:  'zh-CN',
-//	    format: 'yyyy-mm-dd',
-//	    todayBtn:  1,
-//	    autoclose: 1,
-//        pickerPosition: "bottom-left"
-//    }); 
-//	$('#datetimepicker2').datetimepicker({  
-//		minView: "month", //选择日期后，不会再跳转去选择时分秒 
-//	    language:  'zh-CN',
-//	    format: 'yyyy-mm-dd',
-//	    todayBtn:  1,
-//	    autoclose: 1,
-//        pickerPosition: "bottom-left"
-//    });
-//	$('#datetimepicker3').datetimepicker({  
-//		minView: "month", //选择日期后，不会再跳转去选择时分秒 
-//	    language:  'zh-CN',
-//	    format: 'yyyy-mm-dd',
-//	    todayBtn:  1,
-//	    autoclose: 1,
-//        pickerPosition: "bottom-left"
-//    });
-//	$('#datetimepicker4').datetimepicker({  
-//		minView: "month", //选择日期后，不会再跳转去选择时分秒 
-//	    language:  'zh-CN',
-//	    format: 'yyyy-mm-dd',
-//	    todayBtn:  1,
-//	    autoclose: 1,
-//        pickerPosition: "bottom-left"
-//    });
 	$('#datetimepicker5').datetimepicker({  
 		minView: "month", //选择日期后，不会再跳转去选择时分秒 
 	    language:  'zh-CN',
@@ -228,6 +196,18 @@ function modifyAbnormal(){
 	var memo = $("textarea[name='memo_b']").val();
 	var equipmentID = $("input[name='equipmentID']").val();
 	var engineer = $("input[name='engineer_b']").val();
+	if(ifCompleted=="1") {
+		if(actualTime==""){
+			alert("请填写实际完成时间");
+			return;
+		}
+	}
+	if(actualTime != "") {
+		if(ifCompleted=="0") {
+			alert("实际完成时间已确认，请选择已完成")
+			return;
+		}
+	}
 	$.ajax({
 		url:'modifyAbnormal.do',
 		type:'post',
@@ -246,17 +226,10 @@ function modifyAbnormal(){
 		},
 		success:function(data){
 			if(data.success=="true"){
-//				alert("修改成功");
 				$("#responsive2").modal('hide');
-//				var year = $("input[name='year']").val();
-//				var month = $("input[name='month']").val();
-//				var equipmentGroup = $("input[name='equipmentGroup']").val();
-//				var day = "";
-//				var equipmentID = "";
-//				loadAbnormalTable(year,month,day,equipmentGroup,equipmentID);
 				setReportTableData();
 				if(ifCompleted=="1"){
-					alert("异常完成提醒：请及时确认该设备异常是否解决！！");
+					alert("该设备的异常已处理完成,请确认该设备是否已从异常状态切换回正常状态,如果没有请完成修改后及时提交");
 				}
 			}else{
 				alert("数据提交失败");
@@ -282,12 +255,6 @@ function deleteAbnormal(){
 			if(data.success=="true"){
 				alert("删除成功");
 				$("#responsive2").modal('hide');
-//				var year = $("input[name='year']").val();
-//				var month = $("input[name='month']").val();
-//				var equipmentGroup = $("input[name='equipmentGroup']").val();
-//				var day = "";
-//				var equipmentID = "";
-//				loadAbnormalTable(year,month,day,equipmentGroup,equipmentID);
 				setReportTableData();
 			}else{
 				alert(data.message);
@@ -297,4 +264,27 @@ function deleteAbnormal(){
 			alert("数据提交失败，请重新登录提交！");
 		}
 	});
+}
+
+/**人员组织树**/
+function empTree() {
+    XQuery.XFactory.init();
+    var tree = XQuery.make({
+        width : "250px",
+        height : "400px",
+        xtype : "XTree",
+        root : "10000000",
+        url : "http://10.20.2.10:8080/org/" + "/org/emp",
+        crossdomain : true,
+        autoParam : [ "id" ],
+        nodeClick : function(tree, node) {
+            $("input[name='engineer_b']").val(node.id + " " + node.name);
+            $("#responsive3").modal('hide');
+        }
+    });
+    var html = tree.compile();
+    $("#memo").html("");
+    $("#treeArea").html(html);
+    tree.init();
+    $("#responsive3").modal('show');
 }

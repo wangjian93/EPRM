@@ -1,6 +1,6 @@
 
 function reloadAbnormalTabl(){
-	loadAbnormalTable(year,month,day,equipmentGroup,equipmentID)
+	loadAbnormalTable( 0, 0, 0,equipmentGroup,equipmentID)
 }
 function loadAbnormalTable(year,month,day,equipmentGroup,equipmentID){
 	$.ajax({
@@ -76,6 +76,19 @@ function submitAbnormal(){
 	var memo = $("textarea[name='memo_a']").val();
 	var equipmentID = $("select[name='equipmentID_a']").val();
 	var engineer = $("input[name='engineer_a']").val();
+
+	if(dates=="") {
+		alert("请选择日期");
+		return;
+	}
+	if(sipecification=="") {
+		alert("请填写异常描述");
+		return;
+	}
+	if(engineer=="") {
+		alert("请选择工程师");
+		return;
+	}
 	$.ajax({
 		url:'submitAbnormal.do',
 		type:'post',
@@ -131,7 +144,6 @@ function setEquipment(){
 }
 function setSelect(data){
 	$("select[name='equipmentID_a']").empty();
-	$("select[name='equipmentID_b']").empty();
 	for(var i=0; i<data.length; i++){
 		var equipmentID = data[i].equipmentID;
 		var equipmentName = data[i].equipmentName;
@@ -140,16 +152,8 @@ function setSelect(data){
 		option.attr("value",equipmentID);
 		$("select[name='equipmentID_a']").append(option);
 	}
-	for(var i=0; i<data.length; i++){
-		var equipmentID = data[i].equipmentID;
-		var equipmentName = data[i].equipmentName;
-		var option = $("<option></option>");
-		option.html(equipmentName);
-		option.attr("value",equipmentID);
-		$("select[name='equipmentID_b']").append(option);
-	}
-	$('select').selectpicker('render');
-    $('select').selectpicker('refresh');
+    $("select[name='equipmentID_a']").selectpicker('render');
+    $("select[name='equipmentID_a']").selectpicker('refresh');
 }
 
 function addShowModal(){
@@ -158,7 +162,6 @@ function addShowModal(){
 }
 
 function modifyShowModal(abnormalID){
-	setEquipment();
 	$.ajax({
 		url:'getAbnormalByID.do',
 		type:'post',
@@ -169,14 +172,15 @@ function modifyShowModal(abnormalID){
 		success:function(data){
 			var abnormal = data.abnormal;
 			$("input[name='abnormalID_b']").val(abnormal.id);
-			$("input[name='dates_b']").val(abnormal.dates);
+            $("input[name='equipmentID']").val(abnormal.equipmentID_fk);
+            $("input[name='dates_b']").val(abnormal.dates);
 			$("textarea[name='sipecification_b']").val(abnormal.sipecification);
 			$("textarea[name='solutions_b']").val(abnormal.solutions);
 			$("input[name='expectedTime_b']").val(abnormal.expectedTime);
 			$("input[name='actualTime_b']").val(abnormal.actualTime);
 			$("select[name='ifCompleted_b']").selectpicker('val',abnormal.ifCompleted);
 			$("textarea[name='memo_b']").val(abnormal.memo);
-			$("select[name='equipmentID_b']").selectpicker('val',abnormal.equipmentID_b);
+            $("input[name='equipmentID_b']").val(abnormal.equipmentName);
 			$("input[name='engineer_b']").val(abnormal.engineer);
 		},
 		error:function(data){
@@ -195,8 +199,20 @@ function modifyAbnormal(){
 	var actualTime = $("input[name='actualTime_b']").val();
 	var ifCompleted = $("select[name='ifCompleted_b']").val();
 	var memo = $("textarea[name='memo_b']").val();
-	var equipmentID = $("select[name='equipmentID_b']").val();
+    var equipmentID = $("input[name='equipmentID']").val();
 	var engineer = $("input[name='engineer_b']").val();
+    if(ifCompleted=="1") {
+        if(actualTime==""){
+            alert("请填写实际完成时间");
+            return;
+        }
+    }
+    if(actualTime != "") {
+        if(ifCompleted=="0") {
+            alert("实际完成时间已确认，请选择已完成")
+            return;
+        }
+    }
 	$.ajax({
 		url:'modifyAbnormal.do',
 		type:'post',
@@ -222,9 +238,9 @@ function modifyAbnormal(){
 				var equipmentGroup = $("input[name='equipmentGroup']").val();
 				var day = "";
 				var equipmentID = "";
-				if(ifCompleted=="1"){
-					alert("异常完成提醒：请及时确认该设备异常是否解决！！");
-				}
+                if(ifCompleted=="1"){
+                    alert("该设备的异常已处理完成,请确认该设备是否已从异常状态切换回正常状态,如果没有请完成修改后及时提交");
+                }
 				loadAbnormalTable(year,month,day,equipmentGroup,equipmentID);
 			}else{
 				alert("数据提交失败");
@@ -264,4 +280,32 @@ function deleteAbnormal(){
 			alert("数据提交失败，请重新登录提交！");
 		}
 	});
+}
+
+/**人员组织树**/
+function empTree() {
+    XQuery.XFactory.init();
+    var tree = XQuery.make({
+        width : "250px",
+        height : "400px",
+        xtype : "XTree",
+        root : "10000000",
+        url : "http://10.20.2.10:8080/org/" + "/org/emp",
+        crossdomain : true,
+        autoParam : [ "id" ],
+        nodeClick : function(tree, node) {
+        	if($("input[name='engineer_b']")) {
+                $("input[name='engineer_b']").val(node.id + " " + node.name);
+            }
+            if($("input[name='engineer_a']")) {
+                $("input[name='engineer_a']").val(node.id + " " + node.name);
+            }
+            $("#responsive3").modal('hide');
+        }
+    });
+    var html = tree.compile();
+    $("#memo").html("");
+    $("#treeArea").html(html);
+    tree.init();
+    $("#responsive3").modal('show');
 }

@@ -117,6 +117,7 @@ public class CheckServiceImpl implements ICheckService{
 				CheckForm checkForm = checkFormDao.getCheckForm(trackingNumber);
 				/**前一天的CheckFrom**/
 				String perTrackingNumber = CurrentUtil.CurrentPerTracking(equipmentGroup.getEquipmentGroupID());
+				System.out.println(perTrackingNumber);
 				CheckForm pertheckForm = checkFormDao.getCheckForm(perTrackingNumber);
 				if(checkForm==null){
 					checkForm = new CheckForm();
@@ -200,8 +201,9 @@ public class CheckServiceImpl implements ICheckService{
 							int dayPer = CurrentUtil.CurrentPerDay();
 							CheckDataDetail perCheckDataDetail = checkDataDetailDao.getCheckData(yearPer, monthPer, equipment.getEquipmentID());
 							checkDataDetail.getCurrentDay(dayPer);
-							if(perCheckDataDetail!=null)
-							checkDataDetail.SetCurrentDay(day, perCheckDataDetail.getCurrentDay(dayPer));
+							if(perCheckDataDetail!=null) {
+								checkDataDetail.SetCurrentDay(day, perCheckDataDetail.getCurrentDay(dayPer));
+							}
 							checkDataDetailDao.updateCheckDataDetail(checkDataDetail);
 						}
 					}

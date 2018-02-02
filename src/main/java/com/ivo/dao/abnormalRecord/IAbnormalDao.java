@@ -22,5 +22,9 @@ public interface IAbnormalDao {
 	public List<Abnormal> getAbnormalByMonth(@Param("year")int year, @Param("month")int month);
 	public List<Abnormal> queryAbnormal(
 			@Param("year")int year, @Param("month")int month, @Param("day")int day, 
-			@Param("deptClass")int deptClass, @Param("equipmentGroup_fk")int equipmentGroup_fk, @Param("equipmentID_fk")int equipmentID_fk);
+			@Param("deptClass")int deptClass, @Param("equipmentGroup_fk")int equipmentGroup_fk, @Param("equipmentID_fk")int equipmentID_fk,
+			@Param("ifCompleted")String ifCompleted);
+
+	/**查询7天后到达预定日期的异常记录**/
+	public List<Abnormal> getAbnormalExpected(@Param("expectedTime") String expectedTime);
 }

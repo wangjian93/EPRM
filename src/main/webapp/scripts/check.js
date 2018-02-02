@@ -34,14 +34,6 @@ function initDate(){
 	    autoclose: 1,
         pickerPosition: "bottom-left"
     });
-	$('#datetimepicker4').datetimepicker({  
-		minView: "month", //选择日期后，不会再跳转去选择时分秒 
-	    language:  'zh-CN',
-	    format: 'yyyy-mm-dd',
-	    todayBtn:  1,
-	    autoclose: 1,
-        pickerPosition: "bottom-left"
-    });
 	$('#datetimepicker5').datetimepicker({  
 		minView: "month", //选择日期后，不会再跳转去选择时分秒 
 	    language:  'zh-CN',
@@ -120,7 +112,9 @@ function setCheckForm(data){
 			$(sel).attr("data-style","btn-danger");
 			$(sel).siblings('button').attr("class","btn dropdown-toggle btn-danger");
 		}
-		sel.change(function(){selectClick(this);});
+		sel.change(function(){
+			selectClick(this);
+		});
 		div.append(lablediv).append(sel);
 		$("#checkForm").append(div);
 	}
@@ -145,7 +139,7 @@ function getCheckOption(){
 }
 function selectClick(select){
 	var str =  select.value;
-	
+	console.log(select);
 	if(str=="R"){
 		$(select).attr("data-style","btn-danger");
 		$(select).siblings('button').attr("class","btn dropdown-toggle btn-danger");
@@ -155,9 +149,12 @@ function selectClick(select){
 	}else if(str=="SB"){
 		$(select).attr("data-style","btn-info");
 		$(select).siblings('button').attr("class","btn dropdown-toggle btn-info");
-	}else{
-		$(select).attr("data-style","btn-warning");
-		$(select).siblings('button').attr("class","btn dropdown-toggle btn-warning");
+	}else if(str=="AB"){
+        alert("  该设备状态换为Abnormal" +
+            "\n  *注意:若该设备还没有做异常记录,请在下面的异常记录中添加后再提交");
+        $(select).attr("data-style","btn-warning");
+        $(select).siblings('button').attr("class","btn dropdown-toggle btn-warning");
+
 	}
 	getProperRate();
 }

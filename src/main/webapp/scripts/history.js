@@ -30,14 +30,6 @@ function initDate(){
 	    autoclose: 1,
         pickerPosition: "bottom-left"
     });
-	$('#datetimepicker4').datetimepicker({  
-		minView: "month", //选择日期后，不会再跳转去选择时分秒 
-	    language:  'zh-CN',
-	    format: 'yyyy-mm-dd',
-	    todayBtn:  1,
-	    autoclose: 1,
-        pickerPosition: "bottom-left"
-    });
 	$('#datetimepicker5').datetimepicker({  
 		minView: "month", //选择日期后，不会再跳转去选择时分秒 
 	    language:  'zh-CN',

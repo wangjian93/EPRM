@@ -42,15 +42,30 @@
         <!-- see the example of method invoking job above -->  
         <property name="jobDetail" ref="specQuartzDetail" />  
         <property name="cronExpression" value="0 10 0 1 * ?" />
-    </bean> 
+    </bean>
+
+    <bean id="emailReminderQuartzObject" class="com.ivo.quartz.EmailReminder" />
+    <bean id="emailReminderQuartzDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name ="targetObject" ref="emailReminderQuartzObject" />
+        <property name="targetMethod" value="execute" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="emailReminderQuartzTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- see the example of method invoking job above -->
+        <property name="jobDetail" ref="emailReminderQuartzDetail" />
+        <property name="cronExpression" value="0 2 14 * * ?" />
+    </bean>
   
     <!-- 总调度用于启动Spring定时器 -->  
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
         <property name="triggers">  
             <list>  
-                <ref bean="specQuartzTrigger" />
-                <ref bean="simpleTrigger" />  
-            </list>  
+                <!--<ref bean="specQuartzTrigger" />-->
+                <!--<ref bean="simpleTrigger" />  -->
+                <ref bean="emailReminderQuartzTrigger" />
+            </list>
         </property>  
     </bean>    
 </beans>

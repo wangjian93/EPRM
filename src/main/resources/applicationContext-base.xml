@@ -25,6 +25,11 @@
         <import resource="spring-db.xml"/>  
           
         <!-- 导入数据库配置 -->  
-        <import resource="spring-tx.xml"/>  
+        <import resource="spring-tx.xml"/>
+
+        <!-- 配置Mail -->
+        <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+                <property name="host" value="exmail.ivo.com.cn" />
+        </bean>
           
 </beans>  

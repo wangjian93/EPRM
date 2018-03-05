@@ -11,7 +11,6 @@ function getEquipment(equipmentGroupID,depClassID,equipmentID){
 	    dataType:'JSON',
 	    success:function(data){
 	    		var total = data.total;
-	    		console.log(total);
 	    		reloadEquipmentTable(data.depCalss);
 	    },
 	    error:function(data){
@@ -130,7 +129,6 @@ function customDblClickFun(){
     //节点选中时触发
     $('#tree').on('nodeSelected', function(event, data) {
         clickNode(event, data);
-        console.log(data);
     });
     //节点取消选中时触发
     $('#tree').on('nodeUnselected', function(event, data) {

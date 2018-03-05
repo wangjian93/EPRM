@@ -70,8 +70,8 @@ function reloadReportTableData(data){
 		var td_engineer = $("<td></td>");
 		td_engineer.html(data[i].engineer);
 		var td_memo = $("<td></td>");
-		var td_action = $("<td></td>");
-		
+        td_memo.html(data[i].memo);
+        var td_action = $("<td></td>");
 		var a = $("<a></a>");
 		$(a).addClass("btn btn-outline btn-circle dark btn-xs black");
 		$(a).attr("href","javascript:;");
@@ -79,16 +79,31 @@ function reloadReportTableData(data){
 		var ii = $("<i></i>");
 		$(ii).addClass("fa fa-trash-o");
 		a.append(ii).append(" 修改");
-		td_action.append(a);
 		$(a).click(function(){
 			var abnormalID = $(this).attr("abnormalID");
 			modifyShowModal(abnormalID);
 		});
-		
-		td_memo.html(data[i].memo);
+        td_action.append(a);
+
+        var td_delay = $("<td></td>");
+        if(data[i].ifCompleted=="1") {
+            td_delay.html("-");
+		} else {
+            var currentTime = getNowFormatDate();
+            var expectedTime = data[i].expectedTime;
+            if(compareDate(expectedTime, currentTime)) {
+                td_delay.html("-");
+            } else {
+                var delayTime = getDays(currentTime, expectedTime);
+                td_delay.html(delayTime);
+				$(td_delay).css({"color":"red"});
+			}
+
+		}
+
 		tr.append(td_dates).append(td_deptClass).append(td_equipmentGroup).append(td_equipmentName).append(td_sipecification).append(td_solutions)
 			.append(td_expectedTime).append(td_actualTime).append(td_ifCompleted).append(td_memo)
-			.append(td_engineer).append(td_action);
+			.append(td_engineer).append(td_delay).append(td_action);
 		$("#abnormalTable").append(tr);
 	}	
 }
@@ -287,4 +302,46 @@ function empTree() {
     $("#treeArea").html(html);
     tree.init();
     $("#responsive3").modal('show');
+}
+
+//计算天数差的函数，通用
+function getDays(date1 , date2){
+    var date1Str = date1.split("-");//将日期字符串分隔为数组,数组元素分别为年.月.日
+    //根据年 . 月 . 日的值创建Date对象
+    var date1Obj = new Date(date1Str[0],(date1Str[1]-1),date1Str[2]);
+    var date2Str = date2.split("-");
+    var date2Obj = new Date(date2Str[0],(date2Str[1]-1),date2Str[2]);
+    var t1 = date1Obj.getTime();
+    var t2 = date2Obj.getTime();
+    var dateTime = 1000*60*60*24; //每一天的毫秒数
+    var minusDays = Math.floor(((t2-t1)/dateTime));//计算出两个日期的天数差
+    var days = Math.abs(minusDays);//取绝对值
+    return days;
+}
+
+//获取当前时间，格式YYYY-MM-DD
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = year + seperator1 + month + seperator1 + strDate;
+    return currentdate;
+}
+//比较两个日期的大小
+function compareDate(date1,date2){
+    var oDate1 = new Date(date1);
+    var oDate2 = new Date(date2);
+    if(oDate1.getTime() > oDate2.getTime()){
+        return true;
+    } else {
+        return false;
+    }
 }

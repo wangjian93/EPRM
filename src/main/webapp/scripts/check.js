@@ -139,7 +139,6 @@ function getCheckOption(){
 }
 function selectClick(select){
 	var str =  select.value;
-	console.log(select);
 	if(str=="R"){
 		$(select).attr("data-style","btn-danger");
 		$(select).siblings('button').attr("class","btn dropdown-toggle btn-danger");

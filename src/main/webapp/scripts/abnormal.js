@@ -107,7 +107,7 @@ function submitAbnormal(){
 		},
 		success:function(data){
 			if(data.success=="true"){
-				alert("提交成功");
+				alert("提交成功,已邮件提醒工程师！");
 				$("#responsive").modal('hide');
 				var year = $("input[name='year']").val();
 				var month = $("input[name='month']").val();

@@ -55,15 +55,15 @@
           class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <!-- see the example of method invoking job above -->
         <property name="jobDetail" ref="emailReminderQuartzDetail" />
-        <property name="cronExpression" value="0 2 14 * * ?" />
+        <property name="cronExpression" value="0 30 8 * * ?" />
     </bean>
   
     <!-- 总调度用于启动Spring定时器 -->  
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
         <property name="triggers">  
             <list>  
-                <!--<ref bean="specQuartzTrigger" />-->
-                <!--<ref bean="simpleTrigger" />  -->
+                <ref bean="specQuartzTrigger" />
+                <ref bean="simpleTrigger" />
                 <ref bean="emailReminderQuartzTrigger" />
             </list>
         </property>  

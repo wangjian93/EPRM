@@ -64,6 +64,7 @@ public class CheckController {
 		CheckForm checkForm = checkService.setCheckForm(trackingNumber);
 		JSONArray json = new JSONArray();
 		json.add(checkForm);
+		System.out.println(json.toJSONString());
 		PrintWriter out = response.getWriter();
 		out.println(json.toJSONString());
 	}
@@ -74,6 +75,8 @@ public class CheckController {
 		String properRate = request.getParameter("properRate");
 		CheckForm checkForm = checkService.getCheckForm(trackingNumber);
 		float p = Float.parseFloat(properRate);
+		System.out.println(properRate);
+		System.out.println(p);
 		checkForm.setProperRate(p);
 		int year = checkForm.getYear();
 		int month = checkForm.getMonth();
@@ -83,6 +86,7 @@ public class CheckController {
 		while(enu.hasMoreElements()){
 			String paraName=(String)enu.nextElement(); 
 			if(!paraName.equals("trackingNumber") && !paraName.equals("properRate")){
+				System.out.println(paraName+"###: "+request.getParameter(paraName));
 				String check = request.getParameter(paraName);
 				CheckDataDetail checkDataDetail = checkService.getCheckDataDetail(year, month, Integer.parseInt(paraName));
 				if(checkDataDetail!=null){

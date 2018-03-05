@@ -48,7 +48,8 @@ public class MenuController {
 //		}
 //		JSONObject json = new JSONObject();
 //		json.putAll(map);
-//
+//		System.out.println(json);
+//		
 //		PrintWriter out = response.getWriter();
 //        out.println(json.toString());
 		List<DepOfClass> depOfClassList = menuService.getDepOfClass();
@@ -62,19 +63,18 @@ public class MenuController {
 				JSONObject jsonObject = new JSONObject();
 				String trackingNumber = CurrentUtil.CurrentPerTracking(e.getEquipmentGroupID());
 				CheckForm checkForm = checkService.getCheckForm(trackingNumber);
-				if(checkForm != null) {
-					float properRate = checkForm.getProperRate();
-					jsonObject.put("class_fk", e.getClass_fk());
-					jsonObject.put("equipmentGroupID", e.getEquipmentGroupID());
-					jsonObject.put("equipmentGroupName", e.getEquipmentGroupName());
-					jsonObject.put("properRate", properRate);
-					jsonArray.add(jsonObject);
-				}
+				float properRate = checkForm.getProperRate();
+				jsonObject.put("class_fk",e.getClass_fk());
+				jsonObject.put("equipmentGroupID", e.getEquipmentGroupID());
+				jsonObject.put("equipmentGroupName", e.getEquipmentGroupName());
+				jsonObject.put("properRate",properRate);
+				jsonArray.add(jsonObject);
 			}
 			String[] classNames = c.getClassName().split("/");
 			String className = classNames.length >1 ? classNames[1] : classNames[0];
 			json.put(className , jsonArray);
 		}
+		System.out.println(json.toJSONString());
 		PrintWriter out = response.getWriter();
         out.println(json.toJSONString());
 	}

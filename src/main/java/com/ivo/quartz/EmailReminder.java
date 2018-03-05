@@ -72,6 +72,8 @@ public class EmailReminder {
         Date date = calendar.getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = sdf.format(date);
+        System.out.println(dateString);
+
         List<Abnormal> abnormalList = abnormalDao.getAbnormalExpected(dateString);
 
         /**循环遍历abnormalList,发送邮件提醒**/
@@ -100,6 +102,8 @@ public class EmailReminder {
             if (createrMail != null) {
                 mailList.add(createrMail);
             }
+            System.out.println(createrMail);
+            System.out.println(engineerMail);
 
             String[] mails = mailList.toArray(new String[mailList.size()]);
 
@@ -109,7 +113,7 @@ public class EmailReminder {
             mailStr.append("<body>");
             mailStr.append("<h4>Dear All,</h4>");
             mailStr.append("<div style=\"margin-left:30px;\">");
-            mailStr.append("<p>异常设备的预计完成时间还有七天到期，设备还处于异常状态，请注意要及时处理。");
+            mailStr.append("<p>异常设备的预计完成时间已接近，设备还处于异常状态，请注意要及时处理。");
             mailStr.append("<p>异常状况：</p>");
             mailStr.append("<div><table style='font-size:12px;text-align:center;' width=\"2000\" border=\"1\" cellspacing=\"0\" cellpadding=\"0\">");
             mailStr.append("<tr>");
@@ -144,8 +148,10 @@ public class EmailReminder {
             mailStr.append("</tr>");
 
             if(mails.length>0){
-                mailService.sendHtmlMails("EPRM@ivo.com.cn", mails,"常务设备妥善率管理系统:设备异常预计完成时间提前7天提醒", mailStr.toString());
+                //mailService.sendHtmlMails("EPRM@ivo.com.cn", mails,"常务设备妥善率管理系统异常提醒", mailStr.toString());
+                mailService.sendHtmlMail("EPRM@ivo.com.cn", "jianwang2@ivo.com.cn","常务设备妥善率管理系统设备异常提醒", mailStr.toString());
             }
+            System.out.println(mails.length);
         }
 
     }

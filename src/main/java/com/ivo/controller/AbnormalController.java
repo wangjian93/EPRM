@@ -156,7 +156,7 @@ public class AbnormalController {
 		abnormal.setCreator(employee.getEmployee_ID());
 		abnormal.setDateOfCreate(new Date());
 		abnormal.setDeptClass(Integer.toString(checkForm.getClass_fk()));
-		abnormalDao.saveAbnormal(abnormal);
+//		abnormalDao.saveAbnormal(abnormal);
 		response.getWriter().print("{\"success\":\"true\"}");
 
 		/**发送邮件给工程师**/
@@ -173,6 +173,8 @@ public class AbnormalController {
 			e.printStackTrace();
 		}
 		String mailAdress = (String) map.get("email");
+
+		System.out.println(mailAdress);
 		if(mailAdress!=null && !("").equals(mailAdress)) {
 			StringBuffer mailStr = new StringBuffer();
 			mailStr.append("<html lang=\"en\">");
@@ -205,6 +207,7 @@ public class AbnormalController {
 			mailStr.append("<th>"+employee.getEmployee_ID()+" "+employee.getEmployeeName()+"</th>");
 			mailStr.append("</tr>");
 			mailService.sendHtmlMail("EPRM@ivo.com.cn",mailAdress,"常务设备妥善率管理系统异常提醒",mailStr.toString());
+
 		}
 	}
 	

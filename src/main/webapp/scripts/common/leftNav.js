@@ -120,6 +120,8 @@ function SetSubNav(groupName, groupID, properRate){
     		span2.addClass("badge badge-danger");
         span2.html("未完成");
     }else{
+    		console.log("properRate:"+properRate);
+    		console.log("properRate:"+properRate*100+"%");
     		span2.addClass("badge badge-success");
         span2.html((properRate*100).toFixed(0)+"%");
     }

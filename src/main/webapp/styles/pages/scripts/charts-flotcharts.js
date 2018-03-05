@@ -188,6 +188,7 @@ var ChartsFlotcharts = function() {
                 			date = date.substring(8);
                 			var str = String(x_);
                 			if(str.length==1) str = "0" + x_;
+                			console.log(str + "   " + date );
                 			if(str == date){
                 				c += $(this).children('td:eq(1)').text() + ": " + $(this).children('td:eq(2)').text() + "<br>";
                 			}

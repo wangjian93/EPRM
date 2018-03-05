@@ -174,18 +174,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                                		<table style="text-align:center;cursor:pointer;" class="table table-bordered table-hover table-striped  flip-content">
 	                                        <thead   class="bg-grey bg-font-grey">
 	                                        		<tr style="text-align:center;" >
-	                                        			<th style="text-align:center;width:7%;">日期</th>
-	                                        			<th style="text-align:center;width:7%;">课</th>
-	                                        			<th style="text-align:center;width:7%;">系统</th>
-	                                            		<th style="text-align:center;width:7%;">设备编号</th>
-	                                            		<th style="text-align:center;width:14%;">异常状况详述</th>
-	                                            		<th style="text-align:center;width:14%;">拟定解决方案</th>
+	                                        			<th style="text-align:center;width:8%;">日期</th>
+	                                        			<th style="text-align:center;width:8%;">课</th>
+	                                        			<th style="text-align:center;width:8%;">系统</th>
+	                                            		<th style="text-align:center;width:8%;">设备编号</th>
+	                                            		<th style="text-align:center;width:15%;">异常状况详述</th>
+	                                            		<th style="text-align:center;width:15%;">拟定解决方案</th>
 	                                            		<th style="text-align:center;width:6%;">预计完成时间</th>
 	                                            		<th style="text-align:center;width:6%;">实际完成时间</th>
 	                                            		<th style="text-align:center;width:6%;">是否完成</th>
 	                                            		<th style="text-align:center;width:8%;">备注</th>
 	                                            		<th style="text-align:center;width:6%;">工程师</th>
-														<th style="text-align:center;width:6%;">Delay天数</th>
 	                                            		<th style="text-align:center;width:6%;">修改</th>
                                             		</tr>
 	                                        </thead>

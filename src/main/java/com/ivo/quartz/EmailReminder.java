@@ -80,7 +80,7 @@ public class EmailReminder {
             String creater = null;
             String engineerMail = null;
             String createrMail = null;
-            List<String> mailList = new ArrayList<>();
+            List<String> mailList = new ArrayList<String>();
 
             /**
              * engineer数据格式 -- "C1607908 王建"

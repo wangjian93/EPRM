@@ -107,7 +107,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                         				<input name="trackingNumber" value="${trackingNumber}" />
                                         			</div> 
                                         			<label>R:<span id="R"></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                        			<label>S:<span id="S"></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        			<%--<label>S:<span id="S"></span></label>&nbsp;&nbsp;&nbsp;&nbsp;--%>
                                         			<label>SB:<span id="SB"></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
                                         			<label>AB:<span id="AB"></span></label>
                                         			<!-- <label><span class="btn btn-xs btn-danger pull-right">R:</span> <span id="R"></span>&nbsp;&nbsp;</label>

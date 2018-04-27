@@ -1,4 +1,4 @@
-var str = "[{'value':'R','name':'Runing'},{'value':'S','name':'Stop'},{'value':'SB','name':'Standby'},{'value':'AB','name':'AbNormal'}]"
+var str = "[{'value':'R','name':'Runing'},{'value':'SB','name':'Standby'},{'value':'AB','name':'AbNormal'}]"
 var checkOption = eval("("+str+")");
 $(function(){
 	initDate();
@@ -99,10 +99,12 @@ function setCheckForm(data){
 		if(str=="R"){
 			$(sel).attr("data-style","btn-danger");
 			$(sel).siblings('button').attr("class","btn dropdown-toggle btn-danger");
-		}else if(str=="S"){
-			$(sel).attr("data-style","btn-success");
-			$(sel).siblings('button').attr("class","btn dropdown-toggle btn-success");
-		}else if(str=="SB"){
+		}
+		// else if(str=="S"){
+		// 	$(sel).attr("data-style","btn-success");
+		// 	$(sel).siblings('button').attr("class","btn dropdown-toggle btn-success");
+		// }
+		else if(str=="SB"){
 			$(sel).attr("data-style","btn-info");
 			$(sel).siblings('button').attr("class","btn dropdown-toggle btn-info");
 		}else if(str=="AB"){
@@ -142,10 +144,12 @@ function selectClick(select){
 	if(str=="R"){
 		$(select).attr("data-style","btn-danger");
 		$(select).siblings('button').attr("class","btn dropdown-toggle btn-danger");
-	}else if(str=="S"){
-		$(select).attr("data-style","btn-success");
-		$(select).siblings('button').attr("class","btn dropdown-toggle btn-success");
-	}else if(str=="SB"){
+	}
+	// else if(str=="S"){
+	// 	$(select).attr("data-style","btn-success");
+	// 	$(select).siblings('button').attr("class","btn dropdown-toggle btn-success");
+	// }
+	else if(str=="SB"){
 		$(select).attr("data-style","btn-info");
 		$(select).siblings('button').attr("class","btn dropdown-toggle btn-info");
 	}else if(str=="AB"){
@@ -160,7 +164,7 @@ function selectClick(select){
 function getProperRate(){
 	var all=0;
 	var R=0;
-	var S=0;
+	// var S=0;
 	var SB=0;
 	var AB=0;
 	$("select").each(function(){
@@ -168,10 +172,12 @@ function getProperRate(){
 	    if(result=="R"){
 	    		R++;
 	    		all++;
-	    }else if(result=="S"){
-	    		S++;
-	    		all++;
-	    }else if(result=="SB"){
+	    }
+	    // else if(result=="S"){
+	    // 		S++;
+	    // 		all++;
+	    // }
+	    else if(result=="SB"){
 	    		SB++;
 	    		all++;
 	    }else if(result=="AB"){
@@ -181,7 +187,7 @@ function getProperRate(){
 	  });
 	var properRate =(1- AB/all).toFixed(2);
 	$("#R").html(R);
-	$("#S").html(S);
+	// $("#S").html(S);
 	$("#SB").html(SB);
 	$("#AB").html(AB);
 	$("#properRate").html(properRate);

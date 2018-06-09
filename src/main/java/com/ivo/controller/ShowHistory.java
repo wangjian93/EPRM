@@ -2,6 +2,8 @@ package com.ivo.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,6 +72,28 @@ public class ShowHistory {
 		mv.addObject("month",month);
 		List<EquipmentGroup> equipmentGroupList = menuService.getEuipmentGroupByCalss(Integer.parseInt(depClassID));
 		mv.addObject("equipmentGroupList", equipmentGroupList);
+
+		List<Map> elist = new ArrayList<Map>();
+		for(EquipmentGroup  e : equipmentGroupList){
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			String trackingNumber = CurrentUtil.CurrentPerTracking(e.getEquipmentGroupID());
+			CheckForm checkForm = checkService.getCheckForm(trackingNumber);
+			if(checkForm != null) {
+				float properRate = checkForm.getProperRate();
+				map.put("class_fk", e.getClass_fk());
+				map.put("equipmentGroupID", e.getEquipmentGroupID());
+				map.put("equipmentGroupName", e.getEquipmentGroupName());
+				map.put("properRate", properRate);
+				if(properRate<1 ) {
+					map.put("mark", "true");
+				} else {
+					map.put("mark", "false");
+				}
+				elist.add(map);
+			}
+		}
+		mv.addObject("equipmentGroupList2", elist);
+
 		return mv;
 	}
 	

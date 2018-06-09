@@ -85,13 +85,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         		<div class="tabbable-line boxless tabbable-reversed">
                                 <ul class="nav nav-tabs">
                                 		<%
-                                		List<EquipmentGroup> equipmentGroupList = (List<EquipmentGroup>)request.getAttribute("equipmentGroupList");
+                                		List<Map<String, Object>> equipmentGroupList = (List<Map<String, Object>>)request.getAttribute("equipmentGroupList2");
                                 		for(int i=0; i<equipmentGroupList.size(); i++){
-                                			EquipmentGroup equipmentGroup = equipmentGroupList.get(i);
+											Map<String, Object> equipmentGroup = equipmentGroupList.get(i);
                                 		%>
                                     <li >
-                                        <a data-toggle="tab" onclick="selectTabbableLine(this)" equipmentGroup="<%=equipmentGroup.getEquipmentGroupID() %>"><%=equipmentGroup.getEquipmentGroupName()%></a>
-                                    </li>
+
+										<%
+											String mark = (String) equipmentGroup.get("mark");
+											if( mark.equals("true")) { %>
+											<a  data-toggle="tab" onclick="selectTabbableLine(this)"
+												style="color: red;"
+											   equipmentGroup="<%=equipmentGroup.get("equipmentGroupID") %>">
+												<%=equipmentGroup.get("equipmentGroupName")%>
+											</a>
+										<% } else { %>
+											<a data-toggle="tab" onclick="selectTabbableLine(this)"
+											   equipmentGroup="<%=equipmentGroup.get("equipmentGroupID") %>">
+												<%=equipmentGroup.get("equipmentGroupName")%>
+											</a>
+										<% } %>
+									</li>
                                     <%} %>
                                     
                                 </ul>
@@ -195,7 +209,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                     <div class="caption">
                                         <i class="icon-bubble font-green-sharp"></i>
                                         <span class="caption-subject font-green-sharp bold uppercase">异常记录</span>
-                                        <small><span id="month2"></span>月份--<span id="equipmentGroupName2"></span>设备异常记录</small>
+                                        <small>
+											<span id="month2" hidden></span><%--月份----%>
+											<span id="equipmentGroupName2"></span>设备异常记录
+										</small>
                                     </div>
                                     <!-- <div class="actions">
                                         <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">

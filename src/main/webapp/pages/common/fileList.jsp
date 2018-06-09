@@ -95,9 +95,29 @@
         </script>
 
         <!--公司人员组织树-->
-        <script src="styles/xquery.js" type="text/javascript"></script>
-        <script src="styles/xtree.js" type="text/javascript"></script>
-        <%--<script src="https://cdn.bootcss.com/zTree.v3/3.5.32/js/jquery.ztree.core.js"></script>--%>
-        <%--<link href="https://cdn.bootcss.com/zTree.v3/3.5.32/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">--%>
-        <script src="styles/jquery.ztree.core.js"></script>
-        <link href="styles/zTreeStyle.css" rel="stylesheet">
+        <!-- xtree -->
+<%--<script type="text/javascript" src="styles/jquery/jquery-1.9.1.min.js"></script>--%>
+<script type="text/javascript" src="styles/jquery/ext/jquery.json-2.4.min.js"></script>
+<%--<script type="text/javascript" src="styles/jquery/ui/jquery-ui.min.js"></script>--%>
+<%--<link rel="stylesheet" type="text/css" href="styles/jquery/ui/css/jquery-ui.min.css" />--%>
+<link rel="stylesheet" type="text/css" href="styles/jquery/ext/css/clear.css" />
+<script type="text/javascript" src="styles/jquery/xquery.js"></script>
+<script type="text/javascript" src="styles/jquery/ext/xgrid.js"></script>
+<link rel="stylesheet" type="text/css" href="styles/jquery/ext/css/xgrid.css" />
+<script type="text/javascript" src="styles/jquery/ext/xpanel.js"></script>
+<script type="text/javascript" src="styles/jquery/ext/xwindow.js"></script>
+<script type="text/javascript" src="styles/jquery/ext/ajaxform.js"></script>
+<script type="text/javascript" src="styles/jquery/ext/pop.js"></script>
+<link rel="stylesheet" type="text/css" href="styles/jquery/ext/css/pop.css" />
+<script type="text/javascript" src="styles/jquery/ext/message.js"></script>
+<link rel="stylesheet" type="text/css" href="styles/jquery/ext/css/message.css" />
+<!-- xtree -->
+<script type="text/javascript" src="styles/jquery/ext/tree/ztree/jquery.ztree.core-3.5_001.min.js"></script>
+<link rel="stylesheet" type="text/css" href="styles/jquery/ext/tree/ztree/css/zTreeStyle.css" />
+<script type="text/javascript" src="styles/jquery/ext/tree/xtree.js"></script>
+<link rel="stylesheet" type="text/css" href="styles/jquery/ext/tree/css/ztree-ex.css" />
+<link rel="stylesheet" type="text/css" href="styles/jquery/ext/tree/css/xtree.css" />
+
+
+<link href="styles/jquery.bootstrap-touchspin.css" rel="stylesheet">
+<script src="styles/jquery.bootstrap-touchspin.js"></script>

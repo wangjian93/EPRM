@@ -72,12 +72,10 @@ public class AbnormalController {
 		jsonObject.put("abnormal", abnormal);
 		response.getWriter().print(jsonObject.toJSONString());
 	}
-	
-//	/**用于报表**/
-//	@RequestMapping("/getAbnormal.do")
-	
-	@RequestMapping("/getAbnormalData.do")
-	public void getAbnormalData(HttpServletRequest request, HttpServletResponse response) throws IOException{
+
+	//历史记录和check中查询异常记录用，可以同时查出之前未完成的异常
+	@RequestMapping("/getAbnormalData2.do")
+	public void getAbnormalData2(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String yearS = request.getParameter("year");
 		String monthS = request.getParameter("month");
 		String dayS = request.getParameter("day");
@@ -91,7 +89,6 @@ public class AbnormalController {
 		int equipmentGroup = 0;
 		int equipmentID = 0;
 		int deptClass = 0;
-
 		if(yearS!=null && !yearS.equals("")){
 			year = Integer.parseInt(yearS);
 		}
@@ -112,12 +109,71 @@ public class AbnormalController {
 		}
 		if(ifCompleted==null) {
 			ifCompleted = "";
+		}
+		List<Abnormal> abnormalList = new ArrayList<Abnormal>();
 
+		abnormalList = abnormalDao.queryAbnormal(
+				year, month, day, deptClass, equipmentGroup, equipmentID, "1");
+
+		//获取未完成的异常记录
+		List<Abnormal> abnormalList2 = new ArrayList<Abnormal>();
+		abnormalList2 = abnormalDao.queryAbnormal(
+					0, 0, 0, deptClass, equipmentGroup, equipmentID, "0");
+		abnormalList.addAll(abnormalList2);
+
+		JSONArray jsonArray = new JSONArray();
+		jsonArray.addAll(abnormalList);
+		PrintWriter out = response.getWriter();
+		out.println(jsonArray.toString());
+	}
+	
+	@RequestMapping("/getAbnormalData.do")
+	public void getAbnormalData(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String yearS = request.getParameter("year");
+		String monthS = request.getParameter("month");
+		String dayS = request.getParameter("day");
+		String equipmentGroupS = request.getParameter("equipmentGroup");
+		String equipmentIDS = request.getParameter("equipmentID");
+		String deptClassS = request.getParameter("deptClass");
+		String ifCompleted = request.getParameter("ifCompleted");
+		int year = 0;
+		int month = 0;
+		int day = 0;
+		int equipmentGroup = 0;
+		int equipmentID = 0;
+		int deptClass = 0;
+		if(yearS!=null && !yearS.equals("")){
+			year = Integer.parseInt(yearS);
+		}
+		if(monthS!=null && !monthS.equals("")){
+			month = Integer.parseInt(monthS);
+		}
+		if(dayS!=null && !dayS.equals("")){
+			day = Integer.parseInt(dayS);
+		}
+		if(equipmentGroupS!=null && !equipmentGroupS.equals("")){
+			equipmentGroup = Integer.parseInt(equipmentGroupS);
+		}
+		if(equipmentIDS!=null && !equipmentIDS.equals("")){
+			equipmentID = Integer.parseInt(equipmentIDS);
+		}
+		if(deptClassS!=null && !deptClassS.equals("")){
+			deptClass = Integer.parseInt(deptClassS);
+		}
+		if(ifCompleted==null) {
+			ifCompleted = "";
 		}
 		List<Abnormal> abnormalList = new ArrayList<Abnormal>();
 		
 		abnormalList = abnormalDao.queryAbnormal(
 				year, month, day, deptClass, equipmentGroup, equipmentID, ifCompleted);
+
+		//获取未完成的异常记录
+//		List<Abnormal> abnormalList2 = new ArrayList<Abnormal>();
+//		abnormalList2 = abnormalDao.queryAbnormal(
+//				0, 0, 0, deptClass, equipmentGroup, equipmentID, "0");
+//		abnormalList.addAll(abnormalList2);
+
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.addAll(abnormalList);
 		PrintWriter out = response.getWriter();
@@ -191,6 +247,7 @@ public class AbnormalController {
 			mailStr.append("<th>异常状况</th>");
 			mailStr.append("<th>备注</th>");
 			mailStr.append("<th>创建人</th>");
+			mailStr.append("<th>工程师</th>");
 			mailStr.append("</tr>");
 			mailStr.append("<tr>");
 			mailStr.append("<th>"+dates+"</th>");
@@ -203,8 +260,9 @@ public class AbnormalController {
 			mailStr.append("<th>"+sipecification+"</th>");
 			mailStr.append("<th>"+memo+"</th>");
 			mailStr.append("<th>"+employee.getEmployee_ID()+" "+employee.getEmployeeName()+"</th>");
+			mailStr.append("<th>"+engineer+"</th>");
 			mailStr.append("</tr>");
-			mailService.sendHtmlMail("EPRM@ivo.com.cn",mailAdress,"常务设备妥善率管理系统异常提醒",mailStr.toString());
+			mailService.sendHtmlMail("EPRM@ivo.com.cn",mailAdress,"常务设备妥善率管理系统有设备异常提醒",mailStr.toString());
 		}
 	}
 	

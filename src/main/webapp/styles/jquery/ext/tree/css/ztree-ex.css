@@ -1,0 +1,25 @@
+@CHARSET "UTF-8";
+
+.ztree li span.button.manager_ico_docu {
+	background: url(img/user_manager.png);
+	_background: url(img/user_manager.gif);
+}
+
+.ztree li span.button.emp_ico_docu {
+	background: url(img/user_male.png);
+	_background: url(img/user_male.gif);
+}
+
+.ztree li span.button.dept_ico_docu {
+	background: url("img/ex.png") no-repeat scroll 0 -192px transparent;
+}
+
+.ztree li span.button.pos_ico_docu {
+	background: url(img/user_male.png);
+	_background: url(img/user_male.gif);
+}
+
+.ztree li span.button.generic_ico_docu {
+	background: url(img/icon/icon_generic_list.png) no-repeat scroll 0 1px;
+	*background: url(img/icon/icon_generic_list.png) no-repeat scroll 0 2px;
+}

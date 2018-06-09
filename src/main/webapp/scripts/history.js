@@ -1,3 +1,4 @@
+var xmax = 100;  //x轴最大刻度
 $(function(){
 	menuInit();
 	setDate();
@@ -75,11 +76,14 @@ function getCheckDataDetail(year, month, equipmentGroup){
 				var properRate = parseFloat(checkFormMonth[day])*100;
 				var arrayObj = new Array();
 				arrayObj.push(i);
-				if(properRate==0)
-					arrayObj.push();
+				if(properRate=="")
+					arrayObj.push(0);
 				else
 					arrayObj.push(properRate);
 				pageviews.push(arrayObj);
+				if(properRate > xmax) {
+                    xmax = properRate;
+				}
 			}
 			var visitors = new Array();
 			for(var i=1; i<32; i++){

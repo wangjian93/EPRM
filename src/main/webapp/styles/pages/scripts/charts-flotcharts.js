@@ -171,8 +171,8 @@ var ChartsFlotcharts = function() {
                         tickColor: "#eee",
                     },
                     yaxis: {
-                    		max:100,
-                    	    min: 0,//最小刻度
+                        max:100,
+                        min: 0,//最小刻度
                         tickSize: 5,//递增量
                         ticks: 21,
                         tickDecimals: 0,

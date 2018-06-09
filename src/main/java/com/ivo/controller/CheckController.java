@@ -37,13 +37,27 @@ public class CheckController {
 	public ModelAndView checkFormView(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String trackingNumber = request.getParameter("trackingNumber");
 		if(trackingNumber==null) trackingNumber = (String) request.getAttribute("trackingNumber");
-		ModelAndView mv = new ModelAndView("check");
 		CheckForm checkForm = checkService.getCheckForm(trackingNumber);
+		ModelAndView mv = null;
 		if(checkForm!=null){
 			int year = checkForm.getYear();
 			int month = checkForm.getMonth();
 			int day = checkForm.getDay();
 			EquipmentGroup equipmentGroup = checkService.getEuipmentGroup(checkForm.getEquipmentGroup_fk());
+
+			int equipmentGroup_id = equipmentGroup.getEquipmentGroupID();
+			//气化课干燥机的id
+			int gzj = 47;
+			if(equipmentGroup_id == gzj) {
+				//1.气化课的干燥机，以input的形式录入设备状态，走check2.jsp
+				mv = new ModelAndView("check2");
+			} else {
+				//2.其他的正常以下拉框选择方式录入，走check.jsp
+				mv = new ModelAndView("check");
+			}
+
+
+
 			DepOfClass depOfClass = checkService.getDepOfClass(checkForm.getClass_fk());
 			mv.addObject("year",year);
 			mv.addObject("month",month);

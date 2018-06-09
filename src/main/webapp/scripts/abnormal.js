@@ -4,7 +4,7 @@ function reloadAbnormalTabl(){
 }
 function loadAbnormalTable(year,month,day,equipmentGroup,equipmentID){
 	$.ajax({
-		url:'getAbnormalData.do',
+		url:'getAbnormalData2.do',
 		type:'post',
 		dataType:'json',
 		data:{
@@ -171,17 +171,24 @@ function modifyShowModal(abnormalID){
 		},
 		success:function(data){
 			var abnormal = data.abnormal;
-			$("input[name='abnormalID_b']").val(abnormal.id);
+
+            $("input[name='abnormalID_b']").val(abnormal.id);
             $("input[name='equipmentID']").val(abnormal.equipmentID_fk);
             $("input[name='dates_b']").val(abnormal.dates);
-			$("textarea[name='sipecification_b']").val(abnormal.sipecification);
-			$("textarea[name='solutions_b']").val(abnormal.solutions);
-			$("input[name='expectedTime_b']").val(abnormal.expectedTime);
-			$("input[name='actualTime_b']").val(abnormal.actualTime);
-			$("select[name='ifCompleted_b']").selectpicker('val',abnormal.ifCompleted);
-			$("textarea[name='memo_b']").val(abnormal.memo);
+            $("textarea[name='sipecification_b']").val(abnormal.sipecification);
+            $("textarea[name='solutions_b']").val(abnormal.solutions);
+            $("input[name='expectedTime_b']").val(abnormal.expectedTime);
+            $("input[name='actualTime_b']").val(abnormal.actualTime);
+            $("textarea[name='memo_b']").val(abnormal.memo);
             $("input[name='equipmentID_b']").val(abnormal.equipmentName);
-			$("input[name='engineer_b']").val(abnormal.engineer);
+            $("input[name='engineer_b']").val(abnormal.engineer);
+            $("select[name='ifCompleted_b']").selectpicker('val',abnormal.ifCompleted);
+            //如果已经填写预计完成时间，将禁止再次修改
+            if(abnormal.expectedTime != "") {
+                $("input[name='expectedTime_b']").attr("readonly","readonly");
+            } else {
+                $("input[name='expectedTime_b']").removeAttr("readonly");
+            }
 		},
 		error:function(data){
 			alert("获取设备编号失败，请重新登录再试!");

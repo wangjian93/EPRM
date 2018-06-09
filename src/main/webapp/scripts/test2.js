@@ -192,6 +192,12 @@ function modifyShowModal(abnormalID){
 			$("input[name='equipmentID_b']").val(abnormal.equipmentName);
 			$("input[name='engineer_b']").val(abnormal.engineer);
 			$("select[name='ifCompleted_b']").selectpicker('val',abnormal.ifCompleted);
+            //如果已经填写预计完成时间，将禁止再次修改
+            if(abnormal.expectedTime != "") {
+                $("input[name='expectedTime_b']").attr("readonly","readonly");
+            } else {
+                $("input[name='expectedTime_b']").removeAttr("readonly");
+			}
 		},
 		error:function(data){
 			alert("获取设备编号失败，请重新登录再试!");

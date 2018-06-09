@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="EPRM:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="EPRM.war">
+      <element id="artifact" artifact-name="EPRM:war exploded" />
+    </root>
+  </artifact>
+</component>

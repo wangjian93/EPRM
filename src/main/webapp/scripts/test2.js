@@ -295,7 +295,7 @@ function empTree() {
         height : "400px",
         xtype : "XTree",
         root : "10000000",
-        url : "http://10.20.2.10:8080/org/" + "/org/emp",
+        url : "http://myivo.ivo.com.cn/org/" + "/org/emp",
         crossdomain : true,
         autoParam : [ "id" ],
         nodeClick : function(tree, node) {

@@ -220,7 +220,7 @@ public class AbnormalController {
 		if(engineer.length()>8) {
 			param += engineer.substring(0,8);
 		}
-		String em = HttpRequest.sendPost("http://10.20.2.10:8080/org/org/getEmployee", param);
+		String em = HttpRequest.sendPost("http://myivo.com.cn/org/org/getEmployee", param);
 		ObjectMapper mapper = new ObjectMapper();
 		HashMap map = null;
 		try{
